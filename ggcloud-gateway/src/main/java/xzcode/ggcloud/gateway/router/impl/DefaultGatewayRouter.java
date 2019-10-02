@@ -8,6 +8,8 @@ public class DefaultGatewayRouter implements IGGCGatewayRouter{
 	@Override
 	public void routeMessage(Request request) {
 		
+		
+		
 	}
 	
 
