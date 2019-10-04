@@ -154,8 +154,8 @@
   
   <modules>
   	<module>ggcloud-eventbus</module>
-  	<module>ggcloud-service-server</module>
-  	<module>ggcloud-service-client</module>
+  	<module>ggcloud-detector</module>
+  	<module>ggcloud-detector-client</module>
   	<module>ggcloud-gateway</module>
   </modules>
 </project>

@@ -6,10 +6,11 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   
-  <artifactId>ggcloud-service-client</artifactId>
+  <artifactId>ggcloud-detector</artifactId>
   
   <dependencies>
   
+	
 	
   
   </dependencies>
