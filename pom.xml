@@ -153,9 +153,8 @@
     </build>
   
   <modules>
+  	<module>ggcloud-discovery</module>
   	<module>ggcloud-eventbus</module>
-  	<module>ggcloud-detector</module>
-  	<module>ggcloud-detector-client</module>
   	<module>ggcloud-gateway</module>
   </modules>
 </project>
