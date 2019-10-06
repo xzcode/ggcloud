@@ -25,6 +25,30 @@ public class GGCDiscoveryClientConfig {
 	
 	//客户端汇报超时时间(秒)
 	private long clientReportTimeout = 30L;
+	
+	//重连次数
+	private int reconnectTimes = 3;
+	
+	//重连间隔-秒
+	private int reconnectInterval = 5;
+	
+	
+
+	public int getReconnectTimes() {
+		return reconnectTimes;
+	}
+
+	public void setReconnectTimes(int reconnectTimes) {
+		this.reconnectTimes = reconnectTimes;
+	}
+
+	public int getReconnectInterval() {
+		return reconnectInterval;
+	}
+
+	public void setReconnectInterval(int reconnectInterval) {
+		this.reconnectInterval = reconnectInterval;
+	}
 
 	public long getClientReportTimeout() {
 		return clientReportTimeout;
