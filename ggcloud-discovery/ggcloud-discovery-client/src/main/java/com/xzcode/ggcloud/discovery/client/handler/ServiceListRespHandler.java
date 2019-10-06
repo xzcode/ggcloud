@@ -1,6 +1,6 @@
 package com.xzcode.ggcloud.discovery.client.handler;
 
-import com.xzcode.ggcloud.discovery.client.GGCDiscoveryClient;
+import com.xzcode.ggcloud.discovery.client.config.GGCDiscoveryClientConfig;
 import com.xzcode.ggcloud.discovery.common.message.resp.RegisterResp;
 
 import xzcode.ggserver.core.message.receive.IOnMessageHandler;
@@ -14,10 +14,10 @@ import xzcode.ggserver.core.message.receive.IOnMessageHandler;
  */
 public class ServiceListRespHandler implements IOnMessageHandler<RegisterResp>{
 	
-	private GGCDiscoveryClient config;
+	private GGCDiscoveryClientConfig config;
 	
 
-	public ServiceListRespHandler(GGCDiscoveryClient config) {
+	public ServiceListRespHandler(GGCDiscoveryClientConfig config) {
 		super();
 		this.config = config;
 	}

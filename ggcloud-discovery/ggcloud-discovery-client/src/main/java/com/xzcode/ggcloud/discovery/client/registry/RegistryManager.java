@@ -24,6 +24,9 @@ public class RegistryManager {
 	 * 2019-10-05 13:49:47
 	 */
 	public RegistryInfo getRandomRegistry() {
+		if (registryInfos.isEmpty()) {
+			return null;
+		}
 		if (registryInfos.size() == 1) {
 			return registryInfos.get(0);
 		}

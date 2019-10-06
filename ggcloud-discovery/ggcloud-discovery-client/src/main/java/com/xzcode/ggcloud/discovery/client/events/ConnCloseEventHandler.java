@@ -1,6 +1,6 @@
 package com.xzcode.ggcloud.discovery.client.events;
 
-import com.xzcode.ggcloud.discovery.client.GGCDiscoveryClient;
+import com.xzcode.ggcloud.discovery.client.config.GGCDiscoveryClientConfig;
 
 import xzcode.ggserver.core.event.IEventHandler;
 import xzcode.ggserver.core.session.GGSession;
@@ -8,9 +8,9 @@ import xzcode.ggserver.core.session.GGSessionUtil;
 
 public class ConnCloseEventHandler implements IEventHandler<Void>{
 	
-	private GGCDiscoveryClient config;
+	private GGCDiscoveryClientConfig config;
 	
-	public ConnCloseEventHandler(GGCDiscoveryClient config) {
+	public ConnCloseEventHandler(GGCDiscoveryClientConfig config) {
 		super();
 		this.config = config;
 	}
