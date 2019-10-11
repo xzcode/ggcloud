@@ -3,7 +3,7 @@ package com.xzcode.ggcloud.discovery.client.handler;
 import com.xzcode.ggcloud.discovery.client.config.GGCDiscoveryClientConfig;
 import com.xzcode.ggcloud.discovery.common.message.resp.RegisterResp;
 
-import xzcode.ggserver.core.message.receive.IOnMessageHandler;
+import xzcode.ggserver.core.common.message.receive.IOnMessageHandler;
 
 /**
  * 客户端注册请求处理

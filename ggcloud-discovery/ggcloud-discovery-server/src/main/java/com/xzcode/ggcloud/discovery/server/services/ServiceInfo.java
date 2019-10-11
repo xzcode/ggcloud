@@ -1,6 +1,6 @@
 package com.xzcode.ggcloud.discovery.server.services;
 
-import xzcode.ggserver.core.session.GGSession;
+import xzcode.ggserver.core.common.session.GGSession;
 
 /**
  * 服务信息

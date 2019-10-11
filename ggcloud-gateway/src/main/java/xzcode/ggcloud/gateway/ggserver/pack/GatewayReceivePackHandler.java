@@ -4,11 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import xzcode.ggcloud.gateway.router.IGGCGatewayRouter;
-import xzcode.ggserver.core.channel.DefaultChannelAttributeKeys;
-import xzcode.ggserver.core.handler.pack.IGGReceivePackHandler;
-import xzcode.ggserver.core.message.PackModel;
-import xzcode.ggserver.core.message.receive.RequestMessageTask;
-import xzcode.ggserver.core.session.GGSession;
+import xzcode.ggserver.core.common.channel.DefaultChannelAttributeKeys;
+import xzcode.ggserver.core.common.handler.pack.IGGReceivePackHandler;
+import xzcode.ggserver.core.common.message.PackModel;
+import xzcode.ggserver.core.common.message.receive.RequestMessageTask;
+import xzcode.ggserver.core.common.session.GGSession;
 
 public class GatewayReceivePackHandler implements IGGReceivePackHandler{
 	

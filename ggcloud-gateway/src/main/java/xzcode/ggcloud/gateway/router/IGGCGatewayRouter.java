@@ -1,7 +1,7 @@
 package xzcode.ggcloud.gateway.router;
 
-import xzcode.ggserver.core.message.PackModel;
-import xzcode.ggserver.core.session.GGSession;
+import xzcode.ggserver.core.common.message.PackModel;
+import xzcode.ggserver.core.common.session.GGSession;
 
 /**
  * 网关路由器统一接口

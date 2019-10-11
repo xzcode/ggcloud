@@ -11,7 +11,10 @@
   <dependencies>
   
 	
-	
+	<dependency>
+		<groupId>xzcode</groupId>
+		<artifactId>ggserver-core-client</artifactId>
+	</dependency>
   
   </dependencies>
 </project>

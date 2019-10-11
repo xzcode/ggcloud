@@ -2,7 +2,7 @@ package com.xzcode.ggcloud.discovery.server.config;
 
 import com.xzcode.ggcloud.discovery.server.services.ServiceManager;
 
-import xzcode.ggserver.core.GGServer;
+import xzcode.ggserver.core.server.GGServer;
 
 /**
  * 配置

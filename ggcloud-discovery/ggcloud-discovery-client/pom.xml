@@ -15,7 +15,10 @@
 	    <artifactId>ggcloud-discovery-common</artifactId>
 	    <version>${project.version}</version>
 	</dependency>
-	
+	<dependency>
+		<groupId>xzcode</groupId>
+		<artifactId>ggserver-core-client</artifactId>
+	</dependency>
   
   </dependencies>
 </project>

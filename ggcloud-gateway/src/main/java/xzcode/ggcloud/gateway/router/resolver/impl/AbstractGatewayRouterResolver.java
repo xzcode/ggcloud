@@ -5,9 +5,9 @@ import java.util.List;
 
 import xzcode.ggcloud.gateway.config.GGGatewayConfig;
 import xzcode.ggcloud.gateway.router.resolver.IGGGatewayRouterResolver;
-import xzcode.ggserver.core.GGClient;
-import xzcode.ggserver.core.config.GGConfig;
-import xzcode.ggserver.core.event.GGEvents;
+import xzcode.ggserver.core.client.GGClient;
+import xzcode.ggserver.core.client.config.GGClientConfig;
+import xzcode.ggserver.core.common.event.GGEvents;
 
 public abstract class AbstractGatewayRouterResolver implements IGGGatewayRouterResolver{
 	
@@ -26,8 +26,7 @@ public abstract class AbstractGatewayRouterResolver implements IGGGatewayRouterR
 	
 	public void newConnection() {
 		
-		GGConfig config = new GGConfig();
-		config.setClient(true);
+		GGClientConfig config = new GGClientConfig();
 		config.init();
 		GGClient client = new GGClient(config);
 		

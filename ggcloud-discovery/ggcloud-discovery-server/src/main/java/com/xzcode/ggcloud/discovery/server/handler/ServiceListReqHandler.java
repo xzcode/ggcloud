@@ -7,9 +7,9 @@ import com.xzcode.ggcloud.discovery.server.constant.DiscoveryServerSessionKeys;
 import com.xzcode.ggcloud.discovery.server.services.ServiceInfo;
 import com.xzcode.ggcloud.discovery.server.util.ServiceIdUtil;
 
-import xzcode.ggserver.core.message.receive.IOnMessageHandler;
-import xzcode.ggserver.core.session.GGSession;
-import xzcode.ggserver.core.session.GGSessionUtil;
+import xzcode.ggserver.core.common.message.receive.IOnMessageHandler;
+import xzcode.ggserver.core.common.session.GGSession;
+import xzcode.ggserver.core.common.session.GGSessionUtil;
 
 /**
  * 客户端注册请求处理

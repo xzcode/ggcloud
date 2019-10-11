@@ -8,8 +8,8 @@ import xzcode.ggcloud.gateway.config.GGGatewayConfig;
 import xzcode.ggcloud.gateway.router.IGGCGatewayRouter;
 import xzcode.ggcloud.gateway.router.resolver.IGGGatewayRouterResolver;
 import xzcode.ggcloud.gateway.router.resolver.ResolvePack;
-import xzcode.ggserver.core.message.PackModel;
-import xzcode.ggserver.core.session.GGSession;
+import xzcode.ggserver.core.common.message.PackModel;
+import xzcode.ggserver.core.common.session.GGSession;
 
 /**
  * 默认网关路由器
