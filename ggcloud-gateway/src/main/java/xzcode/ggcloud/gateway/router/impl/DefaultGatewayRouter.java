@@ -1,15 +1,22 @@
 package xzcode.ggcloud.gateway.router.impl;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import xzcode.ggcloud.gateway.config.GGGatewayConfig;
-import xzcode.ggcloud.gateway.router.IGGCGatewayRouter;
-import xzcode.ggcloud.gateway.router.resolver.IGGGatewayRouterResolver;
-import xzcode.ggcloud.gateway.router.resolver.ResolvePack;
+import xzcode.ggcloud.gateway.router.IGatewayRouter;
+import xzcode.ggcloud.gateway.router.binding.RouterSessionBinding;
+import xzcode.ggcloud.gateway.router.resolve.provider.IResolverProvider;
+import xzcode.ggcloud.gateway.router.resolve.resolver.IRouterResolver;
+import xzcode.ggserver.core.client.GGClient;
+import xzcode.ggserver.core.client.config.GGClientConfig;
+import xzcode.ggserver.core.common.event.GGEvents;
 import xzcode.ggserver.core.common.message.PackModel;
 import xzcode.ggserver.core.common.session.GGSession;
+import xzcode.ggserver.core.server.GGServer;
 
 /**
  * 默认网关路由器
@@ -18,41 +25,62 @@ import xzcode.ggserver.core.common.session.GGSession;
  * @author zai
  * 2019-10-03 14:04:16
  */
-public class DefaultGatewayRouter implements IGGCGatewayRouter{
+public class DefaultGatewayRouter implements IGatewayRouter{
+	
+	private GGServer ggServer;
 	
 	private GGGatewayConfig config;
 	
-	/**
-	 * 路由解析器集合
-	 */
-	private List<IGGGatewayRouterResolver> routerResolvers = new ArrayList<>();;
+	private IResolverProvider resolverProvider;
 	
-	/**
-	 * 添加路由解析器
-	 * @param resolver
-	 * 
-	 * @author zai
-	 * 2019-10-03 14:03:22
-	 */
-	public void addResolver(IGGGatewayRouterResolver resolver) {
-		this.routerResolvers.add(resolver);
-	}
+	
+	protected Map<GGSession, List<RouterSessionBinding>> sessionBindings = new ConcurrentHashMap<>();
+	
 
 	public DefaultGatewayRouter(GGGatewayConfig config) {
-		super();
 		this.config = config;
+	}
+	
+	public void init() {
+		ggServer.onEvent(GGEvents.ConnectionState.CLOSE, (e) -> {
+			//用户客户端断开连接后，移除session绑定
+			GGSession session = ggServer.getSession();
+			List<RouterSessionBinding> bindingList = sessionBindings.remove(session);
+			for (RouterSessionBinding binding : bindingList) {
+				binding.disconnect();
+			}
+		});
 	}
 
 	@Override
-	public void route(PackModel packModel, GGSession session) {
-		String action = new String(packModel.getAction(), Charset.forName(config.getCharset()));
-		for (IGGGatewayRouterResolver resolver : routerResolvers) {
-			if (resolver.match(action)) {
-				resolver.resolve(new ResolvePack(action, packModel, session));
-			}
-			
+	public boolean route(PackModel packModel, GGSession session) {
+		List<IRouterResolver> routerResolvers = resolverProvider.match(packModel);
+		if (routerResolvers == null) {
+			return false;
 		}
+		List<RouterSessionBinding> bindingList = sessionBindings.get(session);
+		if (bindingList == null) {
+			synchronized (session) {
+				bindingList = sessionBindings.get(session);
+				if (bindingList == null) {
+					bindingList = new CopyOnWriteArrayList<RouterSessionBinding>();
+					for (IRouterResolver resolver : routerResolvers) {
+						bindingList.add(new RouterSessionBinding(session, resolver));						
+					}
+					sessionBindings.put(session, bindingList);
+				}
+			}
+		}
+		
+		//如果路由数量发生了变化
+		if (bindingList.size() != routerResolvers.size()) {
+			for (IRouterResolver resolver : routerResolvers) {
+				bindingList.add(new RouterSessionBinding(session, resolver));						
+			}
+		}
+		return true;
 	}
+	
 	
 
 }

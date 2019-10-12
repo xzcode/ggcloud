@@ -1,4 +1,4 @@
-package xzcode.ggcloud.gateway.router.resolver;
+package xzcode.ggcloud.gateway.router.resolve;
 
 import xzcode.ggserver.core.common.message.PackModel;
 import xzcode.ggserver.core.common.session.GGSession;

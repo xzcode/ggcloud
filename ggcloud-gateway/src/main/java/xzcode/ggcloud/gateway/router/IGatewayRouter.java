@@ -10,9 +10,9 @@ import xzcode.ggserver.core.common.session.GGSession;
  * @author zai
  * 2019-10-03 14:04:28
  */
-public interface IGGCGatewayRouter {
+public interface IGatewayRouter {
 	
 	
-	void route(PackModel packModel, GGSession session);
+	boolean route(PackModel packModel, GGSession session);
 	
 }

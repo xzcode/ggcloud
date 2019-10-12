@@ -3,7 +3,7 @@ package xzcode.ggcloud.gateway.ggserver.pack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import xzcode.ggcloud.gateway.router.IGGCGatewayRouter;
+import xzcode.ggcloud.gateway.router.IGatewayRouter;
 import xzcode.ggserver.core.common.channel.DefaultChannelAttributeKeys;
 import xzcode.ggserver.core.common.handler.pack.IGGReceivePackHandler;
 import xzcode.ggserver.core.common.message.PackModel;
@@ -14,7 +14,7 @@ public class GatewayReceivePackHandler implements IGGReceivePackHandler{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(GatewayReceivePackHandler.class);
 	
-	private IGGCGatewayRouter router;
+	private IGatewayRouter router;
 
 	@Override
 	public void handle(PackModel packModel, GGSession session) {
