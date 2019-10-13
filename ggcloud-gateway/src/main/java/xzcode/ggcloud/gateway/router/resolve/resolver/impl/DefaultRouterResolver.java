@@ -6,6 +6,8 @@ import xzcode.ggserver.core.common.message.PackModel;
 
 public class DefaultRouterResolver implements IRouterResolver{
 	
+	protected String id;
+	
 	protected String host;
 	
 	protected int port;
@@ -22,6 +24,10 @@ public class DefaultRouterResolver implements IRouterResolver{
 		return false;
 	}
 
+	@Override
+	public String getId() {
+		return this.id;
+	}
 
 	@Override
 	public String getHost() {
@@ -32,5 +38,7 @@ public class DefaultRouterResolver implements IRouterResolver{
 	public int getPort() {
 		return port;
 	}
+	
+	
 
 }

@@ -16,12 +16,12 @@ import xzcode.ggserver.core.common.message.PackModel;
  */
 public class DefaultResolverPorvider implements IResolverProvider{
 	
-	protected List<IRouterResolver> routingClients = new CopyOnWriteArrayList<>();
+	protected List<IRouterResolver> resolvers = new CopyOnWriteArrayList<>();
 
 	@Override
 	public List<IRouterResolver> match(PackModel packModel) {
 		List<IRouterResolver> matchedResolvers = null;
-		for (IRouterResolver resolver : routingClients) {
+		for (IRouterResolver resolver : resolvers) {
 			if (resolver.match(packModel)) {
 				if (matchedResolvers == null) {
 					matchedResolvers = new ArrayList<>(1);
@@ -34,7 +34,7 @@ public class DefaultResolverPorvider implements IResolverProvider{
 
 	@Override
 	public void addRouterResolver(IRouterResolver resolver) {
-		routingClients.add(resolver);
+		resolvers.add(resolver);
 	}
 	
 	

@@ -12,6 +12,8 @@ public interface IRouterResolver {
 	
 	boolean match(PackModel packModel);
 	
+	String getId();
+	
 	String getHost();
 	
 	int getPort();
