@@ -8,7 +8,7 @@
   
   <properties>
     <jdk.version>1.8</jdk.version>
-    <spring.boot.version>2.1.7.RELEASE</spring.boot.version>
+    <spring.boot.version>2.1.9.RELEASE</spring.boot.version>
     <netty.version>4.1.42.Final</netty.version>
     <ggserver.version>0.1.0-SNAPSHOT</ggserver.version>
   </properties>
@@ -54,7 +54,13 @@
 	    
 	    	<dependency>
 				<groupId>xzcode</groupId>
-				<artifactId>ggserver-core</artifactId>
+				<artifactId>ggserver-core-server</artifactId>
+				<version>${ggserver.version}</version>
+			</dependency>
+	    
+	    	<dependency>
+				<groupId>xzcode</groupId>
+				<artifactId>ggserver-core-client</artifactId>
 				<version>${ggserver.version}</version>
 			</dependency>
 			
@@ -94,7 +100,7 @@
 			</dependency>
 			<dependency>
 				<groupId>xzcode</groupId>
-				<artifactId>ggserver-core</artifactId>
+				<artifactId>ggserver-core-server</artifactId>
 			</dependency>
 			<dependency>
 			    <groupId>com.google.code.gson</groupId>

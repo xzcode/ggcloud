@@ -1,31 +1,40 @@
 package xzcode.ggcloud.gateway.config;
 
+import java.nio.charset.Charset;
+
+import io.netty.channel.nio.NioEventLoopGroup;
+
 public class GGGatewayConfig {
+	
+	/**
+	 * 公共事件循环组
+	 */
+	protected NioEventLoopGroup eventLoopGroup;
 	
 	/**
 	 * 字符串编码格式
 	 */
-	private String charset = "utf-8";
+	private Charset charset = Charset.forName("utf-8");
 	
 	/**
 	 * 默认路由连接数
 	 */
-	private int defaultRoutingConnectionNum = 16;
+	private int routingConnectionNum = 16;
 
-	public String getCharset() {
+	public Charset getCharset() {
 		return charset;
 	}
-
-	public void setCharset(String charset) {
+	
+	public void setCharset(Charset charset) {
 		this.charset = charset;
 	}
 
-	public int getDefaultRoutingConnectionNum() {
-		return defaultRoutingConnectionNum;
+	public int getRoutingConnectionNum() {
+		return routingConnectionNum;
 	}
-
-	public void setDefaultRoutingConnectionNum(int defaultRoutingConnectionNum) {
-		this.defaultRoutingConnectionNum = defaultRoutingConnectionNum;
+	
+	public void setRoutingConnectionNum(int routingConnectionNum) {
+		this.routingConnectionNum = routingConnectionNum;
 	}
 	
 	

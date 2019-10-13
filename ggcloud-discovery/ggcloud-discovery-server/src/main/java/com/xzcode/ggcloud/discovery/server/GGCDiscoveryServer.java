@@ -8,9 +8,10 @@ import com.xzcode.ggcloud.discovery.server.events.ConnCloseEventHandler;
 import com.xzcode.ggcloud.discovery.server.handler.RegisterReqHandler;
 
 import nonapi.io.github.classgraph.concurrency.SimpleThreadFactory;
-import xzcode.ggserver.core.GGServer;
-import xzcode.ggserver.core.config.GGConfig;
-import xzcode.ggserver.core.event.GGEvents;
+import xzcode.ggserver.core.common.config.GGConfig;
+import xzcode.ggserver.core.common.event.GGEvents;
+import xzcode.ggserver.core.server.GGServer;
+import xzcode.ggserver.core.server.config.GGServerConfig;
 
 public class GGCDiscoveryServer {
 	
@@ -25,7 +26,7 @@ public class GGCDiscoveryServer {
 
 	public void start() {
 		
-		GGConfig ggConfig = new GGConfig();
+		GGServerConfig ggConfig = new GGServerConfig();
 		ggConfig.setBossGroupThreadFactory(new SimpleThreadFactory("discovery-B-", false));
 		ggConfig.setWorkerGroupThreadFactory(new SimpleThreadFactory("discovery-W-", false));
 		ggConfig.init();

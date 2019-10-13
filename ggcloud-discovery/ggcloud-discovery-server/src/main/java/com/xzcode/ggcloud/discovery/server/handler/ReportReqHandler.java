@@ -2,7 +2,7 @@ package com.xzcode.ggcloud.discovery.server.handler;
 
 import com.xzcode.ggcloud.discovery.common.message.req.ReportReq;
 
-import xzcode.ggserver.core.message.receive.IOnMessageHandler;
+import xzcode.ggserver.core.common.message.receive.IOnMessageHandler;
 
 public class ReportReqHandler implements IOnMessageHandler<ReportReq>{
 

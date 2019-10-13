@@ -3,7 +3,7 @@ package com.xzcode.ggcloud.discovery.client.config;
 import com.xzcode.ggcloud.discovery.client.registry.RegistryManager;
 import com.xzcode.ggcloud.discovery.client.services.ServiceManager;
 
-import xzcode.ggserver.core.GGClient;
+import xzcode.ggserver.core.client.GGClient;
 
 /**
  * 配置
