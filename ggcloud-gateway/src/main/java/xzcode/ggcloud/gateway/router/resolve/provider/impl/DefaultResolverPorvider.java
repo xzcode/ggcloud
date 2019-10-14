@@ -2,6 +2,9 @@ package xzcode.ggcloud.gateway.router.resolve.provider.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import xzcode.ggcloud.gateway.router.resolve.provider.IResolverProvider;
@@ -16,12 +19,13 @@ import xzcode.ggserver.core.common.message.PackModel;
  */
 public class DefaultResolverPorvider implements IResolverProvider{
 	
-	protected List<IRouterResolver> resolvers = new CopyOnWriteArrayList<>();
+	protected Map<String, IRouterResolver> resolvers = new ConcurrentHashMap<>();
 
 	@Override
 	public List<IRouterResolver> match(PackModel packModel) {
 		List<IRouterResolver> matchedResolvers = null;
-		for (IRouterResolver resolver : resolvers) {
+		for (Entry<String, IRouterResolver> entry : resolvers.entrySet()) {
+			IRouterResolver resolver = entry.getValue();
 			if (resolver.match(packModel)) {
 				if (matchedResolvers == null) {
 					matchedResolvers = new ArrayList<>(1);
@@ -32,9 +36,13 @@ public class DefaultResolverPorvider implements IResolverProvider{
 		return matchedResolvers;
 	}
 
-	@Override
-	public void addRouterResolver(IRouterResolver resolver) {
-		resolvers.add(resolver);
+	public IRouterResolver addResolver(String resolverId, IRouterResolver resolver) {
+		return resolvers.put(resolverId, resolver);
+	}
+
+	public IRouterResolver removeResolver(String resolverId) {
+		return resolvers.remove(resolverId);
+		
 	}
 	
 	

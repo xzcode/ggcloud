@@ -1,5 +1,7 @@
 package xzcode.ggcloud.gateway.router.resolve.resolver.impl;
 
+import java.nio.charset.Charset;
+
 import xzcode.ggcloud.gateway.config.GGGatewayConfig;
 import xzcode.ggcloud.gateway.router.resolve.resolver.IRouterResolver;
 import xzcode.ggserver.core.common.message.PackModel;
@@ -7,6 +9,9 @@ import xzcode.ggserver.core.common.message.PackModel;
 public class DefaultRouterResolver implements IRouterResolver{
 	
 	protected String id;
+	
+	//action前缀
+	protected String actionPrefix;
 	
 	protected String host;
 	
@@ -21,7 +26,8 @@ public class DefaultRouterResolver implements IRouterResolver{
 
 	@Override
 	public boolean match(PackModel packModel) {
-		return false;
+		String action = new String(packModel.getAction(), config.getCharset());
+		return action.startsWith(actionPrefix);
 	}
 
 	@Override

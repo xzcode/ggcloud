@@ -4,6 +4,7 @@ import xzcode.ggcloud.gateway.router.resolve.resolver.IRouterResolver;
 import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.event.GGEvents;
+import xzcode.ggserver.core.common.message.PackModel;
 import xzcode.ggserver.core.common.session.GGSession;
 
 /**
@@ -59,6 +60,10 @@ public class RouterSessionBinding {
 		});
 		
 		client.connect(routerResolver.getHost(), routerResolver.getPort());
+	}
+	
+	public void routeMessage(PackModel pack) {
+		this.client.send(pack);
 	}
 	
 	public void disconnect() {

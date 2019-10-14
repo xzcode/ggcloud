@@ -1,22 +1,27 @@
 package xzcode.ggcloud.gateway.ggserver.filter;
 
-import org.apache.commons.codec.Charsets;
-
+import xzcode.ggcloud.gateway.router.IGatewayRouter;
 import xzcode.ggserver.core.common.message.PackModel;
 import xzcode.ggserver.core.common.message.filter.GGBeforeDeserializeFilter;
+import xzcode.ggserver.core.common.session.GGSessionUtil;
 
 /**
  * 消息路由
  * 
- * @author zzz
+ * @author zai
  * 2019-10-09 19:57:21
  */
 public class RouteReceiveMessageFilter implements GGBeforeDeserializeFilter{
-
+	
+	private IGatewayRouter router;
+	
 	@Override
-	public boolean doFilter(PackModel data) {
-		String action = new String(data.getAction(), Charsets.UTF_8);
-		return false;
+	public boolean doFilter(PackModel pack) {
+		return router.route(pack, GGSessionUtil.getSession());
+	}
+	
+	public void setRouter(IGatewayRouter router) {
+		this.router = router;
 	}
 
 }

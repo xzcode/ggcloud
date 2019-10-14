@@ -13,14 +13,7 @@ import xzcode.ggserver.core.common.message.PackModel;
  */
 public interface IResolverProvider {
 	
-	/**
-	 * 添加路由解析器
-	 * 
-	 * @param resolver
-	 * @author zai
-	 * 2019-10-12 18:19:29
-	 */
-	void addRouterResolver(IRouterResolver resolver);
+	
 	
 	/**
 	 * 匹配解析器
