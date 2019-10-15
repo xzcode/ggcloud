@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import xzcode.ggcloud.gateway.router.resolve.provider.IResolverProvider;
 import xzcode.ggcloud.gateway.router.resolve.resolver.IRouterResolver;
