@@ -8,7 +8,7 @@ import xzcode.ggserver.core.common.message.PackModel;
  * @author zai
  * 2019-10-12 14:57:08
  */
-public interface IRouterResolver {
+public interface IRouterService {
 	
 	boolean match(PackModel packModel);
 	

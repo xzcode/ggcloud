@@ -13,8 +13,16 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class RegistryManager {
 	
+	
 	//注册中心信息
 	private List<RegistryInfo> registryInfos = new CopyOnWriteArrayList<>();
+	
+	/**
+	 * 所有注册中心都已失效
+	 */
+	private boolean allRegistriesDown;
+	
+	
 	
 	/**
 	 * 随机获取一个注册中心

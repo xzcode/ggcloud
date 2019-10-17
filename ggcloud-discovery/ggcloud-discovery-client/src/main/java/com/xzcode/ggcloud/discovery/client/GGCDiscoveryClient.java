@@ -1,5 +1,7 @@
 package com.xzcode.ggcloud.discovery.client;
 
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+
 import com.xzcode.ggcloud.discovery.client.config.GGCDiscoveryClientConfig;
 import com.xzcode.ggcloud.discovery.client.events.ConnActiveEventHandler;
 import com.xzcode.ggcloud.discovery.client.events.ConnCloseEventHandler;
@@ -15,6 +17,17 @@ import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.event.GGEvents;
 
 public class GGCDiscoveryClient {
+	
+	
+	/**
+	 * 线程池执行器
+	 */
+	private ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1, new SimpleThreadFactory("Registry-Manager-", false));
+	
+	/**
+	 * 尝试重新注册周期，ms
+	 */
+	private long tryRegisterInterval = 10 * 1000;
 	
 	private GGCDiscoveryClientConfig config;
 	

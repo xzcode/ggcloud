@@ -3,8 +3,6 @@ package com.xzcode.ggcloud.discovery.client.services;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import xzcode.ggserver.core.common.session.GGSession;
-
 public class ServiceManager {
 	
 	private Map<String, ServiceGroup> serviceGroups = new ConcurrentHashMap<>();

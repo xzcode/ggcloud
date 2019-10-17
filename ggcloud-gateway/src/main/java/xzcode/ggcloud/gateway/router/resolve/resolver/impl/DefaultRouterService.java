@@ -3,10 +3,10 @@ package xzcode.ggcloud.gateway.router.resolve.resolver.impl;
 import java.nio.charset.Charset;
 
 import xzcode.ggcloud.gateway.config.GGGatewayConfig;
-import xzcode.ggcloud.gateway.router.resolve.resolver.IRouterResolver;
+import xzcode.ggcloud.gateway.router.resolve.resolver.IRouterService;
 import xzcode.ggserver.core.common.message.PackModel;
 
-public class DefaultRouterResolver implements IRouterResolver{
+public class DefaultRouterService implements IRouterService{
 	
 	protected String id;
 	
@@ -19,7 +19,7 @@ public class DefaultRouterResolver implements IRouterResolver{
 	
 	protected GGGatewayConfig config;
 	
-	public DefaultRouterResolver(GGGatewayConfig config) {
+	public DefaultRouterService(GGGatewayConfig config) {
 		super();
 		this.config = config;
 	}

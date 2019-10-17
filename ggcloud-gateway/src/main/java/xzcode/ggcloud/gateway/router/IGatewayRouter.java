@@ -1,5 +1,6 @@
 package xzcode.ggcloud.gateway.router;
 
+import xzcode.ggcloud.gateway.router.resolve.resolver.IRouterService;
 import xzcode.ggserver.core.common.message.PackModel;
 import xzcode.ggserver.core.common.session.GGSession;
 
@@ -14,5 +15,7 @@ public interface IGatewayRouter {
 	
 	
 	boolean route(PackModel packModel, GGSession session);
+	
+	boolean switchService(IRouterService service, GGSession session);
 	
 }
