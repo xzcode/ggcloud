@@ -6,7 +6,6 @@ import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.event.GGEvents;
 import xzcode.ggserver.core.common.message.PackModel;
 import xzcode.ggserver.core.common.session.GGSession;
-import xzcode.ggserver.core.common.session.filter.ISessionBeforeDeserializeFilter;
 
 /**
  * 路由会话绑定
@@ -14,7 +13,7 @@ import xzcode.ggserver.core.common.session.filter.ISessionBeforeDeserializeFilte
  * @author zai
  * 2019-10-12 16:36:40
  */
-public class RouterMessageDispacher {
+public class RouterMessageDispatcher {
 	
 
 	/**
@@ -34,17 +33,26 @@ public class RouterMessageDispacher {
 	protected GGClient destClient;
 	
 	
-	public RouterMessageDispacher(GGSession srcSession) {
-		this.srcSession = srcSession;
-		srcSession.addBeforeDeserializeFilter((PackModel data) -> {
+	public void init() {
+		srcSession.addBeforeDeserializeFilter((GGSession session, PackModel data) -> {
 			if (getDestClient() != null) {
 				getDestClient().send(data);						
 			}
 			return false;
 		});
+		
+	}
+	
+	public RouterMessageDispatcher(GGSession srcSession) {
+		this.srcSession = srcSession;
+		init();
 	}
 
 	public void connectService(IRouterService routerService) {
+		this.routerService = routerService;
+		connect();
+	}
+	public void switchOrConnectService(IRouterService routerService) {
 		this.routerService = routerService;
 		connect();
 	}
@@ -83,7 +91,7 @@ public class RouterMessageDispacher {
 		client.connect(routerService.getHost(), routerService.getPort());
 		GGSession destSession = client.getSession();
 		
-		destSession.addBeforeDeserializeFilter((PackModel data) -> {
+		destSession.addBeforeDeserializeFilter((GGSession session, PackModel data) -> {
 			srcSession.send(data);
 			return false;
 		});
