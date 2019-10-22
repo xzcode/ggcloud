@@ -1,34 +1,16 @@
 package xzcode.ggcloud.gateway.router.resolve.resolver.impl;
 
-import java.nio.charset.Charset;
-
-import xzcode.ggcloud.gateway.config.GGGatewayConfig;
 import xzcode.ggcloud.gateway.router.resolve.resolver.IRouterService;
-import xzcode.ggserver.core.common.message.PackModel;
 
 public class DefaultRouterService implements IRouterService{
 	
-	protected String id;
+	protected String name;
 	
-	//action前缀
-	protected String actionPrefix;
+	protected String id;
 	
 	protected String host;
 	
 	protected int port;
-	
-	protected GGGatewayConfig config;
-	
-	public DefaultRouterService(GGGatewayConfig config) {
-		super();
-		this.config = config;
-	}
-
-	@Override
-	public boolean match(PackModel packModel) {
-		String action = new String(packModel.getAction(), config.getCharset());
-		return action.startsWith(actionPrefix);
-	}
 
 	@Override
 	public String getId() {
@@ -44,6 +26,27 @@ public class DefaultRouterService implements IRouterService{
 	public int getPort() {
 		return port;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+	
 	
 	
 

@@ -32,9 +32,9 @@ public class GGCDiscoveryServer {
 		ggConfig.init();
 		GGServer ggServer = new GGServer(ggConfig);
 		
-		ggServer.onEvent(GGEvents.ConnectionState.ACTIVE, new ConnActiveEventHandler());
+		ggServer.onEvent(GGEvents.Connection.OPEN, new ConnActiveEventHandler());
 		
-		ggServer.onEvent(GGEvents.ConnectionState.CLOSE, new ConnCloseEventHandler());
+		ggServer.onEvent(GGEvents.Connection.CLOSE, new ConnCloseEventHandler());
 		
 		ggServer.onMessage(RegisterReq.ACTION, new RegisterReqHandler(config));
 		ggServer.onMessage(ReportReq.ACTION, new RegisterReqHandler(config));
