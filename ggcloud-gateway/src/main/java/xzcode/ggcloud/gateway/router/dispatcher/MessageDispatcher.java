@@ -1,5 +1,8 @@
 package xzcode.ggcloud.gateway.router.dispatcher;
 
+import org.apache.commons.codec.Charsets;
+
+import xzcode.ggcloud.gateway.config.GatewayRouterConfig;
 import xzcode.ggcloud.gateway.router.resolve.resolver.IRouterService;
 import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.client.config.GGClientConfig;
@@ -15,6 +18,8 @@ import xzcode.ggserver.core.common.session.GGSession;
  * 2019-10-12 16:36:40
  */
 public class MessageDispatcher {
+	
+	protected GatewayRouterConfig config;
 	
 	/**
 	 * 来源session
@@ -37,11 +42,22 @@ public class MessageDispatcher {
 			if (getDestClient() != null) {
 				getDestClient().send(data);						
 			}
+			config.getRoutingServer().addBeforeDeserializeFilter((PackModel pack) -> {
+
+				String action = new String(pack.getAction(), Charsets.UTF_8);
+				String[] actionRegex = config.getExcludedRoutingActionRegex();
+				if (config.getExcludedRoutingActionRegex() != null) {
+					for (String regex : actionRegex) {
+						action.matches(regex);
+					}
+				}
+				return true;
+			});
 			return false;
 		});
 	}
 	
-	public MessageDispatcher(GGSession srcSession) {
+	public MessageDispatcher(GatewayRouterConfig config, GGSession srcSession) {
 		this.srcSession = srcSession;
 		init();
 	}

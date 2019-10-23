@@ -2,7 +2,7 @@ package xzcode.ggcloud.gateway.router.resolve.resolver.impl;
 
 import xzcode.ggcloud.gateway.router.resolve.resolver.IRouterService;
 
-public class DefaultRouterService implements IRouterService{
+public class RouterService implements IRouterService{
 	
 	protected String name;
 	
@@ -11,6 +11,8 @@ public class DefaultRouterService implements IRouterService{
 	protected String host;
 	
 	protected int port;
+	
+	protected boolean defaultService;
 
 	@Override
 	public String getId() {
@@ -45,6 +47,14 @@ public class DefaultRouterService implements IRouterService{
 
 	public void setPort(int port) {
 		this.port = port;
+	}
+
+	public boolean isDefaultService() {
+		return defaultService;
+	}
+
+	public void setDefaultService(boolean defaultService) {
+		this.defaultService = defaultService;
 	}
 	
 	

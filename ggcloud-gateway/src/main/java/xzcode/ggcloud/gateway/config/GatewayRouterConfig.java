@@ -36,6 +36,11 @@ public class GatewayRouterConfig {
 	private GGServer routingServer;
 	
 	/**
+	 * 不参与路由的action匹配正则表达式
+	 */
+	private String[] excludedRoutingActionRegex;
+	
+	/**
 	 * 初始化
 	 * 
 	 * @author zai
@@ -89,6 +94,14 @@ public class GatewayRouterConfig {
 
 	public void setRoutingServer(GGServer routingServer) {
 		this.routingServer = routingServer;
+	}
+
+	public String[] getExcludedRoutingActionRegex() {
+		return excludedRoutingActionRegex;
+	}
+
+	public void setExcludedRoutingActionRegex(String[] excludedRoutingActionRegex) {
+		this.excludedRoutingActionRegex = excludedRoutingActionRegex;
 	}
 	
 	
