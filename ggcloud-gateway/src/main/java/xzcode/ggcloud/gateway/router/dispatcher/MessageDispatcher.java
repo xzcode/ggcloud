@@ -8,7 +8,7 @@ import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.event.GGEvents;
 import xzcode.ggserver.core.common.future.IGGFuture;
-import xzcode.ggserver.core.common.message.PackModel;
+import xzcode.ggserver.core.common.message.Pack;
 import xzcode.ggserver.core.common.session.GGSession;
 
 /**
@@ -38,11 +38,11 @@ public class MessageDispatcher {
 	
 	
 	public void init() {
-		srcSession.addBeforeDeserializeFilter((GGSession session, PackModel data) -> {
+		srcSession.addBeforeDeserializeFilter((GGSession session, Pack data) -> {
 			if (getDestClient() != null) {
 				getDestClient().send(data);						
 			}
-			config.getRoutingServer().addBeforeDeserializeFilter((PackModel pack) -> {
+			config.getRoutingServer().addBeforeDeserializeFilter((Pack pack) -> {
 
 				String action = new String(pack.getAction(), Charsets.UTF_8);
 				String[] actionRegex = config.getExcludedRoutingActionRegex();
@@ -103,7 +103,7 @@ public class MessageDispatcher {
 			}
 		});
 		
-		client.addBeforeDeserializeFilter((PackModel data) -> {
+		client.addBeforeDeserializeFilter((Pack data) -> {
 			srcSession.send(data);
 			return false;
 		});

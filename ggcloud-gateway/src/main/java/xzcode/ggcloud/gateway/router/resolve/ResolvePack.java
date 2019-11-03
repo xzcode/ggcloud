@@ -1,21 +1,21 @@
 package xzcode.ggcloud.gateway.router.resolve;
 
-import xzcode.ggserver.core.common.message.PackModel;
+import xzcode.ggserver.core.common.message.Pack;
 import xzcode.ggserver.core.common.session.GGSession;
 
 public class ResolvePack {
 	
 	private String action;
-	private PackModel packModel;
+	private Pack pack;
 	private GGSession session;
 	
 	public ResolvePack() {
 		super();
 	}
-	public ResolvePack(String action, PackModel packModel, GGSession session) {
+	public ResolvePack(String action, Pack pack, GGSession session) {
 		super();
 		this.action = action;
-		this.packModel = packModel;
+		this.pack = pack;
 		this.session = session;
 	}
 	public String getAction() {
@@ -24,11 +24,11 @@ public class ResolvePack {
 	public void setAction(String action) {
 		this.action = action;
 	}
-	public PackModel getPackModel() {
-		return packModel;
+	public Pack getPackModel() {
+		return pack;
 	}
-	public void setPackModel(PackModel packModel) {
-		this.packModel = packModel;
+	public void setPackModel(Pack pack) {
+		this.pack = pack;
 	}
 	public GGSession getSession() {
 		return session;
