@@ -5,11 +5,11 @@ import xzcode.ggserver.core.common.filter.IBeforeDeserializeFilter;
 import xzcode.ggserver.core.common.message.Pack;
 import xzcode.ggserver.core.common.session.GGSession;
 
-public class RouteReceiveMessageFilter implements IBeforeDeserializeFilter{
+public class RouteSendMessageFilter implements IBeforeDeserializeFilter{
 	
 	private IGatewayRouter router;
 	
-	public RouteReceiveMessageFilter(IGatewayRouter router) {
+	public RouteSendMessageFilter(IGatewayRouter router) {
 		super();
 		this.router = router;
 	}

@@ -4,10 +4,16 @@ import java.nio.charset.Charset;
 
 import io.netty.channel.nio.NioEventLoopGroup;
 import nonapi.io.github.classgraph.concurrency.SimpleThreadFactory;
-import xzcode.ggcloud.gateway.router.resolve.provider.IRouterServiceProvider;
-import xzcode.ggcloud.gateway.router.resolve.provider.impl.DefaultServicePorvider;
+import xzcode.ggcloud.gateway.router.service.IRouterServiceProvider;
+import xzcode.ggcloud.gateway.router.service.impl.DefaultServicePorvider;
 import xzcode.ggserver.core.server.GGServer;
 
+/**
+ * 网关路由配置
+ * 
+ * @author zai
+ * 2019-11-07 14:35:07
+ */
 public class GatewayRouterConfig {
 	
 	/**
@@ -16,7 +22,7 @@ public class GatewayRouterConfig {
 	protected NioEventLoopGroup executor;
 	
 	/**
-	 * 公共事件循环组
+	 * 线程执行器最大线程数
 	 */
 	protected int executorThreads = 32;
 	
@@ -31,7 +37,7 @@ public class GatewayRouterConfig {
 	private IRouterServiceProvider serviceProvider;
 	
 	/**
-	 * 路由服务器
+	 * 消息将被路由的服务器对象
 	 */
 	private GGServer routingServer;
 	
@@ -41,6 +47,17 @@ public class GatewayRouterConfig {
 	private String[] excludedRoutingActionRegex;
 	
 	/**
+	 * 对每个服务生成的连接数
+	 */
+	private int serviceConnectionSize = 3;
+	
+	/**
+	 * 服务重连间隔毫秒数
+	 */
+	private int serviceReconnectDelayMs = 5000;
+	
+	
+	/**
 	 * 初始化
 	 * 
 	 * @author zai
@@ -48,10 +65,10 @@ public class GatewayRouterConfig {
 	 */
 	public void init() {
 		if (executor == null) {
-			executor = new NioEventLoopGroup(executorThreads, new SimpleThreadFactory("ggc-router-", false));
+			executor = new NioEventLoopGroup(executorThreads, new SimpleThreadFactory("router-event-loop-", false));
 		}
 		if (serviceProvider == null) {
-			serviceProvider = new DefaultServicePorvider();
+			serviceProvider = new DefaultServicePorvider(this);
 		}
 	}
 
@@ -103,8 +120,22 @@ public class GatewayRouterConfig {
 	public void setExcludedRoutingActionRegex(String[] excludedRoutingActionRegex) {
 		this.excludedRoutingActionRegex = excludedRoutingActionRegex;
 	}
-	
-	
-	
+
+	public int getServiceConnectionSize() {
+		return serviceConnectionSize;
+	}
+
+	public void setServiceConnectionSize(int serviceConnectionSize) {
+		this.serviceConnectionSize = serviceConnectionSize;
+	}
+
+	public int getServiceReconnectDelayMs() {
+		return serviceReconnectDelayMs;
+	}
+
+	public void setServiceReconnectDelayMs(int serviceReconnectDelayMs) {
+		this.serviceReconnectDelayMs = serviceReconnectDelayMs;
+	}
+
 	
 }
