@@ -73,7 +73,7 @@ public class DefaultMessageDispatcher {
 	public void init() {
 		
 		GGClientConfig clientConfig = new GGClientConfig();
-		clientConfig.setWorkerGroupThreadFactory(new DefaultThreadFactory("router-service-" + routerService.getId() + "-", false));
+		clientConfig.setWorkerGroupThreadFactory(new DefaultThreadFactory("router-service-" + routerService.getServiceId() + "-", false));
 		clientConfig.setWorkThreadSize(config.getServiceConnectionSize() * 2);
 		GGClient client = new GGClient(clientConfig);
 		

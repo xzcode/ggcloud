@@ -1,9 +1,11 @@
 package xzcode.ggcloud.gateway.router.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import xzcode.ggcloud.gateway.config.GatewayRouterConfig;
 import xzcode.ggcloud.gateway.router.IGatewayRouter;
 import xzcode.ggcloud.gateway.router.service.IRouterService;
-import xzcode.ggserver.core.common.future.IGGFuture;
 import xzcode.ggserver.core.common.message.Pack;
 import xzcode.ggserver.core.common.session.GGSession;
 
@@ -16,6 +18,8 @@ import xzcode.ggserver.core.common.session.GGSession;
  */
 public class DefaultGatewayRouter implements IGatewayRouter{
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultGatewayRouter.class);
+	
 	private GatewayRouterConfig config;
 	
 	public DefaultGatewayRouter(GatewayRouterConfig config) {
@@ -23,11 +27,18 @@ public class DefaultGatewayRouter implements IGatewayRouter{
 	}
 	
 	@Override
-	public IGGFuture route(GGSession session, Pack pack) {
-		String action = pack.getActionString();
-		IRouterService matchService = config.getServiceProvider().matchService(pack);
-		
-		return null;
+	public void route(GGSession session, Pack pack) {
+		try {
+			Object metadata = config.getMetadataResolver().resolveMetadata(session);
+			pack.setMetadata(config.getRoutingServer().getConfig().getSerializer().serialize(metadata));
+			IRouterService matchService = config.getServiceProvider().matchService(pack);
+			if (matchService != null) {
+				matchService.dispatch(pack);
+			}
+			
+		} catch (Exception e) {
+			LOGGER.error("Route Message Error!", e);
+		}
 	}
 
 }

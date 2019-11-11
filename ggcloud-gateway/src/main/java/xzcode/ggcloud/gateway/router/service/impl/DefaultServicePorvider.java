@@ -43,7 +43,7 @@ public class DefaultServicePorvider implements IRouterServiceProvider{
 
 	@Override
 	public IRouterService addService(IRouterService service) {
-		return services.put(service.getId(), service);
+		return services.put(service.getServiceId(), service);
 	}
 
 	@Override

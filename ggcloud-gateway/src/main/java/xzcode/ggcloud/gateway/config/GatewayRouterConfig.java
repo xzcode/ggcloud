@@ -4,6 +4,8 @@ import java.nio.charset.Charset;
 
 import io.netty.channel.nio.NioEventLoopGroup;
 import nonapi.io.github.classgraph.concurrency.SimpleThreadFactory;
+import xzcode.ggcloud.gateway.router.meta.IMetadataResolver;
+import xzcode.ggcloud.gateway.router.meta.impl.DefaultMetadataResolver;
 import xzcode.ggcloud.gateway.router.service.IRouterServiceProvider;
 import xzcode.ggcloud.gateway.router.service.impl.DefaultServicePorvider;
 import xzcode.ggserver.core.server.GGServer;
@@ -35,6 +37,10 @@ public class GatewayRouterConfig {
 	 * 路由服务提供者
 	 */
 	private IRouterServiceProvider serviceProvider;
+	/**
+	 * 元数据提取器
+	 */
+	private IMetadataResolver metadataResolver;
 	
 	/**
 	 * 消息将被路由的服务器对象
@@ -67,6 +73,11 @@ public class GatewayRouterConfig {
 		if (executor == null) {
 			executor = new NioEventLoopGroup(executorThreads, new SimpleThreadFactory("router-event-loop-", false));
 		}
+		
+		if (metadataResolver == null) {
+			metadataResolver = new DefaultMetadataResolver();
+		}
+		
 		if (serviceProvider == null) {
 			serviceProvider = new DefaultServicePorvider(this);
 		}
@@ -137,5 +148,14 @@ public class GatewayRouterConfig {
 		this.serviceReconnectDelayMs = serviceReconnectDelayMs;
 	}
 
+	public IMetadataResolver getMetadataResolver() {
+		return metadataResolver;
+	}
+
+	public void setMetadataResolver(IMetadataResolver metadataResolver) {
+		this.metadataResolver = metadataResolver;
+	}
+
+	
 	
 }

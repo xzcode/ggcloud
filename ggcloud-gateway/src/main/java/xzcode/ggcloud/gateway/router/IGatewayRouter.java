@@ -1,6 +1,5 @@
 package xzcode.ggcloud.gateway.router;
 
-import xzcode.ggserver.core.common.future.IGGFuture;
 import xzcode.ggserver.core.common.message.Pack;
 import xzcode.ggserver.core.common.session.GGSession;
 
@@ -22,7 +21,7 @@ public interface IGatewayRouter {
 	 * @author zai
 	 * 2019-11-06 17:48:12
 	 */
-	IGGFuture route(GGSession session, Pack pack);
+	void route(GGSession session, Pack pack);
 	
 	
 }

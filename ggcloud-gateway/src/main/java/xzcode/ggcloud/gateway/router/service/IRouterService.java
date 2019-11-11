@@ -1,5 +1,7 @@
 package xzcode.ggcloud.gateway.router.service;
 
+import xzcode.ggserver.core.common.message.Pack;
+
 /**
  * 路由服务统一接口
  * 
@@ -15,7 +17,7 @@ public interface IRouterService {
 	 * @author zai
 	 * 2019-11-07 16:50:36
 	 */
-	String getId();
+	String getServiceId();
 	
 	/**
 	 * 获取服务匹配器
@@ -43,6 +45,16 @@ public interface IRouterService {
 	 * 2019-11-07 16:50:57
 	 */
 	int getPort();
+	
+	
+	/**
+	 * 进行消息转发
+	 * @param pack
+	 * 
+	 * @author zai
+	 * 2019-11-11 21:40:46
+	 */
+	void dispatch(Pack pack);
 	
 	
 	
