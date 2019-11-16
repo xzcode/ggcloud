@@ -63,6 +63,16 @@ public class GatewayRouterConfig {
 	private int serviceReconnectDelayMs = 5000;
 	
 	
+	
+	
+	
+	public GatewayRouterConfig(GGServer routingServer) {
+		if (routingServer == null) {
+			throw new NullPointerException("Parameter 'routingServer' cannot be null!!");
+		}
+		this.routingServer = routingServer;
+	}
+
 	/**
 	 * 初始化
 	 * 
@@ -70,6 +80,7 @@ public class GatewayRouterConfig {
 	 * 2019-10-22 18:27:01
 	 */
 	public void init() {
+		
 		if (executor == null) {
 			executor = new NioEventLoopGroup(executorThreads, new SimpleThreadFactory("router-event-loop-", false));
 		}

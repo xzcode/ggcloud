@@ -1,4 +1,4 @@
-package xzcode.ggcloud.gateway.ggserver.filter;
+package xzcode.ggcloud.gateway.filter;
 
 import xzcode.ggcloud.gateway.router.IGatewayRouter;
 import xzcode.ggserver.core.common.filter.IBeforeDeserializeFilter;

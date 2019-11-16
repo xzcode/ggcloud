@@ -19,6 +19,7 @@ import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.event.GGEvents;
 import xzcode.ggserver.core.common.event.model.EventData;
 import xzcode.ggserver.core.common.filter.IBeforeDeserializeFilter;
+import xzcode.ggserver.core.common.future.IGGFuture;
 import xzcode.ggserver.core.common.message.Pack;
 import xzcode.ggserver.core.common.session.GGSession;
 
@@ -44,7 +45,7 @@ public class DefaultRouterService implements IRouterService{
 	protected int port;
 	
 	/**
-	 * 路由服务对象
+	 * 消息队列
 	 */
 	protected Queue<Pack> packQueue = new ConcurrentLinkedQueue<>();
 	
@@ -67,6 +68,10 @@ public class DefaultRouterService implements IRouterService{
 	 * 是否已关闭
 	 */
 	protected boolean down;
+
+	private IGGFuture connectCheckFuture;
+
+	private IGGFuture consumeMessageFuture;
 	
 
 	/**
@@ -109,6 +114,8 @@ public class DefaultRouterService implements IRouterService{
 		
 		this.dispatchClient = client;
 		
+		this.packQueue.clear();
+		
 		//开启连接检查任务
 		this.startConnectCheckTask();
 		
@@ -136,11 +143,14 @@ public class DefaultRouterService implements IRouterService{
 	 * 2019-11-07 15:44:45
 	 */
 	private void startConnectCheckTask() {
-		dispatchClient.scheduleWithFixedDelay(0L, config.getServiceReconnectDelayMs(), () -> {
+		this.connectCheckFuture = dispatchClient.scheduleWithFixedDelay(0L, config.getServiceReconnectDelayMs(), () -> {
 			try {
 				int reconnectSize = config.getServiceConnectionSize() - dispatchSessionList.size();
 				if (reconnectSize != 0 && !this.reconnecting) {
 					synchronized (this) {
+						if (this.down) {
+							return;
+						}
 						reconnectSize = config.getServiceConnectionSize() - dispatchSessionList.size();
 						if (reconnectSize != 0 && !this.reconnecting) {
 							this.reconnecting = true;
@@ -167,14 +177,17 @@ public class DefaultRouterService implements IRouterService{
 	 */
 	private void startConsumeMessageTask() {
 		
-		dispatchClient.scheduleWithFixedDelay(1L, 5L, TimeUnit.MILLISECONDS, () -> {
+		this.consumeMessageFuture = dispatchClient.scheduleWithFixedDelay(1L, 5L, TimeUnit.MILLISECONDS, () -> {
 			try {
-				
+				if (this.down) {
+					return;
+				}
 				Pack pack = packQueue.poll();
 				
 				while (pack != null) {
 					GGSession session = null;
-					while (true) {
+					while (!this.down) {
+						
 						//如果没有可用的连接
 						if (dispatchSessionList.size() == 0) {
 							//清除队列
@@ -206,6 +219,10 @@ public class DefaultRouterService implements IRouterService{
 	public void shutdown() {
 		this.down = true;
 		this.dispatchClient.shutdown();
+		this.connectCheckFuture.cancel();
+		this.consumeMessageFuture.cancel();
+		this.packQueue.clear();
+		
 	}
 
 
