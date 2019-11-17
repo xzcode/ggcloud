@@ -13,13 +13,9 @@ import xzcode.ggserver.core.common.session.GGSession;
  */
 public class DefaultMetadataResolver implements IMetadataResolver{
 	
-	/**
-	 * 元数据key
-	 */
-	private static final String METADATA_KEY = "ROUTER_METADATA";
 
 	@Override
-	public IMetadata resolveMetadata(GGSession session) {
+	public Object resolveMetadata(GGSession session) {
 		return session.getAttribute(METADATA_KEY, IMetadata.class);
 	}
 

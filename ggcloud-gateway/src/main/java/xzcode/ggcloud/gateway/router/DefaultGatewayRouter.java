@@ -1,10 +1,9 @@
-package xzcode.ggcloud.gateway.router.impl;
+package xzcode.ggcloud.gateway.router;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import xzcode.ggcloud.gateway.config.GatewayRouterConfig;
-import xzcode.ggcloud.gateway.router.IGatewayRouter;
 import xzcode.ggcloud.gateway.router.service.IRouterService;
 import xzcode.ggserver.core.common.message.Pack;
 import xzcode.ggserver.core.common.session.GGSession;

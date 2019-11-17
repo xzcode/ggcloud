@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import io.netty.util.concurrent.DefaultThreadFactory;
 import xzcode.ggcloud.gateway.config.GatewayRouterConfig;
+import xzcode.ggcloud.gateway.router.meta.IMetadata;
 import xzcode.ggcloud.gateway.router.service.IRouterService;
 import xzcode.ggcloud.gateway.router.service.IRouterServiceMatcher;
 import xzcode.ggserver.core.client.GGClient;
@@ -20,7 +21,9 @@ import xzcode.ggserver.core.common.event.GGEvents;
 import xzcode.ggserver.core.common.event.model.EventData;
 import xzcode.ggserver.core.common.filter.IBeforeDeserializeFilter;
 import xzcode.ggserver.core.common.future.IGGFuture;
+import xzcode.ggserver.core.common.handler.serializer.ISerializer;
 import xzcode.ggserver.core.common.message.Pack;
+import xzcode.ggserver.core.common.message.meta.UserMetadata;
 import xzcode.ggserver.core.common.session.GGSession;
 
 /**
@@ -86,6 +89,7 @@ public class DefaultRouterService implements IRouterService{
 		clientConfig.setWorkerGroupThreadFactory(new DefaultThreadFactory("router-service-" + this.serviceId + "-", false));
 		clientConfig.setWorkThreadSize(config.getServiceConnectionSize() * 2);
 		GGClient client = new GGClient(clientConfig);
+		ISerializer serializer = clientConfig.getSerializer();
 		
 		/**
 		 * 监听连接打开事件
@@ -104,12 +108,34 @@ public class DefaultRouterService implements IRouterService{
 			dispatchSessionList.remove(session);
 		});
 		
-		client.addBeforeDeserializeFilter(new IBeforeDeserializeFilter() {
-			@Override
-			public boolean doFilter(GGSession session, Pack data) {
-				config.getRoutingServer().send(data);
+		client.addBeforeDeserializeFilter((GGSession session, Pack pack) -> {
+			//对远端返回的包进行处理
+				byte[] metadata = pack.getMetadata();
+				try {
+					UserMetadata userMetadata = serializer.deserialize(metadata, UserMetadata.class);
+					if (userMetadata != null) {
+						GGSession routingServerSession = config.getRoutingServer().getConfig().getSessionManager().getSession(userMetadata.getUserId());					
+						if (routingServerSession != null) {
+							pack.setMetadata(null);
+							routingServerSession.send(pack);
+						}
+					}
+				} catch (Exception e) {
+					LOGGER.error("Deserialize metadata Error!", e);
+				}
 				return false;
+		});
+		
+		client.addAfterSerializeFilter((GGSession session, Pack pack) -> {
+			//对发送到远端的包进行处理
+			try {
+				Object metadata = config.getMetadataResolver().resolveMetadata(session);
+				pack.setMetadata(serializer.serialize(metadata));
+			} catch (Exception e) {
+				LOGGER.error("Serialize metadata Error!", e);
 			}
+			
+			return true;
 		});
 		
 		this.dispatchClient = client;
@@ -252,8 +278,8 @@ public class DefaultRouterService implements IRouterService{
 	}
 
 
-	public void setId(String id) {
-		this.serviceId = id;
+	public void setServiceId(String serviceId) {
+		this.serviceId = serviceId;
 	}
 
 	public void setHost(String host) {

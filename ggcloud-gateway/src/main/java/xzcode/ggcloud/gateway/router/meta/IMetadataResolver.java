@@ -12,6 +12,11 @@ import xzcode.ggserver.core.common.session.GGSession;
 public interface IMetadataResolver {
 	
 	/**
+	 * 元数据key
+	 */
+	public static final String METADATA_KEY = "ROUTER_METADATA";
+	
+	/**
 	 * 从session获取元数据
 	 * @param session
 	 * @return
@@ -19,6 +24,6 @@ public interface IMetadataResolver {
 	 * @author zai
 	 * 2019-11-11 22:24:03
 	 */
-	 IMetadata resolveMetadata(GGSession session);
+	 Object resolveMetadata(GGSession session);
 	
 }
