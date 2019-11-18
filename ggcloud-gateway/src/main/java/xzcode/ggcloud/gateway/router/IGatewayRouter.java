@@ -17,11 +17,12 @@ public interface IGatewayRouter {
 	 * 
 	 * @param session
 	 * @param pack
-	 * @return
+	 * @return 
+	 * 
 	 * @author zai
 	 * 2019-11-06 17:48:12
 	 */
-	void route(GGSession session, Pack pack);
+	boolean route(GGSession session, Pack pack);
 	
 	
 }
