@@ -22,7 +22,7 @@ public interface IGatewayRouter {
 	 * @author zai
 	 * 2019-11-06 17:48:12
 	 */
-	boolean route(GGSession session, Pack pack);
+	void route(GGSession session, Pack pack);
 	
 	
 }
