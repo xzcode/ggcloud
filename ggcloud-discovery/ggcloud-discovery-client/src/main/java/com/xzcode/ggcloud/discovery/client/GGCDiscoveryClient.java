@@ -3,8 +3,8 @@ package com.xzcode.ggcloud.discovery.client;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 import com.xzcode.ggcloud.discovery.client.config.GGCDiscoveryClientConfig;
-import com.xzcode.ggcloud.discovery.client.events.ConnActiveEventHandler;
-import com.xzcode.ggcloud.discovery.client.events.ConnCloseEventHandler;
+import com.xzcode.ggcloud.discovery.client.events.ConnActiveEventListener;
+import com.xzcode.ggcloud.discovery.client.events.ConnCloseEventListener;
 import com.xzcode.ggcloud.discovery.client.handler.RegisterRespHandler;
 import com.xzcode.ggcloud.discovery.client.handler.ServiceListRespHandler;
 import com.xzcode.ggcloud.discovery.client.registry.RegistryInfo;
@@ -46,8 +46,8 @@ public class GGCDiscoveryClient {
 		GGClient ggClient = new GGClient(ggConfig);
 		RegistryInfo registry = config.getRegistryManager().getRandomRegistry();
 		
-		ggClient.onEvent(GGEvents.Connection.OPEN, new ConnActiveEventHandler());
-		ggClient.onEvent(GGEvents.Connection.CLOSE, new ConnCloseEventHandler(config));
+		ggClient.addEventListener(GGEvents.Connection.OPEN, new ConnActiveEventListener());
+		ggClient.addEventListener(GGEvents.Connection.CLOSE, new ConnCloseEventListener(config));
 		
 		ggClient.onMessage(RegisterResp.ACTION, new RegisterRespHandler(config));
 		ggClient.onMessage(ServiceListResp.ACTION, new ServiceListRespHandler(config));

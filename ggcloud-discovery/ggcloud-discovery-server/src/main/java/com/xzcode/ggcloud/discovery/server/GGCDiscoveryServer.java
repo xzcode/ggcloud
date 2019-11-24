@@ -3,8 +3,8 @@ package com.xzcode.ggcloud.discovery.server;
 import com.xzcode.ggcloud.discovery.common.message.req.RegisterReq;
 import com.xzcode.ggcloud.discovery.common.message.req.ReportReq;
 import com.xzcode.ggcloud.discovery.server.config.GGCDiscoveryServerConfig;
-import com.xzcode.ggcloud.discovery.server.events.ConnActiveEventHandler;
-import com.xzcode.ggcloud.discovery.server.events.ConnCloseEventHandler;
+import com.xzcode.ggcloud.discovery.server.events.ConnActiveEventListener;
+import com.xzcode.ggcloud.discovery.server.events.ConnCloseEventListener;
 import com.xzcode.ggcloud.discovery.server.handler.RegisterReqHandler;
 
 import nonapi.io.github.classgraph.concurrency.SimpleThreadFactory;
@@ -32,9 +32,9 @@ public class GGCDiscoveryServer {
 		ggConfig.init();
 		GGServer ggServer = new GGServer(ggConfig);
 		
-		ggServer.onEvent(GGEvents.Connection.OPEN, new ConnActiveEventHandler());
+		ggServer.addEventListener(GGEvents.Connection.OPEN, new ConnActiveEventListener());
 		
-		ggServer.onEvent(GGEvents.Connection.CLOSE, new ConnCloseEventHandler());
+		ggServer.addEventListener(GGEvents.Connection.CLOSE, new ConnCloseEventListener());
 		
 		ggServer.onMessage(RegisterReq.ACTION, new RegisterReqHandler(config));
 		ggServer.onMessage(ReportReq.ACTION, new RegisterReqHandler(config));
