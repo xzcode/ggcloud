@@ -1,8 +1,10 @@
 package com.xzcode.ggcloud.discovery.client;
 
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+
 import com.xzcode.ggcloud.discovery.client.config.GGCDiscoveryClientConfig;
-import com.xzcode.ggcloud.discovery.client.events.ConnActiveEventHandler;
-import com.xzcode.ggcloud.discovery.client.events.ConnCloseEventHandler;
+import com.xzcode.ggcloud.discovery.client.events.ConnActiveEventListener;
+import com.xzcode.ggcloud.discovery.client.events.ConnCloseEventListener;
 import com.xzcode.ggcloud.discovery.client.handler.RegisterRespHandler;
 import com.xzcode.ggcloud.discovery.client.handler.ServiceListRespHandler;
 import com.xzcode.ggcloud.discovery.client.registry.RegistryInfo;
@@ -15,6 +17,17 @@ import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.event.GGEvents;
 
 public class GGCDiscoveryClient {
+	
+	
+	/**
+	 * 线程池执行器
+	 */
+	private ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1, new SimpleThreadFactory("Registry-Manager-", false));
+	
+	/**
+	 * 尝试重新注册周期，ms
+	 */
+	private long tryRegisterInterval = 10 * 1000;
 	
 	private GGCDiscoveryClientConfig config;
 	
@@ -33,8 +46,8 @@ public class GGCDiscoveryClient {
 		GGClient ggClient = new GGClient(ggConfig);
 		RegistryInfo registry = config.getRegistryManager().getRandomRegistry();
 		
-		ggClient.onEvent(GGEvents.ConnectionState.ACTIVE, new ConnActiveEventHandler());
-		ggClient.onEvent(GGEvents.ConnectionState.CLOSE, new ConnCloseEventHandler(config));
+		ggClient.addEventListener(GGEvents.Connection.OPEN, new ConnActiveEventListener());
+		ggClient.addEventListener(GGEvents.Connection.CLOSE, new ConnCloseEventListener(config));
 		
 		ggClient.onMessage(RegisterResp.ACTION, new RegisterRespHandler(config));
 		ggClient.onMessage(ServiceListResp.ACTION, new ServiceListRespHandler(config));

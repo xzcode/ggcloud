@@ -3,12 +3,11 @@ package com.xzcode.ggcloud.discovery.server;
 import com.xzcode.ggcloud.discovery.common.message.req.RegisterReq;
 import com.xzcode.ggcloud.discovery.common.message.req.ReportReq;
 import com.xzcode.ggcloud.discovery.server.config.GGCDiscoveryServerConfig;
-import com.xzcode.ggcloud.discovery.server.events.ConnActiveEventHandler;
-import com.xzcode.ggcloud.discovery.server.events.ConnCloseEventHandler;
+import com.xzcode.ggcloud.discovery.server.events.ConnActiveEventListener;
+import com.xzcode.ggcloud.discovery.server.events.ConnCloseEventListener;
 import com.xzcode.ggcloud.discovery.server.handler.RegisterReqHandler;
 
 import nonapi.io.github.classgraph.concurrency.SimpleThreadFactory;
-import xzcode.ggserver.core.common.config.GGConfig;
 import xzcode.ggserver.core.common.event.GGEvents;
 import xzcode.ggserver.core.server.GGServer;
 import xzcode.ggserver.core.server.config.GGServerConfig;
@@ -27,14 +26,15 @@ public class GGCDiscoveryServer {
 	public void start() {
 		
 		GGServerConfig ggConfig = new GGServerConfig();
+		ggConfig.setPort(config.getPort());
 		ggConfig.setBossGroupThreadFactory(new SimpleThreadFactory("discovery-B-", false));
 		ggConfig.setWorkerGroupThreadFactory(new SimpleThreadFactory("discovery-W-", false));
 		ggConfig.init();
 		GGServer ggServer = new GGServer(ggConfig);
 		
-		ggServer.onEvent(GGEvents.ConnectionState.ACTIVE, new ConnActiveEventHandler());
+		ggServer.addEventListener(GGEvents.Connection.OPEN, new ConnActiveEventListener());
 		
-		ggServer.onEvent(GGEvents.ConnectionState.CLOSE, new ConnCloseEventHandler());
+		ggServer.addEventListener(GGEvents.Connection.CLOSE, new ConnCloseEventListener());
 		
 		ggServer.onMessage(RegisterReq.ACTION, new RegisterReqHandler(config));
 		ggServer.onMessage(ReportReq.ACTION, new RegisterReqHandler(config));

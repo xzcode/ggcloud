@@ -20,7 +20,7 @@ public class GGCDiscoveryServerConfig {
 	private ServiceManager serviceManager = new ServiceManager();
 	
 	//服务端口
-	private int port = 9394;
+	private int port = 19394;
 	
 	//认证token
 	private String authToken;

@@ -17,10 +17,11 @@ public class GGCDiscoveryClientConfig {
 	//GGClient对象
 	private GGClient ggClient;
 	
+	
 	//服务管理器
 	private ServiceManager serviceManager;
 	
-	//服务管理器
+	//注册中心管理器
 	private RegistryManager registryManager = new RegistryManager();
 	
 	//客户端汇报超时时间(秒)

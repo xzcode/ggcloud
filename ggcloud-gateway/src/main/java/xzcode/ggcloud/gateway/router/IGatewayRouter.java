@@ -1,6 +1,6 @@
 package xzcode.ggcloud.gateway.router;
 
-import xzcode.ggserver.core.common.message.PackModel;
+import xzcode.ggserver.core.common.message.Pack;
 import xzcode.ggserver.core.common.session.GGSession;
 
 /**
@@ -12,7 +12,17 @@ import xzcode.ggserver.core.common.session.GGSession;
  */
 public interface IGatewayRouter {
 	
+	/**
+	 * 路由消息
+	 * 
+	 * @param session
+	 * @param pack
+	 * @return 
+	 * 
+	 * @author zai
+	 * 2019-11-06 17:48:12
+	 */
+	void route(GGSession session, Pack pack);
 	
-	boolean route(PackModel packModel, GGSession session);
 	
 }
