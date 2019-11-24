@@ -2,7 +2,7 @@ package com.xzcode.ggcloud.discovery.client;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
-import com.xzcode.ggcloud.discovery.client.config.GGCDiscoveryClientConfig;
+import com.xzcode.ggcloud.discovery.client.config.DiscoveryClientConfig;
 import com.xzcode.ggcloud.discovery.client.events.ConnActiveEventListener;
 import com.xzcode.ggcloud.discovery.client.events.ConnCloseEventListener;
 import com.xzcode.ggcloud.discovery.client.handler.RegisterRespHandler;
@@ -16,7 +16,7 @@ import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.event.GGEvents;
 
-public class GGCDiscoveryClient {
+public class DiscoveryClient {
 	
 	
 	/**
@@ -29,11 +29,11 @@ public class GGCDiscoveryClient {
 	 */
 	private long tryRegisterInterval = 10 * 1000;
 	
-	private GGCDiscoveryClientConfig config;
+	private DiscoveryClientConfig config;
 	
 	
 	
-	public GGCDiscoveryClient(GGCDiscoveryClientConfig config) {
+	public DiscoveryClient(DiscoveryClientConfig config) {
 		this.config = config;
 	}
 

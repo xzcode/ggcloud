@@ -12,11 +12,10 @@ import xzcode.ggserver.core.client.GGClient;
  * @author zai
  * 2019-10-04 17:23:47
  */
-public class GGCDiscoveryClientConfig {
+public class DiscoveryClientConfig {
 	
 	//GGClient对象
 	private GGClient ggClient;
-	
 	
 	//服务管理器
 	private ServiceManager serviceManager;
@@ -32,6 +31,12 @@ public class GGCDiscoveryClientConfig {
 	
 	//重连间隔-秒
 	private int reconnectInterval = 5;
+	
+	//所在地区
+	private String region = "default";
+		
+	//所在分区
+	private String zone = "default";
 	
 	
 
@@ -81,6 +86,22 @@ public class GGCDiscoveryClientConfig {
 
 	public void setGgClient(GGClient ggClient) {
 		this.ggClient = ggClient;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public String getZone() {
+		return zone;
+	}
+
+	public void setZone(String zone) {
+		this.zone = zone;
 	}
 	
 	

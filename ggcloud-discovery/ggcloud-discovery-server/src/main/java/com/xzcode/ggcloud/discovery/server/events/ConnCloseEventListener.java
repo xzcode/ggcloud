@@ -1,6 +1,6 @@
 package com.xzcode.ggcloud.discovery.server.events;
 
-import com.xzcode.ggcloud.discovery.server.config.GGCDiscoveryServerConfig;
+import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
 import com.xzcode.ggcloud.discovery.server.constant.DiscoveryServerSessionKeys;
 import com.xzcode.ggcloud.discovery.server.services.ServiceInfo;
 
@@ -10,10 +10,10 @@ import xzcode.ggserver.core.common.session.GGSession;
 
 public class ConnCloseEventListener implements IEventListener<Void>{
 	
-	private GGCDiscoveryServerConfig config;
+	private DiscoveryServerConfig config;
 
 
-	public void setConfig(GGCDiscoveryServerConfig config) {
+	public void setConfig(DiscoveryServerConfig config) {
 		this.config = config;
 	}
 

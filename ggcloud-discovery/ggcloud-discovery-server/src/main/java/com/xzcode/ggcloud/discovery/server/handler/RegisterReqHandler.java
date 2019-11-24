@@ -2,12 +2,12 @@ package com.xzcode.ggcloud.discovery.server.handler;
 
 import com.xzcode.ggcloud.discovery.common.message.req.RegisterReq;
 import com.xzcode.ggcloud.discovery.common.message.resp.RegisterResp;
-import com.xzcode.ggcloud.discovery.server.config.GGCDiscoveryServerConfig;
+import com.xzcode.ggcloud.discovery.common.services.ServiceInfo;
+import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
 import com.xzcode.ggcloud.discovery.server.constant.DiscoveryServerSessionKeys;
-import com.xzcode.ggcloud.discovery.server.services.ServiceInfo;
 import com.xzcode.ggcloud.discovery.server.util.ServiceIdUtil;
 
-import xzcode.ggserver.core.common.message.receive.IOnMessageHandler;
+import xzcode.ggserver.core.common.message.receive.action.IRequestMessageAcion;
 import xzcode.ggserver.core.common.session.GGSession;
 import xzcode.ggserver.core.common.session.GGSessionUtil;
 
@@ -18,12 +18,12 @@ import xzcode.ggserver.core.common.session.GGSessionUtil;
  * @author zai
  * 2019-10-04 14:29:53
  */
-public class RegisterReqHandler implements IOnMessageHandler<RegisterReq>{
+public class RegisterReqHandler implements IRequestMessageAcion<RegisterReq>{
 	
-	private GGCDiscoveryServerConfig config;
+	private DiscoveryServerConfig config;
 	
 
-	public RegisterReqHandler(GGCDiscoveryServerConfig config) {
+	public RegisterReqHandler(DiscoveryServerConfig config) {
 		super();
 		this.config = config;
 	}
@@ -35,7 +35,6 @@ public class RegisterReqHandler implements IOnMessageHandler<RegisterReq>{
 		ServiceInfo serviceInfo = session.getAttribute(DiscoveryServerSessionKeys.SERVICE_INFO, ServiceInfo.class);
 		if (serviceInfo == null) {
 			serviceInfo = new ServiceInfo();
-			serviceInfo.setSession(session);
 			serviceInfo.setServiceName(req.getServiceName());
 			serviceInfo.setServiceId(ServiceIdUtil.newServiceId());
 			serviceInfo.setIp(session.getHost());

@@ -11,7 +11,7 @@ import xzcode.ggserver.core.server.GGServer;
  * @author zai
  * 2019-10-04 17:23:47
  */
-public class GGCDiscoveryServerConfig {
+public class DiscoveryServerConfig {
 	
 	//ggserver对象
 	private GGServer ggServer;
@@ -27,6 +27,12 @@ public class GGCDiscoveryServerConfig {
 	
 	//客户端汇报超时时间(秒)
 	private long clientReportTimeout = 30L;
+	
+	//所在地区
+	private String region = "default";
+	
+	//所在分区
+	private String zone = "default";
 
 	public String getAuthToken() {
 		return authToken;
@@ -67,5 +73,23 @@ public class GGCDiscoveryServerConfig {
 	public void setServiceManager(ServiceManager serviceManager) {
 		this.serviceManager = serviceManager;
 	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public String getZone() {
+		return zone;
+	}
+
+	public void setZone(String zone) {
+		this.zone = zone;
+	}
+	
+	
 
 }

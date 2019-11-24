@@ -2,7 +2,7 @@ package com.xzcode.ggcloud.discovery.server;
 
 import com.xzcode.ggcloud.discovery.common.message.req.RegisterReq;
 import com.xzcode.ggcloud.discovery.common.message.req.ReportReq;
-import com.xzcode.ggcloud.discovery.server.config.GGCDiscoveryServerConfig;
+import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
 import com.xzcode.ggcloud.discovery.server.events.ConnActiveEventListener;
 import com.xzcode.ggcloud.discovery.server.events.ConnCloseEventListener;
 import com.xzcode.ggcloud.discovery.server.handler.RegisterReqHandler;
@@ -12,13 +12,13 @@ import xzcode.ggserver.core.common.event.GGEvents;
 import xzcode.ggserver.core.server.GGServer;
 import xzcode.ggserver.core.server.config.GGServerConfig;
 
-public class GGCDiscoveryServer {
+public class DiscoveryServer {
 	
-	private GGCDiscoveryServerConfig config;
+	private DiscoveryServerConfig config;
 	
 	
 	
-	public GGCDiscoveryServer(GGCDiscoveryServerConfig config) {
+	public DiscoveryServer(DiscoveryServerConfig config) {
 		super();
 		this.config = config;
 	}
@@ -45,7 +45,7 @@ public class GGCDiscoveryServer {
 		
 	}
 	
-	public void setConfig(GGCDiscoveryServerConfig config) {
+	public void setConfig(DiscoveryServerConfig config) {
 		this.config = config;
 	}
 	
