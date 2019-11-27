@@ -46,8 +46,8 @@ public class DiscoveryClient {
 		GGClient ggClient = new GGClient(ggConfig);
 		RegistryInfo registry = config.getRegistryManager().getRandomRegistry();
 		
-		ggClient.addEventListener(GGEvents.Connection.OPEN, new ConnActiveEventListener());
-		ggClient.addEventListener(GGEvents.Connection.CLOSE, new ConnCloseEventListener(config));
+		ggClient.addEventListener(GGEvents.Connection.OPENED, new ConnActiveEventListener());
+		ggClient.addEventListener(GGEvents.Connection.CLOSED, new ConnCloseEventListener(config));
 		
 		ggClient.onMessage(RegisterResp.ACTION, new RegisterRespHandler(config));
 		ggClient.onMessage(ServiceListResp.ACTION, new ServiceListRespHandler(config));

@@ -80,7 +80,7 @@ public class DefaultMessageDispatcher {
 		/**
 		 * 监听连接打开事件
 		 */
-		client.addEventListener(GGEvents.Connection.OPEN, (EventData<Void> data) -> {
+		client.addEventListener(GGEvents.Connection.OPENED, (EventData<Void> data) -> {
 			GGSession session = data.getSession();
 			dispatchSessionList.add(session);
 			
@@ -89,7 +89,7 @@ public class DefaultMessageDispatcher {
 		/**
 		 * 监听连接断开事件
 		 */
-		client.addEventListener(GGEvents.Connection.CLOSE, (EventData<Void> data) -> {
+		client.addEventListener(GGEvents.Connection.CLOSED, (EventData<Void> data) -> {
 			GGSession session = data.getSession();
 			dispatchSessionList.remove(session);
 		});
