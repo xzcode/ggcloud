@@ -12,14 +12,12 @@ import org.slf4j.LoggerFactory;
 
 import io.netty.util.concurrent.DefaultThreadFactory;
 import xzcode.ggcloud.gateway.config.GatewayRouterConfig;
-import xzcode.ggcloud.gateway.router.meta.IMetadata;
 import xzcode.ggcloud.gateway.router.service.IRouterService;
 import xzcode.ggcloud.gateway.router.service.IRouterServiceMatcher;
 import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.event.GGEvents;
 import xzcode.ggserver.core.common.event.model.EventData;
-import xzcode.ggserver.core.common.filter.IBeforeDeserializeFilter;
 import xzcode.ggserver.core.common.future.IGGFuture;
 import xzcode.ggserver.core.common.handler.serializer.ISerializer;
 import xzcode.ggserver.core.common.message.Pack;
@@ -72,9 +70,9 @@ public class DefaultRouterService implements IRouterService{
 	 */
 	protected boolean down;
 
-	private IGGFuture connectCheckFuture;
+	private IGGFuture<?> connectCheckFuture;
 
-	private IGGFuture consumeMessageFuture;
+	private IGGFuture<?> consumeMessageFuture;
 	
 
 	/**
@@ -117,7 +115,7 @@ public class DefaultRouterService implements IRouterService{
 						GGSession routingServerSession = config.getRoutingServer().getConfig().getSessionManager().getSession(userMetadata.getUserId());					
 						if (routingServerSession != null) {
 							pack.setMetadata(null);
-							routingServerSession.send(pack);
+							routingServerSession.send(pack, 0, TimeUnit.MILLISECONDS);
 						}
 					}
 				} catch (Exception e) {
@@ -223,7 +221,7 @@ public class DefaultRouterService implements IRouterService{
 						}
 						session = dispatchSessionList.get(ThreadLocalRandom.current().nextInt(dispatchSessionList.size()));
 						if (session.isActive()) {
-							session.send(pack);
+							session.send(pack,0, TimeUnit.MILLISECONDS);
 						}else {
 							dispatchSessionList.remove(session);
 							session.disconnect();

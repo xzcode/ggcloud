@@ -80,7 +80,7 @@ public class DefaultMessageDispatcher {
 		/**
 		 * 监听连接打开事件
 		 */
-		client.addEventListener(GGEvents.Connection.OPENED, (EventData<Void> data) -> {
+		client.addEventListener(GGEvents.Connection.OPENED, (data) -> {
 			GGSession session = data.getSession();
 			dispatchSessionList.add(session);
 			
@@ -97,7 +97,7 @@ public class DefaultMessageDispatcher {
 		client.addBeforeDeserializeFilter(new IBeforeDeserializeFilter() {
 			@Override
 			public boolean doFilter(GGSession session, Pack data) {
-				config.getRoutingServer().send(data);
+				config.getRoutingServer().send(session, data, 0, TimeUnit.MILLISECONDS);
 				return false;
 			}
 		});
@@ -170,7 +170,7 @@ public class DefaultMessageDispatcher {
 						}
 						session = dispatchSessionList.get(ThreadLocalRandom.current().nextInt(dispatchSessionList.size()));
 						if (session.isActive()) {
-							session.send(pack);
+							session.send(pack, 0, TimeUnit.MILLISECONDS);
 						}else {
 							dispatchSessionList.remove(session);
 							session.disconnect();
