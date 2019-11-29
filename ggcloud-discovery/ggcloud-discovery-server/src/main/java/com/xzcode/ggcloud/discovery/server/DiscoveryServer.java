@@ -41,7 +41,7 @@ public class DiscoveryServer {
 		
 		ggServer.start();
 		
-		config.setGgServer(ggServer);
+		config.setServer(ggServer);
 		
 	}
 	

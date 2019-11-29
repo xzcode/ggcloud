@@ -1,6 +1,6 @@
 package com.xzcode.ggcloud.discovery.server.config;
 
-import com.xzcode.ggcloud.discovery.server.services.ServiceManager;
+import com.xzcode.ggcloud.discovery.common.services.ServiceManager;
 
 import xzcode.ggserver.core.server.GGServer;
 
@@ -14,7 +14,7 @@ import xzcode.ggserver.core.server.GGServer;
 public class DiscoveryServerConfig {
 	
 	//ggserver对象
-	private GGServer ggServer;
+	private GGServer server;
 	
 	//服务管理器
 	private ServiceManager serviceManager = new ServiceManager();
@@ -58,12 +58,12 @@ public class DiscoveryServerConfig {
 		this.port = port;
 	}
 	
-	public GGServer getGgServer() {
-		return ggServer;
+	public GGServer getServer() {
+		return server;
 	}
 	
-	public void setGgServer(GGServer ggServer) {
-		this.ggServer = ggServer;
+	public void setServer(GGServer server) {
+		this.server = server;
 	}
 	
 	public ServiceManager getServiceManager() {

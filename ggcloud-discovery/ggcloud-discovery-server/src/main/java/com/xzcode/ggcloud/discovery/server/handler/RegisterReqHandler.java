@@ -9,7 +9,6 @@ import com.xzcode.ggcloud.discovery.server.util.ServiceIdUtil;
 
 import xzcode.ggserver.core.common.message.receive.action.IRequestMessageAcion;
 import xzcode.ggserver.core.common.session.GGSession;
-import xzcode.ggserver.core.common.session.GGSessionUtil;
 
 /**
  * 客户端注册请求处理
@@ -27,11 +26,11 @@ public class RegisterReqHandler implements IRequestMessageAcion<RegisterReq>{
 		super();
 		this.config = config;
 	}
+	
 
 
 	@Override
-	public void onMessage(RegisterReq req) {
-		GGSession session = GGSessionUtil.getSession();
+	public void action(GGSession session, RegisterReq req) {
 		ServiceInfo serviceInfo = session.getAttribute(DiscoveryServerSessionKeys.SERVICE_INFO, ServiceInfo.class);
 		if (serviceInfo == null) {
 			serviceInfo = new ServiceInfo();
@@ -41,9 +40,10 @@ public class RegisterReqHandler implements IRequestMessageAcion<RegisterReq>{
 			serviceInfo.setPort(session.getPort());
 			config.getServiceManager().registerService(serviceInfo);
 		}
-		config.getGgServer().send(RegisterResp.ACTION, new RegisterResp(true));
+		config.getServer().send(session, RegisterResp.ACTION, new RegisterResp(true));
 		
 	}
+
 
 	
 
