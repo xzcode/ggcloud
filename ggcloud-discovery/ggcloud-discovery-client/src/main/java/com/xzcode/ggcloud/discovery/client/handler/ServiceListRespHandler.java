@@ -4,6 +4,7 @@ import com.xzcode.ggcloud.discovery.client.config.DiscoveryClientConfig;
 import com.xzcode.ggcloud.discovery.common.message.resp.RegisterResp;
 
 import xzcode.ggserver.core.common.message.receive.action.IRequestMessageAcion;
+import xzcode.ggserver.core.common.session.GGSession;
 
 /**
  * 注册响应处理
@@ -24,7 +25,7 @@ public class ServiceListRespHandler implements IRequestMessageAcion<RegisterResp
 
 
 	@Override
-	public void onMessage(RegisterResp resp) {
+	public void action(GGSession session, RegisterResp resp) {
 		
 	}
 
