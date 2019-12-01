@@ -28,7 +28,7 @@ public class DefaultGatewayRouter implements IGatewayRouter{
 	@Override
 	public void route(Pack pack) {
 		try {
-			Object metadata = config.getMetadataResolver().resolveMetadata(session);
+			Object metadata = null;
 			pack.setMetadata(config.getRoutingServer().getConfig().getSerializer().serialize(metadata));
 			IRouterService matchService = config.getServiceProvider().matchService(pack);
 			if (matchService != null) {

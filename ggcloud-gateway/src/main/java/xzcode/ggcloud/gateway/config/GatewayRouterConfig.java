@@ -4,10 +4,10 @@ import java.nio.charset.Charset;
 
 import io.netty.channel.nio.NioEventLoopGroup;
 import nonapi.io.github.classgraph.concurrency.SimpleThreadFactory;
-import xzcode.ggcloud.gateway.router.meta.IMetadataResolver;
 import xzcode.ggcloud.gateway.router.meta.impl.DefaultMetadataResolver;
 import xzcode.ggcloud.gateway.router.service.IRouterServiceProvider;
 import xzcode.ggcloud.gateway.router.service.impl.DefaultServicePorvider;
+import xzcode.ggserver.core.common.message.meta.resolver.IMetadataResolver;
 import xzcode.ggserver.core.server.GGServer;
 
 /**

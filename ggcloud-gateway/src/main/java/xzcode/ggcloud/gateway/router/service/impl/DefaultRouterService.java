@@ -111,7 +111,7 @@ public class DefaultRouterService implements IRouterService{
 		distClient.addAfterSerializeFilter((Pack pack) -> {
 			//对发送到远端的包进行处理
 			try {
-				Object metadata = config.getMetadataResolver().resolveMetadata(session);
+				Object metadata = null;
 				pack.setMetadata(serializer.serialize(metadata));
 			} catch (Exception e) {
 				LOGGER.error("Serialize metadata Error!", e);

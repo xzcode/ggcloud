@@ -7,6 +7,7 @@ import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
 import com.xzcode.ggcloud.discovery.server.constant.DiscoveryServerSessionKeys;
 import com.xzcode.ggcloud.discovery.server.util.ServiceIdUtil;
 
+import xzcode.ggserver.core.common.message.request.Request;
 import xzcode.ggserver.core.common.message.request.action.IRequestMessageAcion;
 import xzcode.ggserver.core.common.session.GGSession;
 
@@ -30,7 +31,9 @@ public class RegisterReqHandler implements IRequestMessageAcion<RegisterReq>{
 
 
 	@Override
-	public void action(GGSession session, RegisterReq req) {
+	public void action(Request<RegisterReq> request) {
+		GGSession session = request.getSession();
+		RegisterReq req = request.getMessage();
 		ServiceInfo serviceInfo = session.getAttribute(DiscoveryServerSessionKeys.SERVICE_INFO, ServiceInfo.class);
 		if (serviceInfo == null) {
 			serviceInfo = new ServiceInfo();
