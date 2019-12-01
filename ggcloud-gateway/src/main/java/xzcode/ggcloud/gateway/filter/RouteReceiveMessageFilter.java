@@ -15,8 +15,8 @@ public class RouteReceiveMessageFilter implements IBeforeDeserializeFilter{
 	}
 
 	@Override
-	public boolean doFilter(GGSession session, Pack pack) {
-		router.route(session, pack);
+	public boolean doFilter(Pack pack) {
+		router.route(pack);
 		return true;
 	}
 

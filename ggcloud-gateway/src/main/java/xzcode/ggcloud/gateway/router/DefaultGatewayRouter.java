@@ -26,7 +26,7 @@ public class DefaultGatewayRouter implements IGatewayRouter{
 	}
 	
 	@Override
-	public void route(GGSession session, Pack pack) {
+	public void route(Pack pack) {
 		try {
 			Object metadata = config.getMetadataResolver().resolveMetadata(session);
 			pack.setMetadata(config.getRoutingServer().getConfig().getSerializer().serialize(metadata));

@@ -7,7 +7,7 @@ import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
 import com.xzcode.ggcloud.discovery.server.constant.DiscoveryServerSessionKeys;
 import com.xzcode.ggcloud.discovery.server.util.ServiceIdUtil;
 
-import xzcode.ggserver.core.common.message.receive.action.IRequestMessageAcion;
+import xzcode.ggserver.core.common.message.request.action.IRequestMessageAcion;
 import xzcode.ggserver.core.common.session.GGSession;
 
 /**
