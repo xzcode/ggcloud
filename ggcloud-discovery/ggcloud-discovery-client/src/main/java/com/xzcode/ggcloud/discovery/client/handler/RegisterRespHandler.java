@@ -3,6 +3,7 @@ package com.xzcode.ggcloud.discovery.client.handler;
 import com.xzcode.ggcloud.discovery.client.config.DiscoveryClientConfig;
 import com.xzcode.ggcloud.discovery.common.message.resp.RegisterResp;
 
+import xzcode.ggserver.core.common.message.request.Request;
 import xzcode.ggserver.core.common.message.request.action.IRequestMessageAcion;
 import xzcode.ggserver.core.common.session.GGSession;
 
@@ -23,9 +24,11 @@ public class RegisterRespHandler implements IRequestMessageAcion<RegisterResp>{
 		this.config = config;
 	}
 
-	
+
+
 	@Override
-	public void action(GGSession session, RegisterResp resp) {
+	public void action(Request<RegisterResp> request) {
+		// TODO Auto-generated method stub
 		
 	}
 
