@@ -54,11 +54,6 @@ public class RouterConfig {
 	private String[] excludedRoutingActionRegex;
 	
 	/**
-	 * 对每个服务生成的连接数
-	 */
-	private int serviceConnectionSize = 3;
-	
-	/**
 	 * 服务重连间隔毫秒数
 	 */
 	private int serviceReconnectDelayMs = 5000;
@@ -142,14 +137,6 @@ public class RouterConfig {
 
 	public void setExcludedRoutingActionRegex(String[] excludedRoutingActionRegex) {
 		this.excludedRoutingActionRegex = excludedRoutingActionRegex;
-	}
-
-	public int getServiceConnectionSize() {
-		return serviceConnectionSize;
-	}
-
-	public void setServiceConnectionSize(int serviceConnectionSize) {
-		this.serviceConnectionSize = serviceConnectionSize;
 	}
 
 	public int getServiceReconnectDelayMs() {
