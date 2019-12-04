@@ -11,7 +11,11 @@
 	<artifactId>ggcloud-router-server</artifactId>
 
 	<dependencies>
-
+		<dependency>
+			<groupId>xzcode</groupId>
+			<artifactId>ggcloud-router-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>xzcode</groupId>
 			<artifactId>ggserver-core-server</artifactId>
@@ -20,10 +24,6 @@
 			<groupId>xzcode</groupId>
 			<artifactId>ggserver-core-client</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>xzcode</groupId>
-			<artifactId>ggcloud-router-common</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+		
 	</dependencies>
 </project>
