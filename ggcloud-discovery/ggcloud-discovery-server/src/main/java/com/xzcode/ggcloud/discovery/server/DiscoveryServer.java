@@ -11,6 +11,7 @@ import nonapi.io.github.classgraph.concurrency.SimpleThreadFactory;
 import xzcode.ggserver.core.common.event.GGEvents;
 import xzcode.ggserver.core.server.GGServer;
 import xzcode.ggserver.core.server.config.GGServerConfig;
+import xzcode.ggserver.core.server.impl.DefaultServer;
 
 public class DiscoveryServer {
 	
@@ -30,7 +31,7 @@ public class DiscoveryServer {
 		ggConfig.setBossGroupThreadFactory(new SimpleThreadFactory("discovery-B-", false));
 		ggConfig.setWorkerGroupThreadFactory(new SimpleThreadFactory("discovery-W-", false));
 		ggConfig.init();
-		GGServer ggServer = new GGServer(ggConfig);
+		GGServer ggServer = new DefaultServer(ggConfig);
 		
 		ggServer.addEventListener(GGEvents.Connection.OPENED, new ConnActiveEventListener());
 		
