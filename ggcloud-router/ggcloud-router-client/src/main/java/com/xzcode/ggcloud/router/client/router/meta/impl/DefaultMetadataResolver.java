@@ -15,7 +15,7 @@ public class DefaultMetadataResolver implements IMetadataResolver<UserMetadata>{
 
 	@Override
 	public UserMetadata resolve(byte[] bytes) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

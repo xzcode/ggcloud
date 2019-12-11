@@ -2,7 +2,6 @@ package com.xzcode.ggcloud.router.server;
 
 import com.xzcode.ggcloud.router.server.config.RouterServerConfig;
 
-import xzcode.ggserver.core.common.config.GGConfig;
 import xzcode.ggserver.core.server.GGServer;
 import xzcode.ggserver.core.server.starter.IGGServerStarter;
 import xzcode.ggserver.core.server.starter.impl.DefaultGGServerStarter;
@@ -13,7 +12,7 @@ import xzcode.ggserver.core.server.starter.impl.DefaultGGServerStarter;
  * @author zai
  * 2019-12-05 10:34:03
  */
-public class RouterServer implements GGServer{
+public class RouterServer implements GGServer<RouterServerConfig> {
 	
 	private RouterServerConfig config;
 
@@ -24,7 +23,7 @@ public class RouterServer implements GGServer{
 	}
 
 	@Override
-	public GGConfig getConfig() {
+	public RouterServerConfig getConfig() {
 		return config;
 	}
 
