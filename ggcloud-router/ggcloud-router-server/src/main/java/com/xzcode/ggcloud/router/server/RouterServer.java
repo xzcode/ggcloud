@@ -2,7 +2,7 @@ package com.xzcode.ggcloud.router.server;
 
 import com.xzcode.ggcloud.router.server.config.RouterServerConfig;
 
-import xzcode.ggserver.core.server.GGServer;
+import xzcode.ggserver.core.server.IGGServer;
 import xzcode.ggserver.core.server.starter.IGGServerStarter;
 import xzcode.ggserver.core.server.starter.impl.DefaultGGServerStarter;
 
@@ -12,7 +12,7 @@ import xzcode.ggserver.core.server.starter.impl.DefaultGGServerStarter;
  * @author zai
  * 2019-12-05 10:34:03
  */
-public class RouterServer implements GGServer<RouterServerConfig> {
+public class RouterServer implements IGGServer<RouterServerConfig> {
 	
 	private RouterServerConfig config;
 

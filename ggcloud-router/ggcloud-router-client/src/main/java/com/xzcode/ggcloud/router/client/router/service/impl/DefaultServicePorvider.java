@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.xzcode.ggcloud.router.client.config.RouterConfig;
+import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
 import com.xzcode.ggcloud.router.client.router.service.IRouterService;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceMatcher;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceProvider;
@@ -23,7 +23,7 @@ import xzcode.ggserver.core.common.message.Pack;
  */
 public class DefaultServicePorvider implements IRouterServiceProvider{
 	
-	protected RouterConfig config;
+	protected RouterClientConfig config;
 	
 	protected IRouterServiceMatcher routerServiceMatcher = new ActionPrefixRouterServiceMatcher();
 	
@@ -33,7 +33,7 @@ public class DefaultServicePorvider implements IRouterServiceProvider{
 	
 	protected Map<String, IRouterService> services = new ConcurrentHashMap<>();
 	
-	public DefaultServicePorvider(RouterConfig config) {
+	public DefaultServicePorvider(RouterClientConfig config) {
 		this.config = config;
 	}
 

@@ -3,7 +3,7 @@ package com.xzcode.ggcloud.router.client.router;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.xzcode.ggcloud.router.client.config.RouterConfig;
+import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
 import com.xzcode.ggcloud.router.client.router.service.IRouterService;
 
 import xzcode.ggserver.core.common.message.Pack;
@@ -19,9 +19,9 @@ public class DefaultGatewayRouter implements RouterClient{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultGatewayRouter.class);
 	
-	private RouterConfig config;
+	private RouterClientConfig config;
 	
-	public DefaultGatewayRouter(RouterConfig config) {
+	public DefaultGatewayRouter(RouterClientConfig config) {
 		this.config = config;
 	}
 	

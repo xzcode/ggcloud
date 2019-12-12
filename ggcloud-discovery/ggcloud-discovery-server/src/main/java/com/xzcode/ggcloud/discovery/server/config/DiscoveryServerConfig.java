@@ -2,7 +2,7 @@ package com.xzcode.ggcloud.discovery.server.config;
 
 import com.xzcode.ggcloud.discovery.common.services.ServiceManager;
 
-import xzcode.ggserver.core.server.GGServer;
+import xzcode.ggserver.core.server.IGGServer;
 
 /**
  * 配置
@@ -14,7 +14,7 @@ import xzcode.ggserver.core.server.GGServer;
 public class DiscoveryServerConfig {
 	
 	//ggserver对象
-	private GGServer server;
+	private IGGServer server;
 	
 	//服务管理器
 	private ServiceManager serviceManager = new ServiceManager();
@@ -58,11 +58,11 @@ public class DiscoveryServerConfig {
 		this.port = port;
 	}
 	
-	public GGServer getServer() {
+	public IGGServer getServer() {
 		return server;
 	}
 	
-	public void setServer(GGServer server) {
+	public void setServer(IGGServer server) {
 		this.server = server;
 	}
 	

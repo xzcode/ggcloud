@@ -2,14 +2,19 @@ package com.xzcode.ggcloud.router.client.config;
 
 import java.nio.charset.Charset;
 
-import com.xzcode.ggcloud.router.client.router.meta.impl.DefaultMetadataResolver;
+import com.xzcode.ggcloud.router.client.router.meta.impl.RouterUserIdMetadataProvider;
+import com.xzcode.ggcloud.router.client.router.meta.impl.RouterUserIdMetadataResolver;
+import com.xzcode.ggcloud.router.client.router.service.IRouterPackHandler;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceProvider;
 import com.xzcode.ggcloud.router.client.router.service.impl.DefaultServicePorvider;
+import com.xzcode.ggcloud.router.client.router.service.impl.RouterUsereIdMetadataPackHandler;
 
 import io.netty.channel.nio.NioEventLoopGroup;
 import nonapi.io.github.classgraph.concurrency.SimpleThreadFactory;
+import xzcode.ggserver.core.common.message.meta.provider.IMetadataProvider;
 import xzcode.ggserver.core.common.message.meta.resolver.IMetadataResolver;
-import xzcode.ggserver.core.server.GGServer;
+import xzcode.ggserver.core.server.IGGServer;
+import xzcode.ggserver.core.server.impl.GGServer;
 
 /**
  * 网关路由配置
@@ -17,7 +22,7 @@ import xzcode.ggserver.core.server.GGServer;
  * @author zai
  * 2019-11-07 14:35:07
  */
-public class RouterConfig {
+public class RouterClientConfig {
 	
 	/**
 	 * 公共事件循环组
@@ -27,26 +32,18 @@ public class RouterConfig {
 	/**
 	 * 线程执行器最大线程数
 	 */
-	protected int executorThreads = 32;
+	protected int executorThreads = 0;
 	
 	/**
 	 * 字符串编码格式
 	 */
 	private Charset charset = Charset.forName("utf-8");
 	
-	/**
-	 * 路由服务提供者
-	 */
-	private IRouterServiceProvider serviceProvider;
-	/**
-	 * 元数据提取器
-	 */
-	private IMetadataResolver metadataResolver;
 	
 	/**
 	 * 消息将被路由的服务器对象
 	 */
-	private GGServer routingServer;
+	private IGGServer<?> routingServer;
 	
 	/**
 	 * 不参与路由的action匹配正则表达式
@@ -57,12 +54,29 @@ public class RouterConfig {
 	 * 服务重连间隔毫秒数
 	 */
 	private int serviceReconnectDelayMs = 5000;
+
+	/**
+	 * 路由服务提供者
+	 */
+	private IRouterServiceProvider serviceProvider;
+
+	/**
+	 * 元数据解析器
+	 */
+	private IMetadataResolver<?> metadataResolver;
+	
+	/**
+	 * 元数据提供者
+	 */
+	private IMetadataProvider<?> metadataProvider;
+	
+	/**
+	 * 回报处理器
+	 */
+	private IRouterPackHandler packHandler;
 	
 	
-	
-	
-	
-	public RouterConfig(GGServer routingServer) {
+	public RouterClientConfig(IGGServer<?> routingServer) {
 		if (routingServer == null) {
 			throw new NullPointerException("Parameter 'routingServer' cannot be null!!");
 		}
@@ -78,13 +92,19 @@ public class RouterConfig {
 	public void init() {
 		
 		if (executor == null) {
-			executor = new NioEventLoopGroup(executorThreads, new SimpleThreadFactory("router-event-loop-", false));
+			executor = new NioEventLoopGroup(executorThreads, new SimpleThreadFactory("router-executor-", false));
 		}
 		
 		if (metadataResolver == null) {
-			metadataResolver = new DefaultMetadataResolver();
+			metadataResolver = new RouterUserIdMetadataResolver(routingServer.getSerializer());
 		}
-		
+		if (metadataProvider == null) {
+			metadataProvider = new RouterUserIdMetadataProvider();
+		}
+
+		if (packHandler == null) {
+			packHandler = new RouterUsereIdMetadataPackHandler(this);
+		}
 		if (serviceProvider == null) {
 			serviceProvider = new DefaultServicePorvider(this);
 		}
@@ -123,7 +143,7 @@ public class RouterConfig {
 		this.serviceProvider = serviceProvider;
 	}
 
-	public GGServer getRoutingServer() {
+	public IGGServer<?> getRoutingServer() {
 		return routingServer;
 	}
 
@@ -147,14 +167,33 @@ public class RouterConfig {
 		this.serviceReconnectDelayMs = serviceReconnectDelayMs;
 	}
 
-	public IMetadataResolver getMetadataResolver() {
+	public IMetadataResolver<?> getMetadataResolver() {
 		return metadataResolver;
 	}
 
-	public void setMetadataResolver(IMetadataResolver metadataResolver) {
+	public void setMetadataResolver(IMetadataResolver<?> metadataResolver) {
 		this.metadataResolver = metadataResolver;
 	}
 
+	public IMetadataProvider<?> getMetadataProvider() {
+		return metadataProvider;
+	}
+
+	public void setMetadataProvider(IMetadataProvider<?> metadataProvider) {
+		this.metadataProvider = metadataProvider;
+	}
+
+	public void setRoutingServer(IGGServer<?> routingServer) {
+		this.routingServer = routingServer;
+	}
+
+	public IRouterPackHandler getPackHandler() {
+		return packHandler;
+	}
+	
+	public void setPackHandler(IRouterPackHandler packHandler) {
+		this.packHandler = packHandler;
+	}
 	
 	
 }
