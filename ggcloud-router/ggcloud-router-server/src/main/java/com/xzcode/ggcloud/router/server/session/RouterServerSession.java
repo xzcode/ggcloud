@@ -18,7 +18,7 @@ public class RouterServerSession extends AbstractAttrMapSession<RouterServerConf
 	}
 
 	@Override
-	public IGGFuture<?> disconnect() {
+	public IGGFuture disconnect() {
 		return send(new Response(RouterDisconnectResp.ACTION_ID, null));
 	}
 

@@ -15,13 +15,13 @@ import xzcode.ggserver.core.common.message.Pack;
  * @author zai
  * 2019-10-03 14:04:16
  */
-public class DefaultGatewayRouter implements RouterClient{
+public class DefaultRouterClient implements RouterClient{
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultGatewayRouter.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultRouterClient.class);
 	
 	private RouterClientConfig config;
 	
-	public DefaultGatewayRouter(RouterClientConfig config) {
+	public DefaultRouterClient(RouterClientConfig config) {
 		this.config = config;
 	}
 	
