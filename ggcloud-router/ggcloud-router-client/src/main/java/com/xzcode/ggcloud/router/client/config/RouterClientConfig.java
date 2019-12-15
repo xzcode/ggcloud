@@ -71,7 +71,7 @@ public class RouterClientConfig {
 	private IMetadataProvider<?> metadataProvider;
 	
 	/**
-	 * 回报处理器
+	 * 路由包处理器
 	 */
 	private IRouterPackHandler packHandler;
 	

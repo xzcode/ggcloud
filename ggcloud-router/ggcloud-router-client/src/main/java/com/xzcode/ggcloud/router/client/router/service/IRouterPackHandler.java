@@ -17,7 +17,7 @@ public interface IRouterPackHandler {
 	 * @author zai
 	 * 2019-12-12 18:39:25
 	 */
-	void routeBack(Pack pack);
+	void handleReceivePack(Pack pack);
 	
 	/**
 	 * 处理发包
@@ -26,6 +26,6 @@ public interface IRouterPackHandler {
 	 * @author zai
 	 * 2019-12-12 18:53:55
 	 */
-	void routeSend(Pack pack);
+	void handleSendPack(Pack pack);
 
 }

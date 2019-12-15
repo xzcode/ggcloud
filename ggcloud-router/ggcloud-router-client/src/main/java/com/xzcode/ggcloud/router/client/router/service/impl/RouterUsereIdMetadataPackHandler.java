@@ -34,7 +34,7 @@ public class RouterUsereIdMetadataPackHandler implements IRouterPackHandler {
 		this.sessionManager = config.getRoutingServer().getConfig().getSessionManager();
 	}
 
-	public void routeBack(Pack pack) {
+	public void handleReceivePack(Pack pack) {
 		byte[] metadata = pack.getMetadata();
 		try {
 			RouterUserIdMetadata userIdMetadata = metadataResolver.resolve(metadata);
@@ -51,7 +51,7 @@ public class RouterUsereIdMetadataPackHandler implements IRouterPackHandler {
 	}
 
 	@Override
-	public void routeSend(Pack pack) {
+	public void handleSendPack(Pack pack) {
 		try {
 			Object metadata = metadataProvider.provide(pack.getSession());
 			byte[] bytes = serializer.serialize(metadata);

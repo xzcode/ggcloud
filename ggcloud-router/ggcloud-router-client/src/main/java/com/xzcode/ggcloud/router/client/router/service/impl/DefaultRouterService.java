@@ -39,11 +39,6 @@ public class DefaultRouterService implements IRouterService{
 	protected IRouterServiceMatcher serviceMatcher;
 	
 	/**
-	 * 目标session
-	 */
-	protected GGSession distSession;
-	
-	/**
 	 * 绑定的连接客户端
 	 */
 	protected GGClient distClient;
@@ -66,41 +61,24 @@ public class DefaultRouterService implements IRouterService{
 		clientConfig.setWorkerGroupThreadFactory(new DefaultThreadFactory("router-service-" + this.serviceId + "-", false));
 		clientConfig.setMetadataResolver(config.getMetadataResolver());
 		clientConfig.setMetadataProvider(config.getMetadataProvider());
+		clientConfig.setHost(host);
+		clientConfig.setPort(port);
+		clientConfig.setChannelPoolEnabled(true);
 		distClient = new GGClient(clientConfig);
 		
-		
-		/**
-		 * 监听连接打开事件
-		 */
-		distClient.addEventListener(GGEvents.Connection.OPENED, (EventData<Void> data) -> {
-			distSession = data.getSession();
-		});
-		
-		/**
-		 * 监听连接断开事件
-		 */
-		distClient.addEventListener(GGEvents.Connection.CLOSED, (EventData<Void> data) -> {
-			//10s后
-			distClient.schedule(10, TimeUnit.MILLISECONDS, () -> {
-				//进行重新连接
-				distClient.connect(host, port);
-			});
+
+		distClient.addAfterSerializeFilter((Pack pack) -> {
+			//对发送到远端的包进行处理
+			config.getPackHandler().handleSendPack(pack);
+			return true;
 		});
 		
 		distClient.addBeforeDeserializeFilter((Pack pack) -> {
 			//对远端返回的包进行处理
-			config.getPackHandler().routeBack(pack);
+			config.getPackHandler().handleReceivePack(pack);
 			return false;
 		});
 		
-		distClient.addAfterSerializeFilter((Pack pack) -> {
-			//对发送到远端的包进行处理
-			config.getPackHandler().routeSend(pack);
-			return true;
-		});
-		
-		//进行连接
-		distClient.connect(host, port);
 		
 	}
 	
@@ -112,7 +90,7 @@ public class DefaultRouterService implements IRouterService{
 	 * 2019-11-07 17:53:00
 	 */
 	public void dispatch(Pack pack) {
-		distSession.send(pack);
+		distClient.send(pack);
 	}
 	
 	/**
