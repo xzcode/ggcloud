@@ -1,7 +1,5 @@
 package com.xzcode.ggcloud.router.client.router.service.impl;
 
-import java.util.concurrent.TimeUnit;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,11 +10,7 @@ import com.xzcode.ggcloud.router.client.router.service.IRouterServiceMatcher;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.client.config.GGClientConfig;
-import xzcode.ggserver.core.common.event.GGEvents;
-import xzcode.ggserver.core.common.event.model.EventData;
-import xzcode.ggserver.core.common.handler.serializer.ISerializer;
 import xzcode.ggserver.core.common.message.Pack;
-import xzcode.ggserver.core.common.session.GGSession;
 
 /**
  * 默认路由服务
@@ -47,8 +41,13 @@ public class DefaultRouterService implements IRouterService{
 	 * 是否已关闭
 	 */
 	protected boolean down;
+	
 
-
+	public DefaultRouterService(RouterClientConfig config, String serviceId) {
+		this.config = config;
+		this.serviceId = serviceId;
+	}
+	
 	/**
 	 * 初始化
 	 * 
@@ -65,6 +64,7 @@ public class DefaultRouterService implements IRouterService{
 		clientConfig.setPort(port);
 		clientConfig.setChannelPoolEnabled(true);
 		distClient = new GGClient(clientConfig);
+		
 		
 
 		distClient.addAfterSerializeFilter((Pack pack) -> {

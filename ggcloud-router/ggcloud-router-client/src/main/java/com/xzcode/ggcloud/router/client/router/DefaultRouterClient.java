@@ -28,13 +28,10 @@ public class DefaultRouterClient implements RouterClient{
 	@Override
 	public void route(Pack pack) {
 		try {
-			Object metadata = null;
-			pack.setMetadata(config.getRoutingServer().getConfig().getSerializer().serialize(metadata));
 			IRouterService matchService = config.getServiceProvider().matchService(pack);
 			if (matchService != null) {
 				matchService.dispatch(pack);
 			}
-			
 		} catch (Exception e) {
 			LOGGER.error("Route Message Error!", e);
 		}
