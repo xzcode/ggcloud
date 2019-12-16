@@ -1,6 +1,6 @@
 package com.xzcode.ggcloud.router.client.filter;
 
-import com.xzcode.ggcloud.router.client.router.RouterClient;
+import com.xzcode.ggcloud.router.client.RouterClient;
 
 import xzcode.ggserver.core.common.filter.IBeforeDeserializeFilter;
 import xzcode.ggserver.core.common.message.Pack;

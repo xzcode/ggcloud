@@ -1,4 +1,4 @@
-package com.xzcode.ggcloud.router.client.router;
+package com.xzcode.ggcloud.router.client;
 
 import xzcode.ggserver.core.common.message.Pack;
 

@@ -15,8 +15,10 @@ public class RouterUserIdMetadataProvider implements IMetadataProvider<RouterUse
 
 	@Override
 	public RouterUserIdMetadata provide(GGSession session) {
-		String userId = session.getAttribute(RouterUserIdMetadata.METADATA_SESSION_KEY, String.class);
-		return new RouterUserIdMetadata(userId);
+		RouterUserIdMetadata metadata = session.getAttribute(RouterUserIdMetadata.METADATA_SESSION_KEY, RouterUserIdMetadata.class);
+		return metadata;
 	}
+	
+	
 
 }

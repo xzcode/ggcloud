@@ -3,6 +3,7 @@ package com.xzcode.ggcloud.router.client.router;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.xzcode.ggcloud.router.client.RouterClient;
 import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
 import com.xzcode.ggcloud.router.client.router.service.IRouterService;
 

@@ -8,13 +8,16 @@ import xzcode.ggserver.core.common.future.IGGFuture;
 import xzcode.ggserver.core.common.message.response.Response;
 import xzcode.ggserver.core.common.session.AbstractAttrMapSession;
 
+/**
+ * 路由服务器会话
+ * 
+ * @author zai
+ * 2019-12-16 15:59:02
+ */
 public class RouterServerSession extends AbstractAttrMapSession<RouterServerConfig>{
 	
-	private Channel channel;
-	
-	public RouterServerSession(String sessionId, RouterServerConfig config, Channel channel) {
+	public RouterServerSession(String sessionId, RouterServerConfig config) {
 		super(sessionId, config);
-		this.channel = channel;
 	}
 
 	@Override
@@ -23,21 +26,14 @@ public class RouterServerSession extends AbstractAttrMapSession<RouterServerConf
 	}
 
 	@Override
-	public boolean isActive() {
-		return channel.isActive();
-	}
-
-	@Override
 	public Channel getChannel() {
-		return channel;
+		return null;
 	}
 
 	@Override
 	public void setChannel(Channel channel) {
-		this.channel = channel;		
+		
 	}
-
-	
 
 }
 

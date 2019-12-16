@@ -19,11 +19,6 @@ public class RouterClientSession extends AbstractAttrMapSession<GGClientConfig>{
 	}
 
 	@Override
-	public boolean isActive() {
-		return false;
-	}
-
-	@Override
 	public Channel getChannel() {
 		return null;
 	}
@@ -32,6 +27,5 @@ public class RouterClientSession extends AbstractAttrMapSession<GGClientConfig>{
 	public void setChannel(Channel channel) {
 		
 	}
-
 
 }

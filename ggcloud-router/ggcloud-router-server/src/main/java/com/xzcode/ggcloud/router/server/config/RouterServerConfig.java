@@ -1,8 +1,9 @@
 package com.xzcode.ggcloud.router.server.config;
 
-import com.xzcode.ggcloud.router.server.handler.codec.RouterDecodeHandler;
-import com.xzcode.ggcloud.router.server.handler.codec.RouterEncodeHandler;
+import com.xzcode.ggcloud.router.server.session.RouterServerSessionFactory;
 
+import xzcode.ggserver.core.common.channel.group.IChannelGroupManager;
+import xzcode.ggserver.core.common.channel.group.impl.DefaultChannelGroupManager;
 import xzcode.ggserver.core.server.config.GGServerConfig;
 
 /**
@@ -12,15 +13,26 @@ import xzcode.ggserver.core.server.config.GGServerConfig;
  * 2019-12-05 10:33:40
  */
 public class RouterServerConfig extends GGServerConfig{
+	
+	protected IChannelGroupManager channelGroupManager;
 
 	@Override
 	public void init() {
-		this.decodeHandler = new RouterDecodeHandler();
-		this.encodeHandler = new RouterEncodeHandler();
+		
+		this.sessionFactory = new RouterServerSessionFactory(this);
+		
+		if (channelGroupManager == null) {
+			channelGroupManager = new DefaultChannelGroupManager();
+		}
 		super.init();
 	}
-	
-	
-	
+
+	public IChannelGroupManager getChannelGroupManager() {
+		return channelGroupManager;
+	}
+
+	public void setChannelGroupManager(IChannelGroupManager channelGroupManager) {
+		this.channelGroupManager = channelGroupManager;
+	}
 	
 }
