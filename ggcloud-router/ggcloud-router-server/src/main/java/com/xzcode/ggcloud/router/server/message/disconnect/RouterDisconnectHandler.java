@@ -3,12 +3,12 @@ package com.xzcode.ggcloud.router.server.message.disconnect;
 import com.xzcode.ggcloud.router.server.message.disconnect.req.RouterDisconnectReq;
 
 import xzcode.ggserver.core.common.message.request.Request;
-import xzcode.ggserver.core.common.message.request.action.IRequestMessageAcion;
+import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
 
-public class RouterDisconnectHandler implements IRequestMessageAcion<RouterDisconnectReq>{
+public class RouterDisconnectHandler implements IRequestMessageHandler<RouterDisconnectReq>{
 
 	@Override
-	public void action(Request<RouterDisconnectReq> request) {
+	public void handle(Request<RouterDisconnectReq> request) {
 		
 	}
 

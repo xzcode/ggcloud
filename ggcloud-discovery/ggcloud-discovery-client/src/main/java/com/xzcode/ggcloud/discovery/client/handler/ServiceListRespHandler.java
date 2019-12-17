@@ -4,7 +4,7 @@ import com.xzcode.ggcloud.discovery.client.config.DiscoveryClientConfig;
 import com.xzcode.ggcloud.discovery.common.message.resp.RegisterResp;
 
 import xzcode.ggserver.core.common.message.request.Request;
-import xzcode.ggserver.core.common.message.request.action.IRequestMessageAcion;
+import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
 import xzcode.ggserver.core.common.session.GGSession;
 
 /**
@@ -14,7 +14,7 @@ import xzcode.ggserver.core.common.session.GGSession;
  * @author zai
  * 2019-10-04 14:29:53
  */
-public class ServiceListRespHandler implements IRequestMessageAcion<RegisterResp>{
+public class ServiceListRespHandler implements IRequestMessageHandler<RegisterResp>{
 	
 	private DiscoveryClientConfig config;
 	
@@ -26,7 +26,7 @@ public class ServiceListRespHandler implements IRequestMessageAcion<RegisterResp
 
 
 	@Override
-	public void action(Request<RegisterResp> request) {
+	public void handle(Request<RegisterResp> request) {
 		
 	}
 

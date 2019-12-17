@@ -8,7 +8,7 @@ import com.xzcode.ggcloud.discovery.server.constant.DiscoveryServerSessionKeys;
 import com.xzcode.ggcloud.discovery.server.util.ServiceIdUtil;
 
 import xzcode.ggserver.core.common.message.request.Request;
-import xzcode.ggserver.core.common.message.request.action.IRequestMessageAcion;
+import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
 import xzcode.ggserver.core.common.session.GGSession;
 
 /**
@@ -18,7 +18,7 @@ import xzcode.ggserver.core.common.session.GGSession;
  * @author zai
  * 2019-10-04 14:29:53
  */
-public class RegisterReqHandler implements IRequestMessageAcion<RegisterReq>{
+public class RegisterReqHandler implements IRequestMessageHandler<RegisterReq>{
 	
 	private DiscoveryServerConfig config;
 	
@@ -31,7 +31,7 @@ public class RegisterReqHandler implements IRequestMessageAcion<RegisterReq>{
 
 
 	@Override
-	public void action(Request<RegisterReq> request) {
+	public void handle(Request<RegisterReq> request) {
 		GGSession session = request.getSession();
 		RegisterReq req = request.getMessage();
 		ServiceInfo serviceInfo = session.getAttribute(DiscoveryServerSessionKeys.SERVICE_INFO, ServiceInfo.class);
