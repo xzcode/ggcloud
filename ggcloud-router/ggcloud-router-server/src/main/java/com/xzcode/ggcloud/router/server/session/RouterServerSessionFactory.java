@@ -5,7 +5,6 @@ import com.xzcode.ggcloud.router.server.config.RouterServerConfig;
 
 import io.netty.channel.Channel;
 import io.netty.util.AttributeKey;
-import xzcode.ggserver.core.common.channel.group.IChannelGroup;
 import xzcode.ggserver.core.common.channel.group.IChannelGroupManager;
 import xzcode.ggserver.core.common.message.Pack;
 import xzcode.ggserver.core.common.message.request.Request;
