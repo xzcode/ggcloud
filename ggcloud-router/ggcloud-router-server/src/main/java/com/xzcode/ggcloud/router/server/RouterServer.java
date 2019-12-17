@@ -20,6 +20,9 @@ public class RouterServer implements IGGServer<RouterServerConfig> {
 	
 	public RouterServer(RouterServerConfig serverConfig) {
 		this.config = serverConfig;
+		if (!this.config.isInited()) {
+			this.config.init();
+		}
 	}
 
 	@Override
