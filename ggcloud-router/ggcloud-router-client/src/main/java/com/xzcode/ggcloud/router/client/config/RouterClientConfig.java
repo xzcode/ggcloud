@@ -4,12 +4,12 @@ import java.nio.charset.Charset;
 
 import com.xzcode.ggcloud.router.client.RouterClient;
 import com.xzcode.ggcloud.router.client.filter.RouteReceiveMessageFilter;
-import com.xzcode.ggcloud.router.client.router.meta.impl.RouterUserIdMetadataProvider;
-import com.xzcode.ggcloud.router.client.router.meta.impl.RouterUserIdMetadataResolver;
 import com.xzcode.ggcloud.router.client.router.service.IRouterPackHandler;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceProvider;
 import com.xzcode.ggcloud.router.client.router.service.impl.DefaultServicePorvider;
 import com.xzcode.ggcloud.router.client.router.service.impl.RouterUsereIdMetadataPackHandler;
+import com.xzcode.ggcloud.router.common.meta.impl.RouterUserIdMetadataProvider;
+import com.xzcode.ggcloud.router.common.meta.impl.RouterUserIdMetadataResolver;
 
 import io.netty.channel.nio.NioEventLoopGroup;
 import nonapi.io.github.classgraph.concurrency.SimpleThreadFactory;

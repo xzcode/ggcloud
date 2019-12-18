@@ -1,12 +1,15 @@
 package com.xzcode.ggcloud.router.server.session;
 
+import com.xzcode.ggcloud.router.common.message.disconnect.resp.RouterDisconnectResp;
 import com.xzcode.ggcloud.router.server.config.RouterServerConfig;
-import com.xzcode.ggcloud.router.server.message.disconnect.resp.RouterDisconnectResp;
 
 import io.netty.channel.Channel;
+import xzcode.ggserver.core.common.event.GGEvents;
+import xzcode.ggserver.core.common.event.model.EventData;
 import xzcode.ggserver.core.common.future.IGGFuture;
 import xzcode.ggserver.core.common.message.response.Response;
 import xzcode.ggserver.core.common.session.AbstractAttrMapSession;
+import xzcode.ggserver.core.server.events.GGServerEvents;
 
 /**
  * 路由服务器会话
@@ -22,6 +25,7 @@ public class RouterServerSession extends AbstractAttrMapSession<RouterServerConf
 
 	@Override
 	public IGGFuture disconnect() {
+		emitEvent(GGEvents.Connection.CLOSED, new EventData<Object>(this, null));
 		return send(new Response(RouterDisconnectResp.ACTION_ID, null));
 	}
 

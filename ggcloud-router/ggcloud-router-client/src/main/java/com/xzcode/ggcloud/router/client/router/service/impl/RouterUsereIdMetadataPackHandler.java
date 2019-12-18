@@ -2,8 +2,9 @@ package com.xzcode.ggcloud.router.client.router.service.impl;
 
 import java.util.concurrent.TimeUnit;
 import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
-import com.xzcode.ggcloud.router.client.router.meta.RouterUserIdMetadata;
 import com.xzcode.ggcloud.router.client.router.service.IRouterPackHandler;
+import com.xzcode.ggcloud.router.common.meta.RouterUserIdMetadata;
+
 import xzcode.ggserver.core.common.handler.serializer.ISerializer;
 import xzcode.ggserver.core.common.message.Pack;
 import xzcode.ggserver.core.common.message.meta.provider.IMetadataProvider;

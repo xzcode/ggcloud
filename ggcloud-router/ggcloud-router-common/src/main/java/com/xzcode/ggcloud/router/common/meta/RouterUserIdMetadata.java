@@ -1,4 +1,4 @@
-package com.xzcode.ggcloud.router.client.router.meta;
+package com.xzcode.ggcloud.router.common.meta;
 
 import xzcode.ggserver.core.common.message.meta.IMetadata;
 

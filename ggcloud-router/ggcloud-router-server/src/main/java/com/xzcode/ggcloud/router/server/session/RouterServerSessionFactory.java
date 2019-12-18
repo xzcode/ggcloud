@@ -1,6 +1,6 @@
 package com.xzcode.ggcloud.router.server.session;
 
-import com.xzcode.ggcloud.router.client.router.meta.RouterUserIdMetadata;
+import com.xzcode.ggcloud.router.common.meta.RouterUserIdMetadata;
 import com.xzcode.ggcloud.router.server.config.RouterServerConfig;
 
 import io.netty.channel.Channel;
@@ -55,6 +55,7 @@ public class RouterServerSessionFactory implements ISessionFactory {
 				session = new RouterServerSession(userId, this.config);
 				session = sessionManager.addSessionIfAbsent(session);
 				session.addAttribute(routerIdKey, routerId);
+				request.setSession(session);
 			}
 			return session;
 		}

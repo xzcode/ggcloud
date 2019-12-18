@@ -1,6 +1,6 @@
-package com.xzcode.ggcloud.router.client.router.meta.impl;
+package com.xzcode.ggcloud.router.common.meta.impl;
 
-import com.xzcode.ggcloud.router.client.router.meta.RouterUserIdMetadata;
+import com.xzcode.ggcloud.router.common.meta.RouterUserIdMetadata;
 
 import xzcode.ggserver.core.common.handler.serializer.ISerializer;
 import xzcode.ggserver.core.common.message.meta.resolver.IMetadataResolver;
