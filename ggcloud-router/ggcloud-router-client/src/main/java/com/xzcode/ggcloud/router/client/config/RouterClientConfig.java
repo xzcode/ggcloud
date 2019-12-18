@@ -2,6 +2,8 @@ package com.xzcode.ggcloud.router.client.config;
 
 import java.nio.charset.Charset;
 
+import com.xzcode.ggcloud.router.client.RouterClient;
+import com.xzcode.ggcloud.router.client.filter.RouteReceiveMessageFilter;
 import com.xzcode.ggcloud.router.client.router.meta.impl.RouterUserIdMetadataProvider;
 import com.xzcode.ggcloud.router.client.router.meta.impl.RouterUserIdMetadataResolver;
 import com.xzcode.ggcloud.router.client.router.service.IRouterPackHandler;
@@ -25,6 +27,10 @@ import xzcode.ggserver.core.server.impl.GGServer;
 public class RouterClientConfig {
 	
 	/**
+	 * 路由客户端对象
+	 */
+	protected RouterClient routerClient;
+	/**
 	 * 公共事件循环组
 	 */
 	protected NioEventLoopGroup executor;
@@ -43,7 +49,7 @@ public class RouterClientConfig {
 	/**
 	 * 消息将被路由的服务器对象
 	 */
-	private IGGServer<?> routingServer;
+	private IGGServer routingServer;
 	
 	/**
 	 * 不参与路由的action匹配正则表达式
@@ -76,7 +82,7 @@ public class RouterClientConfig {
 	private IRouterPackHandler packHandler;
 	
 	
-	public RouterClientConfig(IGGServer<?> routingServer) {
+	public RouterClientConfig(IGGServer routingServer) {
 		if (routingServer == null) {
 			throw new NullPointerException("Parameter 'routingServer' cannot be null!!");
 		}
@@ -108,6 +114,8 @@ public class RouterClientConfig {
 		if (serviceProvider == null) {
 			serviceProvider = new DefaultServicePorvider(this);
 		}
+		
+		this.routingServer.addBeforeDeserializeFilter(new RouteReceiveMessageFilter(this));
 	}
 
 	public NioEventLoopGroup getExecutor() {
@@ -143,7 +151,7 @@ public class RouterClientConfig {
 		this.serviceProvider = serviceProvider;
 	}
 
-	public IGGServer<?> getRoutingServer() {
+	public IGGServer getRoutingServer() {
 		return routingServer;
 	}
 
@@ -183,7 +191,7 @@ public class RouterClientConfig {
 		this.metadataProvider = metadataProvider;
 	}
 
-	public void setRoutingServer(IGGServer<?> routingServer) {
+	public void setRoutingServer(IGGServer routingServer) {
 		this.routingServer = routingServer;
 	}
 
@@ -194,6 +202,16 @@ public class RouterClientConfig {
 	public void setPackHandler(IRouterPackHandler packHandler) {
 		this.packHandler = packHandler;
 	}
+
+	public RouterClient getRouterClient() {
+		return routerClient;
+	}
+
+	public void setRouterClient(RouterClient routerClient) {
+		this.routerClient = routerClient;
+	}
+	
+	
 	
 	
 }

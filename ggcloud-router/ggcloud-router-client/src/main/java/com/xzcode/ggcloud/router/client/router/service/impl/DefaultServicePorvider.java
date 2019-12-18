@@ -3,11 +3,11 @@ package com.xzcode.ggcloud.router.client.router.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
 import com.xzcode.ggcloud.router.client.router.service.IRouterService;
-import com.xzcode.ggcloud.router.client.router.service.IRouterServiceMatcher;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceProvider;
 import com.xzcode.ggcloud.router.client.router.service.listener.IAddRouterServiceListener;
 import com.xzcode.ggcloud.router.client.router.service.listener.IRemoveRouterServiceListener;
@@ -25,7 +25,6 @@ public class DefaultServicePorvider implements IRouterServiceProvider{
 	
 	protected RouterClientConfig config;
 	
-	protected IRouterServiceMatcher routerServiceMatcher = new ActionPrefixRouterServiceMatcher();
 	
 	protected List<IAddRouterServiceListener> addRouterServiceListeners = new ArrayList<>();
 	
@@ -54,10 +53,10 @@ public class DefaultServicePorvider implements IRouterServiceProvider{
 
 	@Override
 	public IRouterService matchService(Pack pack) {
-		String action = pack.getActionString(config.getCharset());
-		for (String key : services.keySet()) {
-			if (action.startsWith(key)) {
-				return this.getRouterServiceMatcher().match(pack, services);
+		for (Entry<String, IRouterService> entry : services.entrySet()) {
+			IRouterService service = entry.getValue();
+			if (service.getServiceMatcher().match(pack)) {
+				return service;
 			}
 		}
 		return null;
@@ -88,17 +87,5 @@ public class DefaultServicePorvider implements IRouterServiceProvider{
 		}
 	}
 
-	@Override
-	public void setRouterServiceMatcher(IRouterServiceMatcher matcher) {
-		this.routerServiceMatcher = matcher;
-	}
-
-	@Override
-	public IRouterServiceMatcher getRouterServiceMatcher() {
-		return this.routerServiceMatcher;
-	}
-	
-	
-	
 	
 }

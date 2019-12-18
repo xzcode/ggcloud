@@ -1,7 +1,5 @@
 package com.xzcode.ggcloud.router.client.router.service;
 
-import java.util.Map;
-
 import xzcode.ggserver.core.common.message.Pack;
 
 /**
@@ -20,6 +18,6 @@ public interface IRouterServiceMatcher {
 	 * @author zai
 	 * 2019-11-07 16:52:31
 	 */
-	IRouterService match(Pack pack, Map<String, IRouterService> services);
+	boolean match(Pack pack);
 	
 }

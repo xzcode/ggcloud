@@ -13,23 +13,6 @@ import xzcode.ggserver.core.common.message.Pack;
 public interface IRouterServiceProvider {
 	
 	/**
-	 * 获取路由服务匹配器
-	 * 
-	 * @return
-	 * @author zai
-	 * 2019-11-07 17:27:36
-	 */
-	void setRouterServiceMatcher(IRouterServiceMatcher matcher);
-	/**
-	 * 获取路由服务匹配器
-	 * 
-	 * @return
-	 * @author zai
-	 * 2019-11-07 17:27:36
-	 */
-	IRouterServiceMatcher getRouterServiceMatcher();
-	
-	/**
 	 * 获取服务
 	 * 
 	 * @return

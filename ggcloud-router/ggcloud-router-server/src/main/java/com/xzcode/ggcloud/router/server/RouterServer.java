@@ -2,6 +2,7 @@ package com.xzcode.ggcloud.router.server;
 
 import com.xzcode.ggcloud.router.server.config.RouterServerConfig;
 
+import xzcode.ggserver.core.common.future.IGGFuture;
 import xzcode.ggserver.core.server.IGGServer;
 import xzcode.ggserver.core.server.starter.IGGServerStarter;
 import xzcode.ggserver.core.server.starter.impl.DefaultGGServerStarter;
@@ -12,7 +13,7 @@ import xzcode.ggserver.core.server.starter.impl.DefaultGGServerStarter;
  * @author zai
  * 2019-12-05 10:34:03
  */
-public class RouterServer implements IGGServer<RouterServerConfig> {
+public class RouterServer implements IGGServer {
 	
 	private RouterServerConfig config;
 
@@ -31,10 +32,10 @@ public class RouterServer implements IGGServer<RouterServerConfig> {
 	}
 
 	@Override
-	public void start() {
+	public IGGFuture start() {
 		this.shutdown();
 		this.serverStarter = new DefaultGGServerStarter(config);
-		this.serverStarter.start();
+		return this.serverStarter.start();
 	}
 
 	@Override

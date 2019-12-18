@@ -21,7 +21,7 @@ public interface RouterClient {
 	 * @author zai
 	 * 2019-11-06 17:48:12
 	 */
-	void route(Pack pack);
+	boolean route(Pack pack);
 	
 	
 }

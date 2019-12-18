@@ -30,8 +30,8 @@ public class RouterUsereIdMetadataPackHandler implements IRouterPackHandler {
 	public RouterUsereIdMetadataPackHandler(RouterClientConfig config) {
 		this.metadataResolver = (IMetadataResolver<RouterUserIdMetadata>) config.getMetadataResolver();
 		this.metadataProvider = (IMetadataProvider<RouterUserIdMetadata>) config.getMetadataProvider();
-		this.serializer = config.getRoutingServer().getConfig().getSerializer();
-		this.sessionManager = config.getRoutingServer().getConfig().getSessionManager();
+		this.serializer = ((RouterClientConfig) config).getRoutingServer().getConfig().getSerializer();
+		this.sessionManager = ((RouterClientConfig) config).getRoutingServer().getConfig().getSessionManager();
 	}
 
 	public void handleReceivePack(Pack pack) {
