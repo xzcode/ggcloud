@@ -11,10 +11,6 @@ import xzcode.ggserver.core.common.message.meta.IMetadata;
 public class RouterUserIdMetadata implements IMetadata {
 	
 	public static final String METADATA_SESSION_KEY = "ROUTER_METADATA";
-	/**
-	 * 路由客户端id
-	 */
-	private String routerId;
 	
 	/**
 	 * 用户id
@@ -26,8 +22,6 @@ public class RouterUserIdMetadata implements IMetadata {
 	}
 
 	public RouterUserIdMetadata(String routerId, String userId) {
-		super();
-		this.routerId = routerId;
 		this.userId = userId;
 	}
 
@@ -39,12 +33,5 @@ public class RouterUserIdMetadata implements IMetadata {
 		this.userId = userId;
 	}
 	
-	public String getRouterId() {
-		return routerId;
-	}
-	
-	public void setRouterId(String routerId) {
-		this.routerId = routerId;
-	}
 
 }

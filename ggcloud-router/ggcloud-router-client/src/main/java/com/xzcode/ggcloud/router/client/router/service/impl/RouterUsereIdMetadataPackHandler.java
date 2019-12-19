@@ -57,6 +57,7 @@ public class RouterUsereIdMetadataPackHandler implements IRouterPackHandler {
 			Object metadata = metadataProvider.provide(pack.getSession());
 			byte[] bytes = serializer.serialize(metadata);
 			pack.setMetadata(bytes);
+			pack.setSession(null);
 		} catch (Exception e) {
 			GGLoggerUtil.getLogger().error("Serialize metadata Error!", e);
 		}

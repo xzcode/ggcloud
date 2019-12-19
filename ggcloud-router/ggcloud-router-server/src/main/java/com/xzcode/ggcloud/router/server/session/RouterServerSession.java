@@ -9,7 +9,6 @@ import xzcode.ggserver.core.common.event.model.EventData;
 import xzcode.ggserver.core.common.future.IGGFuture;
 import xzcode.ggserver.core.common.message.response.Response;
 import xzcode.ggserver.core.common.session.AbstractAttrMapSession;
-import xzcode.ggserver.core.server.events.GGServerEvents;
 
 /**
  * 路由服务器会话
@@ -19,8 +18,11 @@ import xzcode.ggserver.core.server.events.GGServerEvents;
  */
 public class RouterServerSession extends AbstractAttrMapSession<RouterServerConfig>{
 	
-	public RouterServerSession(String sessionId, RouterServerConfig config) {
+	private String channelGroupId;
+	
+	public RouterServerSession(String sessionId, String channelGroupId,RouterServerConfig config) {
 		super(sessionId, config);
+		this.channelGroupId = channelGroupId;
 	}
 
 	@Override
@@ -31,12 +33,20 @@ public class RouterServerSession extends AbstractAttrMapSession<RouterServerConf
 
 	@Override
 	public Channel getChannel() {
-		return null;
+		return config.getChannelGroupManager().getRandomChannel(channelGroupId);
 	}
 
 	@Override
 	public void setChannel(Channel channel) {
 		
+	}
+	
+	public String getChannelGroupId() {
+		return channelGroupId;
+	}
+	
+	public void setChannelGroupId(String channelGroupId) {
+		this.channelGroupId = channelGroupId;
 	}
 
 }

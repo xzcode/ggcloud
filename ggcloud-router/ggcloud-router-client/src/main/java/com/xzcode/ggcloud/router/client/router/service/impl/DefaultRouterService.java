@@ -6,10 +6,13 @@ import org.slf4j.LoggerFactory;
 import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
 import com.xzcode.ggcloud.router.client.router.service.IRouterService;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceMatcher;
+import com.xzcode.ggcloud.router.common.message.register.req.RouterChannelRegisterReq;
 
+import io.netty.channel.Channel;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.client.config.GGClientConfig;
+import xzcode.ggserver.core.common.event.GGEvents;
 import xzcode.ggserver.core.common.message.Pack;
 
 /**
@@ -63,10 +66,15 @@ public class DefaultRouterService implements IRouterService{
 		clientConfig.setHost(host);
 		clientConfig.setPort(port);
 		clientConfig.setChannelPoolEnabled(true);
+		
 		distClient = new GGClient(clientConfig);
 		
+		//监听连接打开
+		distClient.addEventListener(GGEvents.Connection.OPENED, e -> {
+			Channel channel = e.getChannel();
+			channel.writeAndFlush(new RouterChannelRegisterReq(config.getRouterGroupId()));
+		});
 		
-
 		distClient.addAfterSerializeFilter((Pack pack) -> {
 			//对发送到远端的包进行处理
 			config.getPackHandler().handleSendPack(pack);

@@ -27,6 +27,11 @@ import xzcode.ggserver.core.server.impl.GGServer;
 public class RouterClientConfig {
 	
 	/**
+	 * 路由组id
+	 */
+	protected String routerGroupId;
+	
+	/**
 	 * 路由客户端对象
 	 */
 	protected RouterClient routerClient;
@@ -113,6 +118,10 @@ public class RouterClientConfig {
 		}
 		if (serviceProvider == null) {
 			serviceProvider = new DefaultServicePorvider(this);
+		}
+		
+		if (routerGroupId == null) {
+			routerGroupId = String.valueOf(System.nanoTime());
 		}
 		
 		this.routingServer.addBeforeDeserializeFilter(new RouteReceiveMessageFilter(this));
@@ -209,6 +218,14 @@ public class RouterClientConfig {
 
 	public void setRouterClient(RouterClient routerClient) {
 		this.routerClient = routerClient;
+	}
+
+	public String getRouterGroupId() {
+		return routerGroupId;
+	}
+
+	public void setRouterGroupId(String routerGroupId) {
+		this.routerGroupId = routerGroupId;
 	}
 	
 	

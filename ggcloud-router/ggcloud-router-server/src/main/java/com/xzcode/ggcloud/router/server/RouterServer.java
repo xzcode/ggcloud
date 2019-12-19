@@ -1,6 +1,10 @@
 package com.xzcode.ggcloud.router.server;
 
+import com.xzcode.ggcloud.router.common.message.disconnect.req.RouterDisconnectReq;
+import com.xzcode.ggcloud.router.common.message.register.req.RouterChannelRegisterReq;
 import com.xzcode.ggcloud.router.server.config.RouterServerConfig;
+import com.xzcode.ggcloud.router.server.message.disconnect.RouterDisconnectHandler;
+import com.xzcode.ggcloud.router.server.message.register.RouterRegisterHandler;
 
 import xzcode.ggserver.core.common.future.IGGFuture;
 import xzcode.ggserver.core.server.IGGServer;
@@ -35,7 +39,21 @@ public class RouterServer implements IGGServer {
 	public IGGFuture start() {
 		this.shutdown();
 		this.serverStarter = new DefaultGGServerStarter(config);
-		return this.serverStarter.start();
+		IGGFuture startFuture = this.serverStarter.start();
+		
+		startFuture.addListener((f) -> {
+			
+			//添加预定义的消息处理器
+			
+			//添加通道组注册处理器
+			RouterServer.this.onMessage(RouterChannelRegisterReq.ACTION_ID, new RouterRegisterHandler());
+			
+			//添加通道端口连接处理器
+			RouterServer.this.onMessage(RouterDisconnectReq.ACTION_ID, new RouterDisconnectHandler());
+			
+		});
+		
+		return startFuture;
 	}
 
 	@Override
