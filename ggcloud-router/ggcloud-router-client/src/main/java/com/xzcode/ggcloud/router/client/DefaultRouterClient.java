@@ -1,9 +1,8 @@
-package com.xzcode.ggcloud.router.client.router;
+package com.xzcode.ggcloud.router.client;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.xzcode.ggcloud.router.client.RouterClient;
 import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
 import com.xzcode.ggcloud.router.client.router.service.IRouterService;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceProvider;
@@ -27,8 +26,8 @@ public class DefaultRouterClient implements RouterClient{
 	public DefaultRouterClient(RouterClientConfig config) {
 		this.config = config;
 		serviceProvider = config.getServiceProvider();
-		this.config.init();
 		config.setRouterClient(this);
+		this.config.init();
 	}
 	
 	@Override

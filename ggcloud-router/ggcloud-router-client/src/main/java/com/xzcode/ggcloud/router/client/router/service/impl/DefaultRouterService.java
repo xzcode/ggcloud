@@ -14,6 +14,9 @@ import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.event.GGEvents;
 import xzcode.ggserver.core.common.message.Pack;
+import xzcode.ggserver.core.common.message.request.Request;
+import xzcode.ggserver.core.common.message.response.Response;
+import xzcode.ggserver.core.common.session.GGSession;
 
 /**
  * 默认路由服务
@@ -71,8 +74,8 @@ public class DefaultRouterService implements IRouterService{
 		
 		//监听连接打开
 		distClient.addEventListener(GGEvents.Connection.OPENED, e -> {
-			Channel channel = e.getChannel();
-			channel.writeAndFlush(new RouterChannelRegisterReq(config.getRouterGroupId()));
+			GGSession session = e.getSession();
+			session.send(new Response(null, RouterChannelRegisterReq.ACTION_ID, new RouterChannelRegisterReq(config.getRouterGroupId())));
 		});
 		
 		distClient.addAfterSerializeFilter((Pack pack) -> {

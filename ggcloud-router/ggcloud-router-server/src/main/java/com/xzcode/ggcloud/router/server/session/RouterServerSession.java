@@ -28,6 +28,7 @@ public class RouterServerSession extends AbstractAttrMapSession<RouterServerConf
 	@Override
 	public IGGFuture disconnect() {
 		emitEvent(GGEvents.Connection.CLOSED, new EventData<Object>(this, null));
+		config.getSessionManager().remove(this.getSessonId());
 		return send(new Response(RouterDisconnectResp.ACTION_ID, null));
 	}
 

@@ -20,9 +20,17 @@ public class RouterRegisterHandler implements IRequestMessageHandler<RouterChann
 	protected AttributeKey<String> routerKey = AttributeKey.valueOf(RouterServerChannelAttrKeys.ROUTER_GROUP_ID_KEY);
 	
 	protected IChannelGroupManager channelGroupManager;
+	
+	
+	
+
+	public RouterRegisterHandler(IChannelGroupManager channelGroupManager) {
+		this.channelGroupManager = channelGroupManager;
+	}
 
 	@Override
 	public void handle(Request<RouterChannelRegisterReq> request) {
+		System.out.println("RouterChannelRegisterReq ------->");
 		Channel channel = request.getChannel();
 		RouterChannelRegisterReq req = request.getMessage();
 		String routerGroupId = req.getRouterGroupId();
