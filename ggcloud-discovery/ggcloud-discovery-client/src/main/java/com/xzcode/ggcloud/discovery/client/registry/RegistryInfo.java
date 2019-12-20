@@ -1,13 +1,26 @@
 package com.xzcode.ggcloud.discovery.client.registry;
 
+/**
+ * 注册中心信息
+ * 
+ * 
+ * @author zai
+ * 2019-11-24 16:27:42
+ */
 public class RegistryInfo {
 	
+	//域名或ip
 	private String domain;
+	//端口
 	private int port;
-	private String autoToken;
+	//认证token
+	private String authToken;
+	//所在分区
 	private String zone;
+	//所在地区
 	private String region;
-	private boolean down;
+	//状态
+	private int status;
 	
 	public String getDomain() {
 		return domain;
@@ -34,17 +47,24 @@ public class RegistryInfo {
 		this.region = region;
 	}
 	public String getAutoToken() {
-		return autoToken;
+		return authToken;
 	}
 	public void setAutoToken(String autoToken) {
-		this.autoToken = autoToken;
+		this.authToken = autoToken;
 	}
-	public boolean isDown() {
-		return down;
+	public String getAuthToken() {
+		return authToken;
 	}
-	public void setDown(boolean down) {
-		this.down = down;
+	public void setAuthToken(String authToken) {
+		this.authToken = authToken;
 	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	
 	
 	
 }

@@ -40,4 +40,15 @@ public class RegistryManager {
 		}
 		return registryInfos.get(ThreadLocalRandom.current().nextInt(registryInfos.size()));
 	}
+	
+	/**
+	 * 检查是否所有注册中心均已失效
+	 * @return
+	 * 
+	 * @author zai
+	 * 2019-11-24 16:31:22
+	 */
+	public boolean isAllRegistriesDown() {
+		return allRegistriesDown;
+	}
 }

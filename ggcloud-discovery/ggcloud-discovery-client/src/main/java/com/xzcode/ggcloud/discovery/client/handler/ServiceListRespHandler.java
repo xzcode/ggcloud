@@ -1,9 +1,11 @@
 package com.xzcode.ggcloud.discovery.client.handler;
 
-import com.xzcode.ggcloud.discovery.client.config.GGCDiscoveryClientConfig;
+import com.xzcode.ggcloud.discovery.client.config.DiscoveryClientConfig;
 import com.xzcode.ggcloud.discovery.common.message.resp.RegisterResp;
 
-import xzcode.ggserver.core.common.message.receive.IOnMessageHandler;
+import xzcode.ggserver.core.common.message.request.Request;
+import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
+import xzcode.ggserver.core.common.session.GGSession;
 
 /**
  * 注册响应处理
@@ -12,19 +14,19 @@ import xzcode.ggserver.core.common.message.receive.IOnMessageHandler;
  * @author zai
  * 2019-10-04 14:29:53
  */
-public class ServiceListRespHandler implements IOnMessageHandler<RegisterResp>{
+public class ServiceListRespHandler implements IRequestMessageHandler<RegisterResp>{
 	
-	private GGCDiscoveryClientConfig config;
+	private DiscoveryClientConfig config;
 	
 
-	public ServiceListRespHandler(GGCDiscoveryClientConfig config) {
+	public ServiceListRespHandler(DiscoveryClientConfig config) {
 		super();
 		this.config = config;
 	}
 
 
 	@Override
-	public void onMessage(RegisterResp resp) {
+	public void handle(Request<RegisterResp> request) {
 		
 	}
 

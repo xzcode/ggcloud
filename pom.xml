@@ -161,6 +161,6 @@
   <modules>
   	<module>ggcloud-discovery</module>
   	<module>ggcloud-eventbus</module>
-  	<module>ggcloud-gateway</module>
+	<module>ggcloud-router</module>
   </modules>
 </project>
