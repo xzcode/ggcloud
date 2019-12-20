@@ -30,7 +30,7 @@ public class RouterRegisterHandler implements IRequestMessageHandler<RouterChann
 
 	@Override
 	public void handle(Request<RouterChannelRegisterReq> request) {
-		System.out.println("RouterChannelRegisterReq ------->");
+		// System.out.println("RouterChannelRegisterReq ------->");
 		Channel channel = request.getChannel();
 		RouterChannelRegisterReq req = request.getMessage();
 		String routerGroupId = req.getRouterGroupId();
@@ -40,9 +40,6 @@ public class RouterRegisterHandler implements IRequestMessageHandler<RouterChann
 				channelGroupManager.addToChannelGroup(routerGroupId, channel);
 			}
 		}
-		
-		
-		
 	}
 
 }
