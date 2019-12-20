@@ -4,9 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
+import com.xzcode.ggcloud.router.client.pool.RouterChannelPoolHandler;
 import com.xzcode.ggcloud.router.client.router.service.IRouterService;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceMatcher;
 import com.xzcode.ggcloud.router.common.message.register.req.RouterChannelRegisterReq;
+import com.xzcode.ggcloud.router.common.message.register.resp.RouterChannelRegisterResp;
 
 import io.netty.channel.Channel;
 import io.netty.util.concurrent.DefaultThreadFactory;
@@ -66,6 +68,7 @@ public class DefaultRouterService implements IRouterService{
 		clientConfig.setWorkerGroupThreadFactory(new DefaultThreadFactory("router-service-" + this.serviceId + "-", false));
 		clientConfig.setMetadataResolver(config.getMetadataResolver());
 		clientConfig.setMetadataProvider(config.getMetadataProvider());
+		clientConfig.setChannelPoolHandler(new RouterChannelPoolHandler(config, clientConfig));
 		clientConfig.setHost(host);
 		clientConfig.setPort(port);
 		clientConfig.setChannelPoolEnabled(true);
@@ -74,8 +77,12 @@ public class DefaultRouterService implements IRouterService{
 		
 		//监听连接打开
 		distClient.addEventListener(GGEvents.Connection.OPENED, e -> {
-			GGSession session = e.getSession();
-			session.send(new Response(null, RouterChannelRegisterReq.ACTION_ID, new RouterChannelRegisterReq(config.getRouterGroupId())));
+			LOGGER.warn("RouterService[{}] Channel Opened: {}", config.getRouterGroupId() , e.getChannel());
+		});
+		
+		
+		distClient.addEventListener(GGEvents.Connection.CLOSED, e -> {
+			LOGGER.warn("RouterService[{}] Channel Closed: {}", config.getRouterGroupId(), e.getChannel());
 		});
 		
 		distClient.addAfterSerializeFilter((Pack pack) -> {

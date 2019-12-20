@@ -3,7 +3,7 @@ package com.xzcode.ggcloud.router.client.session;
 import io.netty.channel.Channel;
 import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.future.IGGFuture;
-import xzcode.ggserver.core.common.session.AbstractAttrMapSession;
+import xzcode.ggserver.core.common.session.impl.AbstractAttrMapSession;
 
 public class RouterClientSession extends AbstractAttrMapSession<GGClientConfig>{
 

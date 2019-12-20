@@ -8,8 +8,8 @@ import com.xzcode.ggcloud.router.client.router.service.IRouterPackHandler;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceProvider;
 import com.xzcode.ggcloud.router.client.router.service.impl.DefaultServicePorvider;
 import com.xzcode.ggcloud.router.client.router.service.impl.RouterUsereIdMetadataPackHandler;
-import com.xzcode.ggcloud.router.common.meta.impl.RouterUserIdMetadataProvider;
-import com.xzcode.ggcloud.router.common.meta.impl.RouterUserIdMetadataResolver;
+import com.xzcode.ggcloud.router.common.meta.impl.RouterSessionIdMetadataProvider;
+import com.xzcode.ggcloud.router.common.meta.impl.RouterSessionIdMetadataResolver;
 
 import io.netty.channel.nio.NioEventLoopGroup;
 import nonapi.io.github.classgraph.concurrency.SimpleThreadFactory;
@@ -107,10 +107,10 @@ public class RouterClientConfig {
 		}
 		
 		if (metadataResolver == null) {
-			metadataResolver = new RouterUserIdMetadataResolver(routingServer.getSerializer());
+			metadataResolver = new RouterSessionIdMetadataResolver(routingServer.getSerializer());
 		}
 		if (metadataProvider == null) {
-			metadataProvider = new RouterUserIdMetadataProvider();
+			metadataProvider = new RouterSessionIdMetadataProvider();
 		}
 
 		if (packHandler == null) {

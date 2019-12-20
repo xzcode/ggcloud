@@ -8,7 +8,8 @@ import xzcode.ggserver.core.common.event.GGEvents;
 import xzcode.ggserver.core.common.event.model.EventData;
 import xzcode.ggserver.core.common.future.IGGFuture;
 import xzcode.ggserver.core.common.message.response.Response;
-import xzcode.ggserver.core.common.session.AbstractAttrMapSession;
+import xzcode.ggserver.core.common.session.impl.AbstractAttrMapSession;
+import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 
 /**
  * 路由服务器会话
@@ -34,6 +35,10 @@ public class RouterServerSession extends AbstractAttrMapSession<RouterServerConf
 
 	@Override
 	public Channel getChannel() {
+		if (channelGroupId == null) {
+			GGLoggerUtil.getLogger(this.getClass()).error("RouterServerSession Cannot get channl, 'channelGroupId' is null!");
+		}
+		
 		return config.getChannelGroupManager().getRandomChannel(channelGroupId);
 	}
 

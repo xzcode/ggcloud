@@ -1,7 +1,7 @@
 package com.xzcode.ggcloud.router.server.config;
 
-import com.xzcode.ggcloud.router.common.meta.impl.RouterUserIdMetadataProvider;
-import com.xzcode.ggcloud.router.common.meta.impl.RouterUserIdMetadataResolver;
+import com.xzcode.ggcloud.router.common.meta.impl.RouterSessionIdMetadataProvider;
+import com.xzcode.ggcloud.router.common.meta.impl.RouterSessionIdMetadataResolver;
 import com.xzcode.ggcloud.router.server.session.RouterServerSessionFactory;
 
 import xzcode.ggserver.core.common.channel.group.IChannelGroupManager;
@@ -27,8 +27,8 @@ public class RouterServerConfig extends GGServerConfig{
 			channelGroupManager = new DefaultChannelGroupManager();
 		}
 		
-		this.metadataResolver = new RouterUserIdMetadataResolver(serializer);
-		this.metadataProvider = new RouterUserIdMetadataProvider();
+		this.metadataResolver = new RouterSessionIdMetadataResolver(serializer);
+		this.metadataProvider = new RouterSessionIdMetadataProvider();
 		
 		super.init();
 	}

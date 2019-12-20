@@ -1,6 +1,6 @@
 package com.xzcode.ggcloud.router.server.session;
 
-import com.xzcode.ggcloud.router.common.meta.RouterUserIdMetadata;
+import com.xzcode.ggcloud.router.common.meta.RouterSessionIdMetadata;
 import com.xzcode.ggcloud.router.server.config.RouterServerConfig;
 import com.xzcode.ggcloud.router.server.constant.RouterServerChannelAttrKeys;
 
@@ -29,25 +29,30 @@ public class RouterServerSessionFactory implements ISessionFactory {
 
 	@Override
 	public GGSession getSession(Channel channel, Request<?> request) {
-		RouterUserIdMetadata metadata = request.getMetadata(RouterUserIdMetadata.class);
+		RouterSessionIdMetadata metadata = request.getMetadata(RouterSessionIdMetadata.class);
 		if (metadata == null) {
 			return null;
 		}
-		String userId = metadata.getUserId();
+		String routerSessionId = metadata.getSessionId();
 
-		if (userId == null) {
+		if (routerSessionId == null) {
 			return null;
 			
 		}
 		ISessionManager sessionManager = config.getSessionManager();
-		GGSession session = sessionManager.getSession(userId);
+		GGSession session = sessionManager.getSession(routerSessionId);
 		if (session == null) {
 			String channelGroupId = channel.attr(routerKey).get();
-			session = new RouterServerSession(userId, channelGroupId, this.config);
-			session = sessionManager.addSessionIfAbsent(session);
-
-			request.setSession(session);
+			GGSession newSession = new RouterServerSession(routerSessionId, channelGroupId, this.config);
+			session = sessionManager.addSessionIfAbsent(newSession);
+			if (session == null) {
+				session = newSession;
+			}
+			session.addAttribute(RouterSessionIdMetadata.METADATA_SESSION_KEY, metadata);
+		}else {
+			session.updateExpire();
 		}
+		request.setSession(session);
 		return session;
 
 	}

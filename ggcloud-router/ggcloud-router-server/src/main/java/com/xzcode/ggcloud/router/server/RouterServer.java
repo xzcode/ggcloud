@@ -46,7 +46,7 @@ public class RouterServer implements IGGServer {
 			//添加预定义的消息处理器
 			
 			//添加通道组注册处理器
-			RouterServer.this.onMessage(RouterChannelRegisterReq.ACTION_ID, new RouterRegisterHandler(this.config.getChannelGroupManager()));
+			RouterServer.this.onMessage(RouterChannelRegisterReq.ACTION_ID, new RouterRegisterHandler(this, this.config.getChannelGroupManager()));
 			
 			//添加通道端口连接处理器
 			RouterServer.this.onMessage(RouterDisconnectReq.ACTION_ID, new RouterDisconnectHandler());

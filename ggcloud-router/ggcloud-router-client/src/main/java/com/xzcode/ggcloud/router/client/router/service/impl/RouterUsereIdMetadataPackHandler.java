@@ -3,7 +3,7 @@ package com.xzcode.ggcloud.router.client.router.service.impl;
 import java.util.concurrent.TimeUnit;
 import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
 import com.xzcode.ggcloud.router.client.router.service.IRouterPackHandler;
-import com.xzcode.ggcloud.router.common.meta.RouterUserIdMetadata;
+import com.xzcode.ggcloud.router.common.meta.RouterSessionIdMetadata;
 
 import xzcode.ggserver.core.common.handler.serializer.ISerializer;
 import xzcode.ggserver.core.common.message.Pack;
@@ -20,8 +20,8 @@ import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
  */
 public class RouterUsereIdMetadataPackHandler implements IRouterPackHandler {
 
-	private IMetadataResolver<RouterUserIdMetadata> metadataResolver;
-	private IMetadataProvider<RouterUserIdMetadata> metadataProvider;
+	private IMetadataResolver<RouterSessionIdMetadata> metadataResolver;
+	private IMetadataProvider<RouterSessionIdMetadata> metadataProvider;
 	private ISerializer serializer;
 	private ISessionManager sessionManager;
 
@@ -29,8 +29,8 @@ public class RouterUsereIdMetadataPackHandler implements IRouterPackHandler {
 
 	@SuppressWarnings("unchecked")
 	public RouterUsereIdMetadataPackHandler(RouterClientConfig config) {
-		this.metadataResolver = (IMetadataResolver<RouterUserIdMetadata>) config.getMetadataResolver();
-		this.metadataProvider = (IMetadataProvider<RouterUserIdMetadata>) config.getMetadataProvider();
+		this.metadataResolver = (IMetadataResolver<RouterSessionIdMetadata>) config.getMetadataResolver();
+		this.metadataProvider = (IMetadataProvider<RouterSessionIdMetadata>) config.getMetadataProvider();
 		this.serializer = ((RouterClientConfig) config).getRoutingServer().getConfig().getSerializer();
 		this.sessionManager = ((RouterClientConfig) config).getRoutingServer().getConfig().getSessionManager();
 	}
@@ -38,11 +38,12 @@ public class RouterUsereIdMetadataPackHandler implements IRouterPackHandler {
 	public void handleReceivePack(Pack pack) {
 		byte[] metadata = pack.getMetadata();
 		try {
-			RouterUserIdMetadata userIdMetadata = metadataResolver.resolve(metadata);
-			if (userIdMetadata != null) {
-				GGSession routingServerSession = sessionManager.getSession(userIdMetadata.getUserId());
+			RouterSessionIdMetadata sessionIdMetadata = metadataResolver.resolve(metadata);
+			if (sessionIdMetadata != null) {
+				GGSession routingServerSession = sessionManager.getSession(sessionIdMetadata.getSessionId());
 				if (routingServerSession != null) {
 					pack.setMetadata(null);
+					pack.setSession(routingServerSession);
 					routingServerSession.send(pack, 0, TimeUnit.MILLISECONDS);
 				}
 			}
