@@ -12,7 +12,7 @@ import com.xzcode.ggcloud.router.common.meta.impl.RouterSessionIdMetadataProvide
 import com.xzcode.ggcloud.router.common.meta.impl.RouterSessionIdMetadataResolver;
 
 import io.netty.channel.nio.NioEventLoopGroup;
-import nonapi.io.github.classgraph.concurrency.SimpleThreadFactory;
+import xzcode.ggserver.core.common.executor.thread.SimpleThreadFactory;
 import xzcode.ggserver.core.common.message.meta.provider.IMetadataProvider;
 import xzcode.ggserver.core.common.message.meta.resolver.IMetadataResolver;
 import xzcode.ggserver.core.server.IGGServer;
