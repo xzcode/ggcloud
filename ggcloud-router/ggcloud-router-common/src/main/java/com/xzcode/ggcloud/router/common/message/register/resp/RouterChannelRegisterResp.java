@@ -8,7 +8,7 @@ package com.xzcode.ggcloud.router.common.message.register.resp;
  */
 public class RouterChannelRegisterResp {
 	
-	public static final String ACTION_ID = "router.channel.register.resp";
+	public static final String ACTION_ID = "ROUTER.CHANNEL.REGISTER.RESP";
 	
 	/**
 	 * 是否绑定成功

@@ -7,7 +7,7 @@ package com.xzcode.ggcloud.router.common.message.register.req;
  * 2019-12-19 15:36:31
  */
 public class RouterChannelRegisterReq {
-	public static final String ACTION_ID = "router.channel.register.req";
+	public static final String ACTION_ID = "ROUTER.CHANNEL.REGISTER.REQ";
 	
 	/**
 	 * 路由组id

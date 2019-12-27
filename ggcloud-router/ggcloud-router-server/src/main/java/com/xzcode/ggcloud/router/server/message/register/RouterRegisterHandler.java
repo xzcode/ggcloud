@@ -11,7 +11,6 @@ import xzcode.ggserver.core.common.channel.group.IChannelGroupManager;
 import xzcode.ggserver.core.common.message.request.Request;
 import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
 import xzcode.ggserver.core.common.message.response.Response;
-import xzcode.ggserver.core.common.message.response.support.IMakePackSupport;
 
 /**
  * 路由通道组注册处理器
