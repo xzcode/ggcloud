@@ -7,19 +7,14 @@ import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
 import com.xzcode.ggcloud.router.client.pool.RouterChannelPoolHandler;
 import com.xzcode.ggcloud.router.client.router.service.IRouterService;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceMatcher;
-import com.xzcode.ggcloud.router.common.message.ping.req.RouterPingReq;
-import com.xzcode.ggcloud.router.common.message.ping.resp.RouterPingResp;
 import com.xzcode.ggcloud.router.common.ping.RouterPingPongInfo;
 
-import io.netty.channel.Channel;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.event.GGEvents;
 import xzcode.ggserver.core.common.message.Pack;
-import xzcode.ggserver.core.common.message.request.Request;
-import xzcode.ggserver.core.common.message.response.Response;
 
 /**
  * 默认路由服务
