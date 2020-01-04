@@ -57,9 +57,10 @@ public class RouterClientConfig {
 	private IGGServer routingServer;
 	
 	/**
-	 * 不参与路由的action匹配正则表达式
+	 * 不参与路由的actionid
+	 * 
 	 */
-	private String[] excludedRoutingActionRegex;
+	private String[] excludedActionId;
 	
 	/**
 	 * 服务重连间隔毫秒数
@@ -168,12 +169,12 @@ public class RouterClientConfig {
 		this.routingServer = routingServer;
 	}
 
-	public String[] getExcludedRoutingActionRegex() {
-		return excludedRoutingActionRegex;
+	public String[] getExcludedActionId() {
+		return excludedActionId;
 	}
 
-	public void setExcludedRoutingActionRegex(String[] excludedRoutingActionRegex) {
-		this.excludedRoutingActionRegex = excludedRoutingActionRegex;
+	public void setExcludedActionId(String[] excludedRoutingActionRegex) {
+		this.excludedActionId = excludedRoutingActionRegex;
 	}
 
 	public int getServiceReconnectDelayMs() {

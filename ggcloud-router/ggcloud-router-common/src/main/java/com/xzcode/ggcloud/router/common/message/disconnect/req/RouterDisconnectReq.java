@@ -8,5 +8,5 @@ package com.xzcode.ggcloud.router.common.message.disconnect.req;
  * 2019-12-19 16:17:22
  */
 public class RouterDisconnectReq {
-	public static final String ACTION_ID = "router.disconnect.req";
+	public static final String ACTION_ID = "ROUTER.DISCONNECT.REQ";
 }

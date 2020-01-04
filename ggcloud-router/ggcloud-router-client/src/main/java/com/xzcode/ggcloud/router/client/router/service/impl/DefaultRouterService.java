@@ -7,18 +7,14 @@ import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
 import com.xzcode.ggcloud.router.client.pool.RouterChannelPoolHandler;
 import com.xzcode.ggcloud.router.client.router.service.IRouterService;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceMatcher;
-import com.xzcode.ggcloud.router.common.message.register.req.RouterChannelRegisterReq;
-import com.xzcode.ggcloud.router.common.message.register.resp.RouterChannelRegisterResp;
+import com.xzcode.ggcloud.router.common.ping.RouterPingPongInfo;
 
-import io.netty.channel.Channel;
+import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.event.GGEvents;
 import xzcode.ggserver.core.common.message.Pack;
-import xzcode.ggserver.core.common.message.request.Request;
-import xzcode.ggserver.core.common.message.response.Response;
-import xzcode.ggserver.core.common.session.GGSession;
 
 /**
  * 默认路由服务
@@ -29,6 +25,8 @@ import xzcode.ggserver.core.common.session.GGSession;
 public class DefaultRouterService implements IRouterService{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultRouterService.class);
+	private static final String PING_PONG_INFO_KEY = "PING_PONG_INFO";
+	private static final AttributeKey<RouterPingPongInfo> PING_PONG_INFO_ATTR_KEY = AttributeKey.valueOf(PING_PONG_INFO_KEY);
 	
 	protected RouterClientConfig config;
 	
@@ -84,6 +82,40 @@ public class DefaultRouterService implements IRouterService{
 		distClient.addEventListener(GGEvents.Connection.CLOSED, e -> {
 			LOGGER.warn("RouterService[{}] Channel Closed: {}", config.getRouterGroupId(), e.getChannel());
 		});
+		/*
+		distClient.addEventListener(GGEvents.Idle.ALL, eventData -> {
+			Channel channel = eventData.getChannel();
+			channel.writeAndFlush(distClient.makePack(new Response(RouterPingReq.ACTION_ID, null)));
+				
+			RouterPingPongInfo pingPongInfo = channel.attr(PING_PONG_INFO_ATTR_KEY).get();
+			
+			if (pingPongInfo == null) {
+				pingPongInfo = new RouterPingPongInfo();
+				channel.attr(PING_PONG_INFO_ATTR_KEY).set(pingPongInfo);
+			}
+			
+			if (pingPongInfo.isHeartBeatLost()) {
+				channel.disconnect();
+			}
+			//增加心跳失败次数
+			pingPongInfo.heartBeatLostTimesIncrease();
+		});
+		
+		distClient.onMessage(RouterPingResp.ACTION_ID, (Request<RouterPingResp> request) -> {
+			Channel channel = request.getChannel();
+			RouterPingPongInfo pingPongInfo = channel.attr(PING_PONG_INFO_ATTR_KEY).get();
+			
+			if (pingPongInfo == null) {
+				pingPongInfo = new RouterPingPongInfo();
+				channel.attr(PING_PONG_INFO_ATTR_KEY).set(pingPongInfo);
+			}
+			
+			//重置心跳失败累计次数
+			pingPongInfo.heartBeatLostTimesReset();
+			
+		});
+		*/
+		
 		
 		distClient.addAfterSerializeFilter((Pack pack) -> {
 			//对发送到远端的包进行处理
