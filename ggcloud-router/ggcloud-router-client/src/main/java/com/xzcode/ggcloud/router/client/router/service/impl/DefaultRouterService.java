@@ -178,7 +178,9 @@ public class DefaultRouterService implements IRouterService{
 				channelPool.acquire()
 				.addListener(f -> {
 					Channel channel = (Channel) f.getNow();
-					LOGGER.info("Router Service Init Connections ----> [{}], channel: [{}]", getHost() + ":" + getPort(), channel);
+					if (LOGGER.isDebugEnabled()) {
+						LOGGER.info("Router Service Init Connections ----> [{}], channel: [{}]", getHost() + ":" + getPort(), channel);						
+					}
 					if (channel == null) {
 						initConnections();
 						return;
