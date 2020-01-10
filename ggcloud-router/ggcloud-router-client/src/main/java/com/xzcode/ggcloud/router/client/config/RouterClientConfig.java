@@ -35,6 +35,11 @@ public class RouterClientConfig {
 	 * 路由客户端对象
 	 */
 	protected RouterClient routerClient;
+	
+	/**
+	 * 路由客户端最大连接数
+	 */
+	protected int routerClientChannelPoolMaxSize = 2;
 	/**
 	 * 公共事件循环组
 	 */
@@ -230,6 +235,12 @@ public class RouterClientConfig {
 	}
 	
 	
+	public int getRouterClientChannelPoolMaxSize() {
+		return routerClientChannelPoolMaxSize;
+	}
 	
+	public void setRouterClientChannelPoolMaxSize(int routerClientChannelPoolMaxSize) {
+		this.routerClientChannelPoolMaxSize = routerClientChannelPoolMaxSize;
+	}
 	
 }

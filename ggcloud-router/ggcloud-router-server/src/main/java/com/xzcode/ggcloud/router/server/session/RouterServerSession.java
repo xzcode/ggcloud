@@ -36,7 +36,8 @@ public class RouterServerSession extends AbstractAttrMapSession<RouterServerConf
 	@Override
 	public Channel getChannel() {
 		if (channelGroupId == null) {
-			GGLoggerUtil.getLogger(this.getClass()).error("RouterServerSession Cannot get channl, 'channelGroupId' is null!");
+			GGLoggerUtil.getLogger(this.getClass()).error("RouterServerSession Cannot get channel, 'channelGroupId' is null!");
+			return null;
 		}
 		
 		return config.getChannelGroupManager().getRandomChannel(channelGroupId);

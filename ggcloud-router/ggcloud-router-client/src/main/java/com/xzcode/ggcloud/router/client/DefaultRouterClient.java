@@ -7,6 +7,8 @@ import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
 import com.xzcode.ggcloud.router.client.router.service.IRouterService;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceProvider;
 
+import xzcode.ggserver.core.common.future.GGFailedFuture;
+import xzcode.ggserver.core.common.future.IGGFuture;
 import xzcode.ggserver.core.common.message.Pack;
 import xzcode.ggserver.core.server.IGGServer;
 
@@ -23,36 +25,26 @@ public class DefaultRouterClient implements RouterClient{
 	
 	private RouterClientConfig config;
 	private IRouterServiceProvider serviceProvider;
-	private IGGServer routingServer;
 	
 	public DefaultRouterClient(RouterClientConfig config) {
 		this.config = config;
 		this.serviceProvider = config.getServiceProvider();
-		this.routingServer = config.getRoutingServer();
 		this.config.setRouterClient(this);
 		this.config.init();
 	}
 	
 	@Override
-	public boolean route(Pack pack) {
+	public IGGFuture route(Pack pack) {
 		try {
-			
-			String actionId = pack.getActionString(config.getCharset());
-			//routingServer已定义的actionid,不参与路由
-			if (routingServer.getRequestMessageManager().getMessageHandler(actionId) != null) {
-				return false;
-			}
-			
 			//进行服务匹配
 			IRouterService matchService = serviceProvider.matchService(pack);
 			if (matchService != null) {
-				matchService.dispatch(pack);
-				return true;
+				return matchService.dispatch(pack);
 			}
 		} catch (Exception e) {
 			LOGGER.error("Route Message Error!", e);
 		}
-		return false;
+		return GGFailedFuture.DEFAULT_FAILED_FUTURE;
 	}
 
 }

@@ -44,7 +44,7 @@ public class GGTask implements Runnable{
 			}
 			
 		} catch (Exception e) {
-			LOGGER.error("SyncTask ERROR!!", e);
+			LOGGER.error("GGTask ERROR!!", e);
 		}
 		
 	}

@@ -6,6 +6,7 @@ import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
 import com.xzcode.ggcloud.router.common.message.register.req.RouterChannelRegisterReq;
 
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.pool.ChannelPoolHandler;
@@ -44,22 +45,20 @@ public class RouterChannelPoolHandler implements ChannelPoolHandler, IMakePackSu
 
 	@Override
 	public void channelAcquired(Channel ch) throws Exception {
-		if (ch == null) {
-			GGLoggerUtil.getLogger(this).warn("Acquired a null Channel!");
-		}
+		
 	}
 
 	@Override
 	public void channelCreated(Channel ch) throws Exception {
 		ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
-
 			@Override
 			public void channelActive(ChannelHandlerContext ctx) throws Exception {
 				ch.writeAndFlush(makePack(new Response(null, RouterChannelRegisterReq.ACTION_ID, new RouterChannelRegisterReq(routerClientConfig.getRouterGroupId()))));
 				super.channelActive(ctx);
+				
 			}
 		});
-		ch.pipeline().addLast(new TcpChannelInitializer(this.ggclientConfig));
+		ch.pipeline().addLast(new TcpChannelInitializer(ggclientConfig));
 		
 		
 	}

@@ -1,5 +1,6 @@
 package com.xzcode.ggcloud.router.client.router.service;
 
+import xzcode.ggserver.core.common.future.IGGFuture;
 import xzcode.ggserver.core.common.message.Pack;
 
 /**
@@ -54,7 +55,7 @@ public interface IRouterService {
 	 * @author zai
 	 * 2019-11-11 21:40:46
 	 */
-	void dispatch(Pack pack);
+	IGGFuture dispatch(Pack pack);
 	
 	
 	

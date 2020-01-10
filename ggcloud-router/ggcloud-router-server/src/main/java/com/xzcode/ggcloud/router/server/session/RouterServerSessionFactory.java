@@ -43,14 +43,15 @@ public class RouterServerSessionFactory implements ISessionFactory {
 		GGSession session = sessionManager.getSession(routerSessionId);
 		if (session == null) {
 			String channelGroupId = channel.attr(routerKey).get();
+			if (channelGroupId == null) {
+				return null;
+			}
 			GGSession newSession = new RouterServerSession(routerSessionId, channelGroupId, this.config);
 			session = sessionManager.addSessionIfAbsent(newSession);
 			if (session == null) {
 				session = newSession;
 			}
 			session.addAttribute(RouterSessionIdMetadata.METADATA_SESSION_KEY, metadata);
-		}else {
-			session.updateExpire();
 		}
 		request.setSession(session);
 		return session;
