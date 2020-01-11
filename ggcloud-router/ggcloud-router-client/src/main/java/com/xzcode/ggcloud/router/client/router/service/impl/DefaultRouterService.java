@@ -180,6 +180,9 @@ public class DefaultRouterService implements IRouterService{
 	public void startCheckConnectionsTask() {
 			
 			this.checkConnectionsFuture = this.executor.scheduleWithFixedDelay(1, 5, TimeUnit.SECONDS, () -> {
+				if (isShutdown()) {
+					getCheckConnectionsFuture().cancel();
+				}
 				int need = config.getRouterClientChannelPoolMaxSize() - this.avaliableConnections.get(); 
 				if (need > 0) {
 					for (int i = 0; i < need; i++) {
@@ -281,6 +284,9 @@ public class DefaultRouterService implements IRouterService{
 	}
 	public boolean isShutdown() {
 		return shutdown;
+	}
+	public IGGFuture getCheckConnectionsFuture() {
+		return checkConnectionsFuture;
 	}
 
 }
