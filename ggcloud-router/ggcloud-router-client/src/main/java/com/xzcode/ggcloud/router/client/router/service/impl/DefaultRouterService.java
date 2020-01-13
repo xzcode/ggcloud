@@ -1,5 +1,7 @@
 package com.xzcode.ggcloud.router.client.router.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -17,8 +19,6 @@ import io.netty.channel.Channel;
 import io.netty.channel.pool.ChannelPool;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.DefaultThreadFactory;
-import io.netty.util.concurrent.Future;
-import javafx.event.Event;
 import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.event.GGEvents;
@@ -66,6 +66,10 @@ public class DefaultRouterService implements IRouterService{
 	 * 是否已准备接收数据
 	 */
 	protected AtomicInteger avaliableConnections = new AtomicInteger(0);
+	/**
+	 * 是否已准备接收数据
+	 */
+	protected Map<String, Object> extraDatas = new HashMap<>();
 	
 	/**
 	 * 是否已关闭
@@ -113,9 +117,9 @@ public class DefaultRouterService implements IRouterService{
 			int i = avaliableConnections.get();
 			if (i > 0) {
 				i = avaliableConnections.decrementAndGet();				
-			}
-			if (i <= 0) {
-				config.getRoutingServer().emitEvent(new EventData<IRouterService>(RouterClientEvents.RouterService.UNAVAILABLE, this));
+				if (i <= 0) {
+					config.getRoutingServer().emitEvent(new EventData<IRouterService>(RouterClientEvents.RouterService.UNAVAILABLE, this));
+				}
 			}
 		});
 		
@@ -269,7 +273,21 @@ public class DefaultRouterService implements IRouterService{
 	public int getPort() {
 		return port;
 	}
-
+	
+	public void removeExtraData(String key) {
+		this.extraDatas.remove(key);
+	}
+	public void addExtraData(String key, Object data) {
+		this.extraDatas.put(key, data);
+	}
+	@SuppressWarnings("unchecked")
+	public <T> T getExtraData(String key, Class<T> clazz) {
+		return (T)this.extraDatas.get(key);
+	}
+	
+	public Map<String, Object> getExtraDatas() {
+		return extraDatas;
+	}
 
 	public void setServiceId(String serviceId) {
 		this.serviceId = serviceId;
@@ -288,5 +306,6 @@ public class DefaultRouterService implements IRouterService{
 	public IGGFuture getCheckConnectionsFuture() {
 		return checkConnectionsFuture;
 	}
+	
 
 }
