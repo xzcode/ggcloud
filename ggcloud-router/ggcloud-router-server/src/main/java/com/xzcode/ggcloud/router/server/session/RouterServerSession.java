@@ -20,6 +20,7 @@ import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 public class RouterServerSession extends AbstractAttrMapSession<RouterServerConfig>{
 	
 	private String channelGroupId;
+	private Channel channel;
 	
 	public RouterServerSession(String sessionId, String channelGroupId,RouterServerConfig config) {
 		super(sessionId, config);
@@ -39,13 +40,16 @@ public class RouterServerSession extends AbstractAttrMapSession<RouterServerConf
 			GGLoggerUtil.getLogger(this.getClass()).error("RouterServerSession Cannot get channel, 'channelGroupId' is null!");
 			return null;
 		}
+		if (this.channel == null || !channel.isActive()) {
+			this.channel = config.getChannelGroupManager().getRandomChannel(channelGroupId);
+		}
+		return this.channel;
 		
-		return config.getChannelGroupManager().getRandomChannel(channelGroupId);
 	}
 
 	@Override
 	public void setChannel(Channel channel) {
-		
+		this.channel = channel;
 	}
 	
 	public String getChannelGroupId() {
