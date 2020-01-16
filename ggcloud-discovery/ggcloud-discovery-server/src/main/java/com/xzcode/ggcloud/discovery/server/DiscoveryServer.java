@@ -7,8 +7,8 @@ import com.xzcode.ggcloud.discovery.server.events.ConnActiveEventListener;
 import com.xzcode.ggcloud.discovery.server.events.ConnCloseEventListener;
 import com.xzcode.ggcloud.discovery.server.handler.RegisterReqHandler;
 
-import nonapi.io.github.classgraph.concurrency.SimpleThreadFactory;
 import xzcode.ggserver.core.common.event.GGEvents;
+import xzcode.ggserver.core.common.executor.thread.SimpleThreadFactory;
 import xzcode.ggserver.core.server.IGGServer;
 import xzcode.ggserver.core.server.config.GGServerConfig;
 import xzcode.ggserver.core.server.impl.GGServer;
@@ -50,5 +50,8 @@ public class DiscoveryServer {
 		this.config = config;
 	}
 	
+	public DiscoveryServerConfig getConfig() {
+		return config;
+	}
 	
 }

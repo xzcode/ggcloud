@@ -1,6 +1,6 @@
 package com.xzcode.ggcloud.discovery.client;
 
-import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.nio.charset.Charset;
 
 import com.xzcode.ggcloud.discovery.client.config.DiscoveryClientConfig;
 import com.xzcode.ggcloud.discovery.client.events.ConnActiveEventListener;
@@ -11,33 +11,19 @@ import com.xzcode.ggcloud.discovery.client.registry.RegistryInfo;
 import com.xzcode.ggcloud.discovery.common.message.resp.RegisterResp;
 import com.xzcode.ggcloud.discovery.common.message.resp.ServiceListResp;
 
-import nonapi.io.github.classgraph.concurrency.SimpleThreadFactory;
 import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.event.GGEvents;
+import xzcode.ggserver.core.common.executor.thread.SimpleThreadFactory;
 
 public class DiscoveryClient {
 	
 	
-	/**
-	 * 线程池执行器
-	 */
-	private ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1, new SimpleThreadFactory("Registry-Manager-", false));
-	
-	/**
-	 * 尝试重新注册周期，ms
-	 */
-	private long tryRegisterInterval = 10 * 1000;
-	
 	private DiscoveryClientConfig config;
-	
-	
 	
 	public DiscoveryClient(DiscoveryClientConfig config) {
 		this.config = config;
 	}
-
-
 
 	public void start() {
 		GGClientConfig ggConfig = new GGClientConfig();

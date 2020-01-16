@@ -1,5 +1,9 @@
 package com.xzcode.ggcloud.discovery.client.config;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.xzcode.ggcloud.discovery.client.registry.RegistryInfo;
 import com.xzcode.ggcloud.discovery.client.registry.RegistryManager;
 import com.xzcode.ggcloud.discovery.client.services.ServiceManager;
 
@@ -15,61 +19,56 @@ import xzcode.ggserver.core.client.GGClient;
 public class DiscoveryClientConfig {
 	
 	//GGClient对象
-	private GGClient ggClient;
+	protected GGClient ggclient;
 	
 	//服务管理器
-	private ServiceManager serviceManager;
+	protected ServiceManager serviceManager;
+	
+	//注册中心信息
+	protected List<RegistryInfo> registries = new ArrayList<>();
 	
 	//注册中心管理器
-	private RegistryManager registryManager = new RegistryManager();
+	protected RegistryManager registryManager = new RegistryManager(registries);
 	
 	//客户端汇报超时时间(秒)
-	private long clientReportTimeout = 30L;
-	
-	//重连次数
-	private int reconnectTimes = 3;
+	protected long clientReportInterval = 30L * 1000L;
 	
 	//重连间隔-秒
-	private int reconnectInterval = 5;
+	protected long reconnectInterval = 5L * 1000L;
+	
+	/**
+	 * 尝试重新注册周期，ms
+	 */
+	protected long tryRegisterInterval = 10L * 1000L;
 	
 	//所在地区
-	private String region = "default";
+	protected String region = "default";
 		
 	//所在分区
-	private String zone = "default";
-	
-	
+	protected String zone = "default";
 
-	public int getReconnectTimes() {
-		return reconnectTimes;
+	public GGClient getGgclient() {
+		return ggclient;
 	}
 
-	public void setReconnectTimes(int reconnectTimes) {
-		this.reconnectTimes = reconnectTimes;
+	public void setGgclient(GGClient ggclient) {
+		this.ggclient = ggclient;
 	}
 
-	public int getReconnectInterval() {
-		return reconnectInterval;
-	}
-
-	public void setReconnectInterval(int reconnectInterval) {
-		this.reconnectInterval = reconnectInterval;
-	}
-
-	public long getClientReportTimeout() {
-		return clientReportTimeout;
-	}
-
-	public void setClientReportTimeout(long clientReportTimeout) {
-		this.clientReportTimeout = clientReportTimeout;
-	}
-	
 	public ServiceManager getServiceManager() {
 		return serviceManager;
 	}
-	
+
 	public void setServiceManager(ServiceManager serviceManager) {
 		this.serviceManager = serviceManager;
+	}
+
+	public List<RegistryInfo> getRegistries() {
+		return registries;
+	}
+
+	public void setRegistries(List<RegistryInfo> registries) {
+		this.registries = registries;
 	}
 
 	public RegistryManager getRegistryManager() {
@@ -80,12 +79,28 @@ public class DiscoveryClientConfig {
 		this.registryManager = registryManager;
 	}
 
-	public GGClient getGgClient() {
-		return ggClient;
+	public long getClientReportInterval() {
+		return clientReportInterval;
 	}
 
-	public void setGgClient(GGClient ggClient) {
-		this.ggClient = ggClient;
+	public void setClientReportInterval(long clientReportInterval) {
+		this.clientReportInterval = clientReportInterval;
+	}
+
+	public long getReconnectInterval() {
+		return reconnectInterval;
+	}
+
+	public void setReconnectInterval(long reconnectInterval) {
+		this.reconnectInterval = reconnectInterval;
+	}
+
+	public long getTryRegisterInterval() {
+		return tryRegisterInterval;
+	}
+
+	public void setTryRegisterInterval(long tryRegisterInterval) {
+		this.tryRegisterInterval = tryRegisterInterval;
 	}
 
 	public String getRegion() {
@@ -103,6 +118,10 @@ public class DiscoveryClientConfig {
 	public void setZone(String zone) {
 		this.zone = zone;
 	}
+	
+	
+
+	
 	
 	
 

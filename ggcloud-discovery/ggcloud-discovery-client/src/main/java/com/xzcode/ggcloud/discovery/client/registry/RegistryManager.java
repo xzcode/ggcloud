@@ -1,7 +1,6 @@
 package com.xzcode.ggcloud.discovery.client.registry;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -15,12 +14,17 @@ public class RegistryManager {
 	
 	
 	//注册中心信息
-	private List<RegistryInfo> registryInfos = new CopyOnWriteArrayList<>();
+	private List<RegistryInfo> registryInfos;
 	
 	/**
 	 * 所有注册中心都已失效
 	 */
 	private boolean allRegistriesDown;
+	
+	
+	public RegistryManager(List<RegistryInfo> registryInfos) {
+		this.registryInfos = registryInfos;
+	}
 	
 	
 	

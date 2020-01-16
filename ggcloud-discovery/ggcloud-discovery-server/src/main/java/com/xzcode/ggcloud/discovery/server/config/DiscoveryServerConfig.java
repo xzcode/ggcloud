@@ -25,8 +25,8 @@ public class DiscoveryServerConfig {
 	//认证token
 	private String authToken;
 	
-	//客户端汇报超时时间(秒)
-	private long clientReportTimeout = 30L;
+	//客户端汇报周期(毫秒)
+	private long clientReportInterval = 30L * 1000L;
 	
 	//所在地区
 	private String region = "default";
@@ -42,12 +42,12 @@ public class DiscoveryServerConfig {
 		this.authToken = authToken;
 	}
 
-	public long getClientReportTimeout() {
-		return clientReportTimeout;
+	public long getClientReportInterval() {
+		return clientReportInterval;
 	}
 
-	public void setClientReportTimeout(long clientReportTimeout) {
-		this.clientReportTimeout = clientReportTimeout;
+	public void setClientReportInterval(long clientReportTimeout) {
+		this.clientReportInterval = clientReportTimeout;
 	}
 
 	public int getPort() {
