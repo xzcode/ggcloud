@@ -1,6 +1,5 @@
 package com.xzcode.ggcloud.router.client.router.service.impl;
 
-import java.util.concurrent.TimeUnit;
 import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
 import com.xzcode.ggcloud.router.client.router.service.IRouterPackHandler;
 import com.xzcode.ggcloud.router.common.meta.RouterSessionIdMetadata;
@@ -44,7 +43,7 @@ public class RouterUsereIdMetadataPackHandler implements IRouterPackHandler {
 				if (routingServerSession != null) {
 					pack.setMetadata(null);
 					pack.setSession(routingServerSession);
-					routingServerSession.send(pack, 0, TimeUnit.MILLISECONDS);
+					routingServerSession.send(pack);
 				}
 			}
 		} catch (Exception e) {

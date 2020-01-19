@@ -8,7 +8,7 @@ import com.xzcode.ggcloud.discovery.server.events.ConnCloseEventListener;
 import com.xzcode.ggcloud.discovery.server.handler.RegisterReqHandler;
 
 import xzcode.ggserver.core.common.event.GGEvents;
-import xzcode.ggserver.core.common.executor.thread.SimpleThreadFactory;
+import xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
 import xzcode.ggserver.core.server.IGGServer;
 import xzcode.ggserver.core.server.config.GGServerConfig;
 import xzcode.ggserver.core.server.impl.GGServer;
@@ -28,8 +28,8 @@ public class DiscoveryServer {
 		
 		GGServerConfig ggConfig = new GGServerConfig();
 		ggConfig.setPort(config.getPort());
-		ggConfig.setBossGroupThreadFactory(new SimpleThreadFactory("discovery-B-", false));
-		ggConfig.setWorkerGroupThreadFactory(new SimpleThreadFactory("discovery-W-", false));
+		ggConfig.setBossGroupThreadFactory(new GGThreadFactory("discovery-B-", false));
+		ggConfig.setWorkerGroupThreadFactory(new GGThreadFactory("discovery-W-", false));
 		ggConfig.init();
 		IGGServer ggServer = new GGServer(ggConfig);
 		

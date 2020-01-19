@@ -14,7 +14,7 @@ import com.xzcode.ggcloud.discovery.common.message.resp.ServiceListResp;
 import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.event.GGEvents;
-import xzcode.ggserver.core.common.executor.thread.SimpleThreadFactory;
+import xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
 
 public class DiscoveryClient {
 	
@@ -28,7 +28,7 @@ public class DiscoveryClient {
 	public void start() {
 		GGClientConfig ggConfig = new GGClientConfig();
 		ggConfig.init();
-		ggConfig.setWorkerGroupThreadFactory(new SimpleThreadFactory("discovery-W-", false));
+		ggConfig.setWorkerGroupThreadFactory(new GGThreadFactory("discovery-W-", false));
 		GGClient ggClient = new GGClient(ggConfig);
 		RegistryInfo registry = config.getRegistryManager().getRandomRegistry();
 		

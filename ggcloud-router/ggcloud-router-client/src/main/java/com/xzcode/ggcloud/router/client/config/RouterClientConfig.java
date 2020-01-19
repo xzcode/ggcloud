@@ -12,7 +12,7 @@ import com.xzcode.ggcloud.router.common.meta.impl.RouterSessionIdMetadataProvide
 import com.xzcode.ggcloud.router.common.meta.impl.RouterSessionIdMetadataResolver;
 
 import io.netty.channel.nio.NioEventLoopGroup;
-import xzcode.ggserver.core.common.executor.thread.SimpleThreadFactory;
+import xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
 import xzcode.ggserver.core.common.message.meta.provider.IMetadataProvider;
 import xzcode.ggserver.core.common.message.meta.resolver.IMetadataResolver;
 import xzcode.ggserver.core.server.IGGServer;
@@ -109,7 +109,7 @@ public class RouterClientConfig {
 	public void init() {
 		
 		if (executor == null) {
-			executor = new NioEventLoopGroup(executorThreads, new SimpleThreadFactory("router-executor-", false));
+			executor = new NioEventLoopGroup(executorThreads, new GGThreadFactory("router-executor-", false));
 		}
 		
 		if (metadataResolver == null) {
