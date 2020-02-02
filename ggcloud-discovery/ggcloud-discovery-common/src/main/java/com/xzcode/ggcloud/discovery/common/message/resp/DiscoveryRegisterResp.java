@@ -7,9 +7,9 @@ package com.xzcode.ggcloud.discovery.common.message.resp;
  * @author zai
  * 2019-10-04 16:44:38
  */
-public class RegisterResp {
+public class DiscoveryRegisterResp {
 	
-	public static final String ACTION = "register.resp";
+	public static final String ACTION = "DISCOVERY.REGISTER.RESP";
 	
 	/**
 	 * 是否注册成功
@@ -27,12 +27,12 @@ public class RegisterResp {
 	private String message;
 	
 
-	public RegisterResp(boolean success) {
+	public DiscoveryRegisterResp(boolean success) {
 		super();
 		this.success = success;
 	}
 
-	public RegisterResp() {
+	public DiscoveryRegisterResp() {
 		super();
 	}
 

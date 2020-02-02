@@ -11,9 +11,9 @@ import com.xzcode.ggcloud.discovery.common.message.req.model.ServiceInfoModel;
  * @author zai
  * 2019-10-04 16:44:38
  */
-public class ServiceListResp {
+public class DiscoveryServiceListResp {
 	
-	public static final String ACTION = "service.list.resp";
+	public static final String ACTION = "DISCOVERY.SERVICE.LIST.RESP";
 	
 	/**
 	 * 服务列表

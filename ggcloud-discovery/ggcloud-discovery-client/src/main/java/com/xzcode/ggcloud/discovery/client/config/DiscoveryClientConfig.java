@@ -36,9 +36,7 @@ public class DiscoveryClientConfig {
 	//重连间隔-秒
 	protected long reconnectInterval = 5L * 1000L;
 	
-	/**
-	 * 尝试重新注册周期，ms
-	 */
+	//尝试重新注册周期，ms
 	protected long tryRegisterInterval = 10L * 1000L;
 	
 	//所在地区
@@ -47,11 +45,11 @@ public class DiscoveryClientConfig {
 	//所在分区
 	protected String zone = "default";
 
-	public GGClient getGgclient() {
+	public GGClient getGGclient() {
 		return ggclient;
 	}
 
-	public void setGgclient(GGClient ggclient) {
+	public void setGGclient(GGClient ggclient) {
 		this.ggclient = ggclient;
 	}
 

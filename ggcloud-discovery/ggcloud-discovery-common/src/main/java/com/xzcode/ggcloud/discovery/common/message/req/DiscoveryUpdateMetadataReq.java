@@ -10,9 +10,9 @@ import java.util.Map;
  * @author zai
  * 2019-10-05 15:42:07
  */
-public class UpdateMetadataReq {
+public class DiscoveryUpdateMetadataReq {
 	
-	public static final String ACTION = "update.metadata.req";
+	public static final String ACTION = "DISCOVERY.UPDATE.METADATA.REQ";
 	
 	/**
 	 * 元数据map

@@ -1,7 +1,7 @@
 package com.xzcode.ggcloud.discovery.server.handler;
 
-import com.xzcode.ggcloud.discovery.common.message.req.RegisterReq;
-import com.xzcode.ggcloud.discovery.common.message.resp.RegisterResp;
+import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryRegisterReq;
+import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryRegisterResp;
 import com.xzcode.ggcloud.discovery.common.services.ServiceInfo;
 import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
 import com.xzcode.ggcloud.discovery.server.constant.DiscoveryServerSessionKeys;
@@ -18,7 +18,7 @@ import xzcode.ggserver.core.common.session.GGSession;
  * @author zai
  * 2019-10-04 14:29:53
  */
-public class RegisterReqHandler implements IRequestMessageHandler<RegisterReq>{
+public class RegisterReqHandler implements IRequestMessageHandler<DiscoveryRegisterReq>{
 	
 	private DiscoveryServerConfig config;
 	
@@ -31,9 +31,9 @@ public class RegisterReqHandler implements IRequestMessageHandler<RegisterReq>{
 
 
 	@Override
-	public void handle(Request<RegisterReq> request) {
+	public void handle(Request<DiscoveryRegisterReq> request) {
 		GGSession session = request.getSession();
-		RegisterReq req = request.getMessage();
+		DiscoveryRegisterReq req = request.getMessage();
 		ServiceInfo serviceInfo = session.getAttribute(DiscoveryServerSessionKeys.SERVICE_INFO, ServiceInfo.class);
 		if (serviceInfo == null) {
 			serviceInfo = new ServiceInfo();
@@ -43,7 +43,7 @@ public class RegisterReqHandler implements IRequestMessageHandler<RegisterReq>{
 			serviceInfo.setPort(session.getPort());
 			config.getServiceManager().registerService(serviceInfo);
 		}
-		config.getServer().send(session, RegisterResp.ACTION, new RegisterResp(true));
+		config.getServer().send(session, DiscoveryRegisterResp.ACTION, new DiscoveryRegisterResp(true));
 		
 	}
 
