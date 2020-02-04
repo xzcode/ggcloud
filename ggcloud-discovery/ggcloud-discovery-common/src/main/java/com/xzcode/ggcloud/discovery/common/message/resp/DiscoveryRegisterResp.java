@@ -1,5 +1,7 @@
 package com.xzcode.ggcloud.discovery.common.message.resp;
 
+import xzcode.ggserver.core.common.message.model.IMessage;
+
 /**
  * 客户端注册响应
  * 
@@ -7,9 +9,14 @@ package com.xzcode.ggcloud.discovery.common.message.resp;
  * @author zai
  * 2019-10-04 16:44:38
  */
-public class DiscoveryRegisterResp {
+public class DiscoveryRegisterResp implements IMessage{
 	
 	public static final String ACTION = "DISCOVERY.REGISTER.RESP";
+	
+	@Override
+	public String getActionId() {
+		return ACTION;
+	}
 	
 	/**
 	 * 是否注册成功

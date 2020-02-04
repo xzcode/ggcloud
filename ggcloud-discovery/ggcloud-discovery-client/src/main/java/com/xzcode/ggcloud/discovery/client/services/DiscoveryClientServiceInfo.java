@@ -1,4 +1,7 @@
-package com.xzcode.ggcloud.discovery.common.services;
+package com.xzcode.ggcloud.discovery.client.services;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * 服务信息
@@ -7,8 +10,7 @@ package com.xzcode.ggcloud.discovery.common.services;
  * @author zai
  * 2019-10-04 16:14:45
  */
-public class ServiceInfo {
-	
+public class DiscoveryClientServiceInfo {
 	
 	/**
 	 * 服务id
@@ -31,24 +33,28 @@ public class ServiceInfo {
 	private int port;
 	
 	/**
-	 * 服务过期时间,时间戳
-	 */
-	private long expireTimestamp;
-	
-	/**
 	 * 负载参考值
 	 */
 	private long loadingCapacity;
 	
 	/**
-	 * 刷新超时时间
-	 * @param delay
-	 * 
-	 * @author zai
-	 * 2019-10-04 16:39:05
+	 * 额外数据
 	 */
-	public void refreshExpireTime(long delay) {
-		this.expireTimestamp = System.currentTimeMillis() + delay;
+	private Map<String, String> extraData;
+	
+	/**
+	 * 添加额外参数
+	 * 
+	 * @param key
+	 * @param value
+	 * @author zai
+	 * 2020-02-04 11:19:05
+	 */
+	public void addExtraData(String key, String value) {
+		if (extraData == null) {
+			extraData = new LinkedHashMap<>();
+		}
+		extraData.put(key, value);
 	}
 	
 	public String getServiceName() {
@@ -56,14 +62,6 @@ public class ServiceInfo {
 	}
 	public void setServiceName(String serviceName) {
 		this.serviceName = serviceName;
-	}
-
-	public long getExpireTimestamp() {
-		return expireTimestamp;
-	}
-
-	public void setExpireTimestamp(long expireTimestamp) {
-		this.expireTimestamp = expireTimestamp;
 	}
 
 	public long getLoadingCapacity() {
@@ -98,6 +96,11 @@ public class ServiceInfo {
 		this.serviceId = serviceId;
 	}
 	
-	
+	public Map<String, String> getExtraData() {
+		return extraData;
+	}
+	public void setExtraData(Map<String, String> extraData) {
+		this.extraData = extraData;
+	}
 	
 }

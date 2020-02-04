@@ -5,7 +5,6 @@ import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryRegisterResp;
 
 import xzcode.ggserver.core.common.message.request.Request;
 import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
-import xzcode.ggserver.core.common.session.GGSession;
 
 /**
  * 客户端注册请求处理
@@ -29,9 +28,9 @@ public class RegisterRespHandler implements IRequestMessageHandler<DiscoveryRegi
 	@Override
 	public void handle(Request<DiscoveryRegisterResp> request) {
 		DiscoveryRegisterResp resp = request.getMessage();
-		System.out.println(resp);
-		
-		
+		if (!resp.isSuccess()) {
+			
+		}
 	}
 
 	

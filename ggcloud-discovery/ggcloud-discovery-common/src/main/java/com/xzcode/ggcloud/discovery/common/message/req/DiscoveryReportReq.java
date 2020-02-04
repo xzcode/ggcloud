@@ -1,8 +1,15 @@
 package com.xzcode.ggcloud.discovery.common.message.req;
 
-public class DiscoveryReportReq {
+import xzcode.ggserver.core.common.message.model.IMessage;
+
+public class DiscoveryReportReq implements IMessage{
 	
 	public static final String ACTION = "DISCOVERY.REPORT.REQ";
+	
+	@Override
+	public String getActionId() {
+		return ACTION;
+	}
 	
 	/**
 	 * 负载参考值

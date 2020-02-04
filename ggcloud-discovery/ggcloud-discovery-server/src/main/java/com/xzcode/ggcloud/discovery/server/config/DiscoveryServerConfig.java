@@ -1,6 +1,9 @@
 package com.xzcode.ggcloud.discovery.server.config;
 
-import com.xzcode.ggcloud.discovery.common.services.ServiceManager;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import com.xzcode.ggcloud.discovery.server.services.ServiceManager;
 
 import xzcode.ggserver.core.server.IGGServer;
 
@@ -28,11 +31,16 @@ public class DiscoveryServerConfig {
 	//客户端汇报周期(毫秒)
 	private long clientReportInterval = 30L * 1000L;
 	
+	//服务失效时间(毫秒)
+	private long serviceTimeoutDelay;
+	
 	//所在地区
 	private String region = "default";
 	
 	//所在分区
 	private String zone = "default";
+	
+	
 
 	public String getAuthToken() {
 		return authToken;
@@ -88,6 +96,13 @@ public class DiscoveryServerConfig {
 
 	public void setZone(String zone) {
 		this.zone = zone;
+	}
+	public long getServiceTimeoutDelay() {
+		return serviceTimeoutDelay;
+	}
+	
+	public void setServiceTimeoutDelay(long serviceTimeout) {
+		this.serviceTimeoutDelay = serviceTimeout;
 	}
 	
 	

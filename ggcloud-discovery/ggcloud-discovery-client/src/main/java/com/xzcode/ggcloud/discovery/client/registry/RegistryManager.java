@@ -21,6 +21,10 @@ public class RegistryManager {
 	 */
 	private boolean allRegistriesDown;
 	
+
+	//已注册的信息
+	protected RegistryInfo registriedInfo;
+	
 	
 	public RegistryManager(List<RegistryInfo> registryInfos) {
 		this.registryInfos = registryInfos;
@@ -40,9 +44,10 @@ public class RegistryManager {
 			return null;
 		}
 		if (registryInfos.size() == 1) {
-			return registryInfos.get(0);
+			this.registriedInfo = registryInfos.get(0);
 		}
-		return registryInfos.get(ThreadLocalRandom.current().nextInt(registryInfos.size()));
+		this.registriedInfo = registryInfos.get(ThreadLocalRandom.current().nextInt(registryInfos.size()));
+		return this.registriedInfo;
 	}
 	
 	/**
@@ -54,5 +59,13 @@ public class RegistryManager {
 	 */
 	public boolean isAllRegistriesDown() {
 		return allRegistriesDown;
+	}
+	
+	public RegistryInfo getRegistriedInfo() {
+		return registriedInfo;
+	}
+	
+	public void setRegistriedInfo(RegistryInfo registriedInfo) {
+		this.registriedInfo = registriedInfo;
 	}
 }

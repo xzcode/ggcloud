@@ -1,8 +1,8 @@
 package com.xzcode.ggcloud.discovery.server.events;
 
-import com.xzcode.ggcloud.discovery.common.services.ServiceInfo;
 import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
 import com.xzcode.ggcloud.discovery.server.constant.DiscoveryServerSessionKeys;
+import com.xzcode.ggcloud.discovery.server.services.ServiceInfo;
 
 import xzcode.ggserver.core.common.event.IEventListener;
 import xzcode.ggserver.core.common.event.model.EventData;
