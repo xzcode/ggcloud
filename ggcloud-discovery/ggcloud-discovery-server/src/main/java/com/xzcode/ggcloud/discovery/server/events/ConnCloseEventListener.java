@@ -1,5 +1,6 @@
 package com.xzcode.ggcloud.discovery.server.events;
 
+import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceDownResp;
 import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
 import com.xzcode.ggcloud.discovery.server.constant.DiscoveryServerSessionKeys;
 import com.xzcode.ggcloud.discovery.server.services.ServiceInfo;
@@ -12,7 +13,14 @@ import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 public class ConnCloseEventListener implements IEventListener<Void>{
 	
 	private DiscoveryServerConfig config;
+	
+	
 
+
+	public ConnCloseEventListener(DiscoveryServerConfig config) {
+		super();
+		this.config = config;
+	}
 
 	public void setConfig(DiscoveryServerConfig config) {
 		this.config = config;
@@ -26,9 +34,12 @@ public class ConnCloseEventListener implements IEventListener<Void>{
 		if (serviceInfo == null) {
 			return;
 		}
-		config.getServiceManager().removeServiceInfo(serviceInfo);			
-		
-		GGLoggerUtil.getLogger(this).warn("Service ungristry!");
+		config.getServiceManager().removeServiceInfo(serviceInfo);
+		DiscoveryServiceDownResp resp = new DiscoveryServiceDownResp();
+		resp.setServiceName(serviceInfo.getServiceName());
+		resp.setServiceId(serviceInfo.getServiceId());
+		session.send(resp);
+		GGLoggerUtil.getLogger(this).warn("Service unregristry! serviceName: {}, serviceId: {}", serviceInfo.getServiceName(), serviceInfo.getServiceId());
 		
 	}
 

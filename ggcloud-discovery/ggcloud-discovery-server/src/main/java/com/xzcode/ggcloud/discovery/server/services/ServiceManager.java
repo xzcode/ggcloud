@@ -6,12 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
-
-import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceDownResp;
+import java.util.concurrent.TimeUnit;
 
 import xzcode.ggserver.core.common.executor.ITaskExecutor;
 import xzcode.ggserver.core.common.executor.SingleThreadTaskExecutor;
-import xzcode.ggserver.core.common.session.GGSession;
 import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 
 /**
@@ -50,12 +48,12 @@ public class ServiceManager {
 			synchronized (serviceGroups) {
 				group = serviceGroups.get(serviceInfo.getServiceName());
 				if (group == null) {
-					group = new ServiceGroup();
-					group.addServiceInfo(serviceInfo);
+					group = new ServiceGroup(serviceInfo.getServiceName());
 					serviceGroups.put(serviceInfo.getServiceName(), group);
 				}
 			}
 		}
+		group.addServiceInfo(serviceInfo);
 	}
 	/**
 	 * 开启检查任务
@@ -64,47 +62,15 @@ public class ServiceManager {
 	 * 2020-02-03 16:29:09
 	 */
 	public void startCheckServiceTask() {
-		taskExecutor.schedule(CHECK_SERVICE_INTERVAL, () -> {
+		taskExecutor.scheduleWithFixedDelay(CHECK_SERVICE_INTERVAL, CHECK_SERVICE_INTERVAL, TimeUnit.MILLISECONDS, () -> {
 			try {
-				checkService();
+				
 			} catch (Exception e) {
 				GGLoggerUtil.getLogger(this).error("Check Service Task Error!", e);
 			}
 		});
 	}
-	/**
-	 * 检查服务可用性
-	 * 
-	 * @author zai
-	 * 2020-02-03 16:29:09
-	 */
-	public void checkService() {
-		
-		List<ServiceInfo> downServices = new ArrayList<>();
-		List<ServiceInfo> availableServices = new ArrayList<>();
-		
-		List<ServiceInfo> serviceList = getServiceList();
-		
-		for (ServiceInfo service : serviceList) {
-			if (service.isTimeout()) {
-				downServices.add(service);
-				continue;
-			}
-			availableServices.add(service);
-		}
-		
-		//处理超时服务
-		for (ServiceInfo downService : downServices) {
-			//通知其他服务，某些服务已经超时
-			for (ServiceInfo availableService : availableServices) {
-				GGSession session = availableService.getSession();
-				DiscoveryServiceDownResp resp = new DiscoveryServiceDownResp();
-				resp.setServiceName(downService.getServiceName());
-				resp.setServiceId(downService.getServiceId());
-				session.send(resp);
-			}
-		}
-	}
+	
 	
 	/**
 	 * 获取服务列表
@@ -123,9 +89,10 @@ public class ServiceManager {
 			Iterator<Entry<String, ServiceInfo>> serviceIterator = services.entrySet().iterator();
 			
 			while (serviceIterator.hasNext()) {
-				ServiceInfo serviceInfo = (ServiceInfo) serviceIterator.next();
+				ServiceInfo serviceInfo = (ServiceInfo) serviceIterator.next().getValue();
 				list.add(serviceInfo);
 			}
+			
 		}
 		
 		return list;

@@ -3,7 +3,7 @@ package com.xzcode.ggcloud.discovery.client.handler;
 import java.util.List;
 
 import com.xzcode.ggcloud.discovery.client.config.DiscoveryClientConfig;
-import com.xzcode.ggcloud.discovery.client.services.DiscoveryClientServiceInfo;
+import com.xzcode.ggcloud.discovery.client.services.DiscoveryClientService;
 import com.xzcode.ggcloud.discovery.client.services.DiscoveryClientServiceManager;
 import com.xzcode.ggcloud.discovery.common.message.req.model.ServiceInfoModel;
 import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceListResp;
@@ -40,10 +40,10 @@ public class ServiceListRespHandler implements IRequestMessageHandler<DiscoveryS
 		
 		DiscoveryClientServiceManager serviceManager = config.getServiceManager();
 		for (ServiceInfoModel model : serviceList) {
-			DiscoveryClientServiceInfo serviceInfo = new DiscoveryClientServiceInfo();
+			DiscoveryClientService serviceInfo = new DiscoveryClientService();
 			serviceInfo.setServiceName(model.getServiceName());
 			serviceInfo.setServiceId(model.getServiceId());
-			serviceInfo.setIp(model.getIp());
+			serviceInfo.setHost(model.getIp());
 			serviceInfo.setPort(model.getPort());
 			serviceInfo.setExtraData(model.getExtraData());
 			serviceManager.registerService(serviceInfo);

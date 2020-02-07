@@ -10,7 +10,7 @@ import java.util.Map;
  * @author zai
  * 2019-10-04 16:14:45
  */
-public class DiscoveryClientServiceInfo {
+public class DiscoveryClientService {
 	
 	/**
 	 * 服务id
@@ -25,7 +25,7 @@ public class DiscoveryClientServiceInfo {
 	/**
 	 * 服务ip地址
 	 */
-	private String ip;
+	private String host;
 	
 	/**
 	 * 服务ip地址
@@ -72,12 +72,12 @@ public class DiscoveryClientServiceInfo {
 		this.loadingCapacity = loadingCapacity;
 	}
 
-	public String getIp() {
-		return ip;
+	public String getHost() {
+		return host;
 	}
 
-	public void setIp(String ip) {
-		this.ip = ip;
+	public void setHost(String ip) {
+		this.host = ip;
 	}
 
 	public int getPort() {

@@ -1,8 +1,5 @@
 package com.xzcode.ggcloud.discovery.server.config;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import com.xzcode.ggcloud.discovery.server.services.ServiceManager;
 
 import xzcode.ggserver.core.server.IGGServer;

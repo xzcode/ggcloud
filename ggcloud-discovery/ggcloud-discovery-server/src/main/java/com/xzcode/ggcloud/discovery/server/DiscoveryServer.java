@@ -28,6 +28,7 @@ public class DiscoveryServer {
 	public void start() {
 		
 		GGServerConfig ggConfig = new GGServerConfig();
+		ggConfig.setPingPongEnabled(true);
 		ggConfig.setProtocolType(ProtocolTypeConstants.TCP);
 		ggConfig.setPort(config.getPort());
 		ggConfig.setBossGroupThreadFactory(new GGThreadFactory("discovery-boss-", false));
@@ -35,9 +36,9 @@ public class DiscoveryServer {
 		ggConfig.init();
 		IGGServer ggServer = new GGServer(ggConfig);
 		
-		ggServer.addEventListener(GGEvents.Connection.OPENED, new ConnActiveEventListener());
+		ggServer.addEventListener(GGEvents.Connection.OPENED, new ConnActiveEventListener(config));
 		
-		ggServer.addEventListener(GGEvents.Connection.CLOSED, new ConnCloseEventListener());
+		ggServer.addEventListener(GGEvents.Connection.CLOSED, new ConnCloseEventListener(config));
 		
 		ggServer.onMessage(DiscoveryRegisterReq.ACTION, new RegisterReqHandler(config));
 		ggServer.onMessage(DiscoveryReportReq.ACTION, new RegisterReqHandler(config));

@@ -12,18 +12,18 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DiscoveryClientServiceGroup {
 	
-	private Map<String, DiscoveryClientServiceInfo> serviceMap = new ConcurrentHashMap<>();
+	private Map<String, DiscoveryClientService> serviceMap = new ConcurrentHashMap<>();
 	
 	
-	public void addServiceInfo(DiscoveryClientServiceInfo discoveryClientServiceInfo) {
-		serviceMap.putIfAbsent(discoveryClientServiceInfo.getServiceId(), discoveryClientServiceInfo);
+	public void addServiceInfo(DiscoveryClientService discoveryClientService) {
+		serviceMap.putIfAbsent(discoveryClientService.getServiceId(), discoveryClientService);
 	}
 	
-	public void removeServiceInfo(String serviceId) {
-		serviceMap.remove(serviceId);
+	public DiscoveryClientService removeServiceInfo(String serviceId) {
+		return serviceMap.remove(serviceId);
 	}
 	
-	public DiscoveryClientServiceInfo getServiceInfo(String serviceId) {
+	public DiscoveryClientService getServiceInfo(String serviceId) {
 		return serviceMap.get(serviceId);
 	}
 	

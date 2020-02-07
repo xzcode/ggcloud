@@ -29,6 +29,7 @@ public class DiscoveryClient {
 
 	public void start() {
 		GGClientConfig ggConfig = new GGClientConfig();
+		ggConfig.setPingPongEnabled(true);
 		ggConfig.setWorkThreadSize(1);
 		ggConfig.setProtocolType(ProtocolTypeConstants.TCP);
 		ggConfig.setWorkerGroupThreadFactory(new GGThreadFactory("discovery-worker-", false));
@@ -110,6 +111,11 @@ public class DiscoveryClient {
 		req.setServiceInfo(serviceInfo);
 		session.send(req);
 
+	}
+	
+	
+	public DiscoveryClientConfig getConfig() {
+		return config;
 	}
 
 }

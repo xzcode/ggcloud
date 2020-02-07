@@ -22,7 +22,11 @@ public class ServiceGroup {
 	 */
 	private Map<String, ServiceInfo> services = new ConcurrentHashMap<>();
 	
-	
+	public ServiceGroup(String serviceName) {
+		super();
+		this.serviceName = serviceName;
+	}
+
 	public void addServiceInfo(ServiceInfo serviceInfo) {
 		services.putIfAbsent(serviceInfo.getServiceId(), serviceInfo);
 	}

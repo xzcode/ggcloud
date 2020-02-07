@@ -69,6 +69,15 @@ public interface IRouterService {
 	public void removeExtraData(String key);
 	
 	/**
+	 * 获取额外数据
+	 * 
+	 * @param key
+	 * @author zai
+	 * 2020-02-07 11:01:55
+	 */
+	public String getExtraData(String key);
+	
+	/**
 	 * 添加额外数据
 	 * 
 	 * @param key
@@ -76,18 +85,16 @@ public interface IRouterService {
 	 * @author zai
 	 * 2020-01-13 17:37:08
 	 */
-	public void addExtraData(String key, Object data);
+	public void addExtraData(String key, String data);
 	
 	/**
-	 * 获取额外数据
+	 * 添加额外数据集合
 	 * 
-	 * @param key
-	 * @param clazz
-	 * @return
+	 * @param extraData
 	 * @author zai
-	 * 2020-01-13 17:37:05
+	 * 2020-02-06 16:42:05
 	 */
-	public <T> T getExtraData(String key, Class<T> clazz);
+	public void addAllExtraData(Map<String, String> extraData);
 	
 	/**
 	 * 获取额外数据集合
@@ -96,8 +103,13 @@ public interface IRouterService {
 	 * @author zai
 	 * 2020-01-13 17:36:46
 	 */
-	public Map<String, Object> getExtraDatas();
+	public Map<String, String> getExtraDatas();
 	
-	
-	
+	/**
+	 * 关闭服务
+	 * 
+	 * @author zai
+	 * 2020-02-06 16:47:04
+	 */
+	public void shutdown();
 }
