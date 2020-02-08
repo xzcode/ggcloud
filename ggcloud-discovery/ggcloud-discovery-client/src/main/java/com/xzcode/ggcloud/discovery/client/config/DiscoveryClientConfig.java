@@ -30,7 +30,7 @@ public class DiscoveryClientConfig {
 	protected GGSession session;
 	
 	//服务管理器
-	protected DiscoveryClientServiceManager discoveryClientServiceManager;
+	protected DiscoveryClientServiceManager discoveryClientServiceManager = new DiscoveryClientServiceManager();
 	
 	//注册中心信息
 	protected List<RegistryInfo> registries = new ArrayList<>();

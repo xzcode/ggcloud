@@ -17,6 +17,6 @@ public interface IDiscoveryClientUpdateServiceListener {
 	 * @author zai
 	 * 2020-02-06 15:07:24
 	 */
-	void onRegister(DiscoveryClientService service);
+	void onUpdate(DiscoveryClientService service);
 
 }

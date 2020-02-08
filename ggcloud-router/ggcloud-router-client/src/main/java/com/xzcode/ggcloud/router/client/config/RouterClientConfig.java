@@ -1,13 +1,17 @@
 package com.xzcode.ggcloud.router.client.config;
 
 import java.nio.charset.Charset;
+import java.util.UUID;
 
+import com.xzcode.ggcloud.discovery.client.DiscoveryClient;
 import com.xzcode.ggcloud.router.client.RouterClient;
 import com.xzcode.ggcloud.router.client.filter.RouteReceiveMessageFilter;
 import com.xzcode.ggcloud.router.client.router.service.IRouterPackHandler;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceProvider;
+import com.xzcode.ggcloud.router.client.router.service.impl.DefaultDiscoveryServicePorvider;
 import com.xzcode.ggcloud.router.client.router.service.impl.DefaultServicePorvider;
 import com.xzcode.ggcloud.router.client.router.service.impl.RouterUsereIdMetadataPackHandler;
+import com.xzcode.ggcloud.router.common.constant.RouterServiceExtraDataKeys;
 import com.xzcode.ggcloud.router.common.meta.impl.RouterSessionIdMetadataProvider;
 import com.xzcode.ggcloud.router.common.meta.impl.RouterSessionIdMetadataResolver;
 
@@ -30,6 +34,11 @@ public class RouterClientConfig {
 	 * 路由组id
 	 */
 	protected String routerGroupId;
+	
+	/**
+	 * 注册中心客户端
+	 */
+	protected DiscoveryClient discoveryClient;
 	
 	/**
 	 * 路由客户端对象
@@ -98,6 +107,7 @@ public class RouterClientConfig {
 			throw new NullPointerException("Parameter 'routingServer' cannot be null!!");
 		}
 		this.routingServer = routingServer;
+		
 	}
 
 	/**
@@ -122,15 +132,25 @@ public class RouterClientConfig {
 		if (packHandler == null) {
 			packHandler = new RouterUsereIdMetadataPackHandler(this);
 		}
+		
+		this.routingServer.addBeforeDeserializeFilter(new RouteReceiveMessageFilter(this));
+		
+		if (routerGroupId == null) {
+			routerGroupId = UUID.randomUUID().toString();
+		}
+
+		DiscoveryClient discoveryClient = getDiscoveryClient();
+		if (discoveryClient != null) {
+			discoveryClient.getConfig().addExtraData(RouterServiceExtraDataKeys.ROUTER_SERVICE_GROUP, getRouterGroupId());
+			discoveryClient.updateService();
+			
+			serviceProvider = new DefaultDiscoveryServicePorvider(this);
+		}
+		
 		if (serviceProvider == null) {
 			serviceProvider = new DefaultServicePorvider(this);
 		}
 		
-		if (routerGroupId == null) {
-			routerGroupId = String.valueOf(System.nanoTime());
-		}
-		
-		this.routingServer.addBeforeDeserializeFilter(new RouteReceiveMessageFilter(this));
 	}
 
 	public NioEventLoopGroup getExecutor() {
@@ -241,6 +261,14 @@ public class RouterClientConfig {
 	
 	public void setRouterClientChannelPoolMaxSize(int routerClientChannelPoolMaxSize) {
 		this.routerClientChannelPoolMaxSize = routerClientChannelPoolMaxSize;
+	}
+	
+	public DiscoveryClient getDiscoveryClient() {
+		return discoveryClient;
+	}
+	
+	public void setDiscoveryClient(DiscoveryClient discoveryClient) {
+		this.discoveryClient = discoveryClient;
 	}
 	
 }

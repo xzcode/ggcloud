@@ -32,14 +32,9 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
 	protected RouterClientConfig config;
 	
 	/**
-	 * 注册中心客户端
-	 */
-	protected DiscoveryClient discoveryClient;
-	
-	/**
 	 * 服务管理器
 	 */
-	protected DiscoveryClientServiceManager serviceManager;
+	protected DiscoveryClientServiceManager discoveryClientServiceManager;
 	
 	/**
 	 * 添加路由服务监听器
@@ -62,28 +57,41 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
 	protected Map<String, IRouterService> actionServiceCache = new ConcurrentHashMap<>();
 	
 	
-	public DefaultDiscoveryServicePorvider(RouterClientConfig config, DiscoveryClient discoveryClient) {
+	public DefaultDiscoveryServicePorvider(RouterClientConfig config) {
+		DiscoveryClient discoveryClient = config.getDiscoveryClient();
 		this.config = config;
-		this.serviceManager = discoveryClient.getConfig().getServiceManager();
+		this.discoveryClientServiceManager = discoveryClient.getConfig().getServiceManager();
+		
 		//添加注册中心服务管器的服务注册监听器
-		this.serviceManager.addRegisterListener(service -> {
+		this.discoveryClientServiceManager.addRegisterListener(service -> {
 			//优先移除旧服务
 			removeService(service.getServiceId());
 			//注册路由服务
 			registerRouterService(service);
 		});
+		
 		//添加注册中心服务管器的服务取消注册监听器
-		this.serviceManager.addUnregisterListener(service -> {
+		this.discoveryClientServiceManager.addUnregisterListener(service -> {
 			removeService(service.getServiceId());
 		});
+		
 		//添加注册中心服务管器的服务更新监听器
-		this.serviceManager.addUpdateListener(service -> {
+		this.discoveryClientServiceManager.addUpdateListener(service -> {
+			
 			IRouterService routerService = getService(service.getServiceId());
 			if (routerService == null) {
 				registerRouterService(service);
 				return;
 			}
+			
 		});
+		
+		List<DiscoveryClientService> serviceList = this.discoveryClientServiceManager.getServiceList();
+		for (DiscoveryClientService discoveryClientService : serviceList) {
+			//注册路由服务
+			registerRouterService(discoveryClientService);
+		}
+		
 	}
 	
 	/**

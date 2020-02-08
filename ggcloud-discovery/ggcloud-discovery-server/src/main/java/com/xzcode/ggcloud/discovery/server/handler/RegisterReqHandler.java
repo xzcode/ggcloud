@@ -34,6 +34,16 @@ public class RegisterReqHandler implements IRequestMessageHandler<DiscoveryRegis
 	public void handle(Request<DiscoveryRegisterReq> request) {
 		GGSession session = request.getSession();
 		DiscoveryRegisterReq req = request.getMessage();
+		String serverAuthToken = config.getAuthToken();
+		//判断认证token是否正确
+		if (serverAuthToken != null && !serverAuthToken.isEmpty()) {
+			String clientAuthToken = req.getAuthToken();
+			if (clientAuthToken == null || clientAuthToken.isEmpty() || !clientAuthToken.equals(serverAuthToken)) {
+				session.send(new DiscoveryRegisterResp(false, "Auth Token Is Incorrect"));
+				return;
+			}
+			
+		}
 		ServiceInfoModel infoModel = req.getServiceInfo();
 		ServiceInfo serviceInfo = session.getAttribute(DiscoveryServerSessionKeys.SERVICE_INFO, ServiceInfo.class);
 		if (serviceInfo == null) {

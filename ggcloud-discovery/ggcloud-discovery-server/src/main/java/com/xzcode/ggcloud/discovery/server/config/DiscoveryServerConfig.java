@@ -1,5 +1,6 @@
 package com.xzcode.ggcloud.discovery.server.config;
 
+import com.xzcode.ggcloud.discovery.common.constant.DiscoveryConstant;
 import com.xzcode.ggcloud.discovery.server.services.ServiceManager;
 
 import xzcode.ggserver.core.server.IGGServer;
@@ -23,7 +24,7 @@ public class DiscoveryServerConfig {
 	private int port = 19394;
 	
 	//认证token
-	private String authToken;
+	private String authToken = DiscoveryConstant.DEFAULT_AUTH_TOKEN;
 	
 	//客户端汇报周期(毫秒)
 	private long clientReportInterval = 30L * 1000L;

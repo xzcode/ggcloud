@@ -1,4 +1,4 @@
-package com.xzcode.ggcloud.router.client.constant;
+package com.xzcode.ggcloud.router.common.constant;
 
 /**
  * 路由服务额外数据key常量类
@@ -13,8 +13,8 @@ public interface RouterServiceExtraDataKeys {
 	String ROUTER_SERVICE_ACTION_ID_PREFIX = "ROUTER_SERVICE_ACTION_ID_PREFIX";
 	
 	/**
-	 * 路由服务标识
+	 * 路由服务组
 	 */
-	String ROUTER_SERVICE_TAG = "ROUTER_SERVICE_ACTION_ID_PREFIX";
+	String ROUTER_SERVICE_GROUP = "ROUTER_SERVICE_GROUP";
 	
 }

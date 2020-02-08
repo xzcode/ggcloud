@@ -5,6 +5,7 @@ import com.xzcode.ggcloud.discovery.client.handler.RegisterRespHandler;
 import com.xzcode.ggcloud.discovery.client.handler.ServiceListRespHandler;
 import com.xzcode.ggcloud.discovery.client.registry.RegistryInfo;
 import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryRegisterReq;
+import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryServiceListReq;
 import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryServiceUpdateReq;
 import com.xzcode.ggcloud.discovery.common.message.req.model.ServiceInfoModel;
 import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryRegisterResp;
@@ -98,6 +99,9 @@ public class DiscoveryClient {
 	 */
 	public void updateService() {
 		GGSession session = config.getSession();
+		if (session == null) {
+			return;
+		}
 		DiscoveryServiceUpdateReq req = new DiscoveryServiceUpdateReq();
 		ServiceInfoModel serviceInfo = new ServiceInfoModel();
 		
@@ -111,6 +115,13 @@ public class DiscoveryClient {
 		req.setServiceInfo(serviceInfo);
 		session.send(req);
 
+	}
+	
+	public void syncServiceInfos() {
+		GGSession session = config.getSession();
+		if (session != null) {
+			session.send(DiscoveryServiceListReq.DEFAULT_INSTANT);
+		}
 	}
 	
 	

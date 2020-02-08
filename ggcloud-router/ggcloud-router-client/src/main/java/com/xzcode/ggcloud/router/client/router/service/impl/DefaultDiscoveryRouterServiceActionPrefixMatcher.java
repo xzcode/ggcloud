@@ -1,8 +1,8 @@
 package com.xzcode.ggcloud.router.client.router.service.impl;
 
 import com.xzcode.ggcloud.discovery.client.services.DiscoveryClientService;
-import com.xzcode.ggcloud.router.client.constant.RouterServiceExtraDataKeys;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceMatcher;
+import com.xzcode.ggcloud.router.common.constant.RouterServiceExtraDataKeys;
 
 import xzcode.ggserver.core.common.message.Pack;
 

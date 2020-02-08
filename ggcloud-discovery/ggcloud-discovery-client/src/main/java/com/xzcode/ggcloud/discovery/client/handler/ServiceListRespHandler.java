@@ -12,7 +12,7 @@ import xzcode.ggserver.core.common.message.request.Request;
 import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
 
 /**
- * 注册响应处理
+ * 服务列表推送处理
  * 
  * 
  * @author zai

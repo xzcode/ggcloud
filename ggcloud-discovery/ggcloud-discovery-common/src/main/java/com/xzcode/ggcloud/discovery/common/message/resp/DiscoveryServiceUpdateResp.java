@@ -20,7 +20,7 @@ public class DiscoveryServiceUpdateResp  implements IMessage{
 	}
 	
 	/**
-	 * 服务列表
+	 * 服务信息
 	 */
 	private ServiceInfoModel serviceInfo;
 	

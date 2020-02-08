@@ -17,6 +17,12 @@
 			<groupId>xzcode</groupId>
 			<artifactId>ggserver-core-client</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>xzcode</groupId>
+			<artifactId>ggcloud-discovery-client</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 
 	</dependencies>
 </project>

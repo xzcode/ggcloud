@@ -1,6 +1,7 @@
 package com.xzcode.ggcloud.discovery.client.services;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -130,6 +131,12 @@ public class DiscoveryClientServiceManager {
 			DiscoveryClientService oldService = groups.getServiceInfo(service.getServiceId());
 			if (oldService != null) {
 				oldService.setExtraData(service.getExtraData());
+				
+				if (this.updateListeners != null) {
+					for (IDiscoveryClientUpdateServiceListener listener : updateListeners) {
+						listener.onUpdate(service);						
+					}
+				}
 			}
 		}
 	}
@@ -187,6 +194,30 @@ public class DiscoveryClientServiceManager {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * 获取服务列表
+	 * 
+	 * @return
+	 * @author zai
+	 * 2020-02-04 18:53:42
+	 */
+	public List<DiscoveryClientService> getServiceList() {
+		List<DiscoveryClientService> list = new ArrayList<>();
+		
+		for (Entry<String, DiscoveryClientServiceGroup> groupEntry : serviceGroups.entrySet()) {
+			
+			DiscoveryClientServiceGroup serviceGroup = groupEntry.getValue();
+			Map<String, DiscoveryClientService> services = serviceGroup.getServices();
+			Iterator<Entry<String, DiscoveryClientService>> serviceIterator = services.entrySet().iterator();
+			
+			while (serviceIterator.hasNext()) {
+				DiscoveryClientService serviceInfo = (DiscoveryClientService) serviceIterator.next().getValue();
+				list.add(serviceInfo);
+			}
+		}
+		return list;
 	}
 	
 }

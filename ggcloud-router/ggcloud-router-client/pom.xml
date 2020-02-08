@@ -26,11 +26,6 @@
 			<artifactId>ggcloud-router-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>xzcode</groupId>
-			<artifactId>ggcloud-discovery-client</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 
 	</dependencies>
 </project>

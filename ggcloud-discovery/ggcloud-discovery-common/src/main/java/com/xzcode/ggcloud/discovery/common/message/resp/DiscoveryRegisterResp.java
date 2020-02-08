@@ -38,6 +38,10 @@ public class DiscoveryRegisterResp implements IMessage{
 		super();
 		this.success = success;
 	}
+	public DiscoveryRegisterResp(boolean success, String message) {
+		this.success = success;
+		this.message = message;
+	}
 
 	public DiscoveryRegisterResp() {
 		super();

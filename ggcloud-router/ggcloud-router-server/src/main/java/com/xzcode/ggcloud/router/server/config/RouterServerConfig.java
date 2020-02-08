@@ -1,5 +1,6 @@
 package com.xzcode.ggcloud.router.server.config;
 
+import com.xzcode.ggcloud.discovery.client.DiscoveryClient;
 import com.xzcode.ggcloud.router.common.meta.impl.RouterSessionIdMetadataProvider;
 import com.xzcode.ggcloud.router.common.meta.impl.RouterSessionIdMetadataResolver;
 import com.xzcode.ggcloud.router.server.session.RouterServerSessionFactory;
@@ -17,6 +18,10 @@ import xzcode.ggserver.core.server.config.GGServerConfig;
 public class RouterServerConfig extends GGServerConfig{
 	
 	protected IChannelGroupManager channelGroupManager;
+	
+	protected String routerGroupId;
+	
+	protected DiscoveryClient discoveryClient;
 
 	@Override
 	public void init() {
@@ -39,6 +44,22 @@ public class RouterServerConfig extends GGServerConfig{
 
 	public void setChannelGroupManager(IChannelGroupManager channelGroupManager) {
 		this.channelGroupManager = channelGroupManager;
+	}
+	
+	public void setDiscoveryClient(DiscoveryClient discoveryClient) {
+		this.discoveryClient = discoveryClient;
+	}
+	
+	public DiscoveryClient getDiscoveryClient() {
+		return discoveryClient;
+	}
+	
+	public String getRouterGroupId() {
+		return routerGroupId;
+	}
+	
+	public void setRouterGroupId(String routerGroup) {
+		this.routerGroupId = routerGroup;
 	}
 	
 }
