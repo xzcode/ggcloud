@@ -7,8 +7,8 @@ import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.xzcode.ggcloud.discovery.client.DiscoveryClient;
-import com.xzcode.ggcloud.discovery.client.services.DiscoveryClientService;
-import com.xzcode.ggcloud.discovery.client.services.DiscoveryClientServiceManager;
+import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
+import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
 import com.xzcode.ggcloud.router.client.router.service.IRouterService;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceProvider;
@@ -34,7 +34,7 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
 	/**
 	 * 服务管理器
 	 */
-	protected DiscoveryClientServiceManager discoveryClientServiceManager;
+	protected ServiceManager serviceManager;
 	
 	/**
 	 * 添加路由服务监听器
@@ -60,10 +60,10 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
 	public DefaultDiscoveryServicePorvider(RouterClientConfig config) {
 		DiscoveryClient discoveryClient = config.getDiscoveryClient();
 		this.config = config;
-		this.discoveryClientServiceManager = discoveryClient.getConfig().getServiceManager();
+		this.serviceManager = discoveryClient.getConfig().getServiceManager();
 		
 		//添加注册中心服务管器的服务注册监听器
-		this.discoveryClientServiceManager.addRegisterListener(service -> {
+		this.serviceManager.addRegisterListener(service -> {
 			//优先移除旧服务
 			removeService(service.getServiceId());
 			//注册路由服务
@@ -71,25 +71,24 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
 		});
 		
 		//添加注册中心服务管器的服务取消注册监听器
-		this.discoveryClientServiceManager.addUnregisterListener(service -> {
+		this.serviceManager.addUnregisterListener(service -> {
 			removeService(service.getServiceId());
 		});
 		
 		//添加注册中心服务管器的服务更新监听器
-		this.discoveryClientServiceManager.addUpdateListener(service -> {
+		this.serviceManager.addUpdateListener(service -> {
 			
 			IRouterService routerService = getService(service.getServiceId());
-			if (routerService == null) {
-				registerRouterService(service);
-				return;
+			if (routerService != null) {
+				routerService.addAllExtraData(service.getExtraData());
 			}
 			
 		});
 		
-		List<DiscoveryClientService> serviceList = this.discoveryClientServiceManager.getServiceList();
-		for (DiscoveryClientService discoveryClientService : serviceList) {
+		List<ServiceInfo> serviceList = this.serviceManager.getServiceList();
+		for (ServiceInfo serviceInfo : serviceList) {
 			//注册路由服务
-			registerRouterService(discoveryClientService);
+			registerRouterService(serviceInfo);
 		}
 		
 	}
@@ -101,7 +100,7 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
 	 * @author zai
 	 * 2020-02-06 18:24:17
 	 */
-	private void registerRouterService(DiscoveryClientService service) {
+	private void registerRouterService(ServiceInfo service) {
 		//创建新服务对象
 		DefaultRouterService routerService = new DefaultRouterService(config, service.getServiceId());
         routerService.setHost(service.getHost());

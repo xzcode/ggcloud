@@ -8,9 +8,9 @@ import xzcode.ggserver.core.common.message.model.IMessage;
  * @author zai
  * 2020-02-04 11:07:41
  */
-public class DiscoveryServiceDownResp implements IMessage{
+public class DiscoveryServiceUnregisterResp implements IMessage{
 	
-	public static final String ACTION = "DISCOVERY.SERVICE.DOWN.RESP";
+	public static final String ACTION = "DISCOVERY.SERVICE.UNREGISTER.RESP";
 	
 	@Override
 	public String getActionId() {

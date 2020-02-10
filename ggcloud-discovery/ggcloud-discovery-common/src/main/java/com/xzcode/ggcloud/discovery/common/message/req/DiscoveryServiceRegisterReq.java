@@ -11,9 +11,9 @@ import xzcode.ggserver.core.common.message.model.IMessage;
  * @author zai
  * 2019-10-04 16:43:22
  */
-public class DiscoveryRegisterReq implements IMessage {
+public class DiscoveryServiceRegisterReq implements IMessage {
 	
-	public static final String ACTION = "DISCOVERY.REGISTER.REQ";
+	public static final String ACTION = "GG.DISCOVERY.SERVICE.REGISTER.REQ";
 	
 	@Override
 	public String getActionId() {
@@ -27,10 +27,10 @@ public class DiscoveryRegisterReq implements IMessage {
 	private ServiceInfoModel serviceInfo;
 	
 
-	public DiscoveryRegisterReq() {
+	public DiscoveryServiceRegisterReq() {
 	}
 
-	public DiscoveryRegisterReq(ServiceInfoModel serviceInfo) {
+	public DiscoveryServiceRegisterReq(ServiceInfoModel serviceInfo) {
 		this.serviceInfo = serviceInfo;
 	}
 

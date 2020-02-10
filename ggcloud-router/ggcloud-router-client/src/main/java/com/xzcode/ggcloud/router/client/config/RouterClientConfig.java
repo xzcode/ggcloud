@@ -142,8 +142,6 @@ public class RouterClientConfig {
 		DiscoveryClient discoveryClient = getDiscoveryClient();
 		if (discoveryClient != null) {
 			discoveryClient.getConfig().addExtraData(RouterServiceExtraDataKeys.ROUTER_SERVICE_GROUP, getRouterGroupId());
-			discoveryClient.updateService();
-			
 			serviceProvider = new DefaultDiscoveryServicePorvider(this);
 		}
 		

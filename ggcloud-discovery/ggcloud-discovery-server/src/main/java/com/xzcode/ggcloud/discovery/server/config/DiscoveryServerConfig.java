@@ -1,7 +1,7 @@
 package com.xzcode.ggcloud.discovery.server.config;
 
 import com.xzcode.ggcloud.discovery.common.constant.DiscoveryConstant;
-import com.xzcode.ggcloud.discovery.server.services.ServiceManager;
+import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 
 import xzcode.ggserver.core.server.IGGServer;
 

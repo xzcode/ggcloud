@@ -1,6 +1,6 @@
 package com.xzcode.ggcloud.router.client.router.service.impl;
 
-import com.xzcode.ggcloud.discovery.client.services.DiscoveryClientService;
+import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceMatcher;
 import com.xzcode.ggcloud.router.common.constant.RouterServiceExtraDataKeys;
 
@@ -17,7 +17,7 @@ public class DefaultDiscoveryRouterServiceActionPrefixMatcher implements IRouter
 	private String prefix;
 	
 
-	public DefaultDiscoveryRouterServiceActionPrefixMatcher(DiscoveryClientService service) {
+	public DefaultDiscoveryRouterServiceActionPrefixMatcher(ServiceInfo service) {
 		prefix = service.getExtraData().get(RouterServiceExtraDataKeys.ROUTER_SERVICE_ACTION_ID_PREFIX);
 	}
 

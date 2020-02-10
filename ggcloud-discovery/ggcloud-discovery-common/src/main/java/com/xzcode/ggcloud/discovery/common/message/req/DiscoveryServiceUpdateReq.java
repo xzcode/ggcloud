@@ -1,6 +1,7 @@
 package com.xzcode.ggcloud.discovery.common.message.req;
 
-import com.xzcode.ggcloud.discovery.common.message.req.model.ServiceInfoModel;
+import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
+
 import xzcode.ggserver.core.common.message.model.IMessage;
 
 /**
@@ -11,7 +12,7 @@ import xzcode.ggserver.core.common.message.model.IMessage;
  */
 public class DiscoveryServiceUpdateReq implements IMessage{
 	
-	public static final String ACTION = "DISCOVERY.SERVICE.UPDATE.REQ";
+	public static final String ACTION = "GG.DISCOVERY.SERVICE.UPDATE.REQ";
 	
 	@Override
 	public String getActionId() {
@@ -19,30 +20,22 @@ public class DiscoveryServiceUpdateReq implements IMessage{
 	}
 	
 	//服务信息
-	private ServiceInfoModel serviceInfo;
-	
-	
+	private ServiceInfo serviceInfo;
 
 	public DiscoveryServiceUpdateReq() {
+		
 	}
-	
-	
 
-	public DiscoveryServiceUpdateReq(ServiceInfoModel serviceInfo) {
+	public DiscoveryServiceUpdateReq(ServiceInfo serviceInfo) {
 		this.serviceInfo = serviceInfo;
 	}
 
-
-
-	public ServiceInfoModel getServiceInfo() {
+	public ServiceInfo getServiceInfo() {
 		return serviceInfo;
 	}
 
-	public void setServiceInfo(ServiceInfoModel serviceInfo) {
+	public void setServiceInfo(ServiceInfo serviceInfo) {
 		this.serviceInfo = serviceInfo;
 	}
-
-	
-	
 	
 }

@@ -1,15 +1,10 @@
 package com.xzcode.ggcloud.discovery.server.handler;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryServiceUpdateReq;
-import com.xzcode.ggcloud.discovery.common.message.req.model.ServiceInfoModel;
-import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceListResp;
 import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceUpdateResp;
+import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
+import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
-import com.xzcode.ggcloud.discovery.server.services.ServiceInfo;
-import com.xzcode.ggcloud.discovery.server.services.ServiceManager;
 
 import xzcode.ggserver.core.common.message.request.Request;
 import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
@@ -25,20 +20,26 @@ import xzcode.ggserver.core.common.session.GGSession;
 public class ServiceUpdateReqHandler implements IRequestMessageHandler<DiscoveryServiceUpdateReq>{
 	
 	private DiscoveryServerConfig config;
-	
 
 	public ServiceUpdateReqHandler(DiscoveryServerConfig config) {
 		this.config = config;
 	}
 
-
 	@Override
 	public void handle(Request<DiscoveryServiceUpdateReq> request) {
 		GGSession session = request.getSession();
+		DiscoveryServiceUpdateReq req = request.getMessage();
 		ServiceManager serviceManager = config.getServiceManager();
 		
-		DiscoveryServiceUpdateResp resp = new DiscoveryServiceUpdateResp();
+		ServiceInfo service = req.getServiceInfo();
+		service.setSession(session);
+		service.setHost(session.getHost());
+		service.setPort(session.getPort());
 		
+		serviceManager.updateService(service);
+		
+		ServiceInfo updated = serviceManager.getService(service.getServiceId());
+		DiscoveryServiceUpdateResp resp = new DiscoveryServiceUpdateResp(updated);
 		
 		session.send(resp);
 	}

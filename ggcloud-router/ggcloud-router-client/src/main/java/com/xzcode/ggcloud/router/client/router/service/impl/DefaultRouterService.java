@@ -25,6 +25,7 @@ import xzcode.ggserver.core.common.executor.ITaskExecutor;
 import xzcode.ggserver.core.common.future.GGFailedFuture;
 import xzcode.ggserver.core.common.future.IGGFuture;
 import xzcode.ggserver.core.common.message.Pack;
+import xzcode.ggserver.core.common.session.manager.ISessionManager;
 
 /**
  * 默认路由服务
@@ -211,7 +212,8 @@ public class DefaultRouterService implements IRouterService{
 	@Override
 	public void shutdown() {
 		this.shutdown = true;
-		this.distClient.shutdown();
+		ISessionManager sessionManager = this.distClient.getSessionManager();
+		sessionManager.clearAllSession();
 		config.getRoutingServer().emitEvent(new EventData<IRouterService>(RouterClientEvents.RouterService.SHUTDOWN, this));
 	}
 

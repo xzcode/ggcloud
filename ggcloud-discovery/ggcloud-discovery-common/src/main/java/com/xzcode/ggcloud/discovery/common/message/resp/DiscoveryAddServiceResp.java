@@ -5,14 +5,14 @@ import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
 import xzcode.ggserver.core.common.message.model.IMessage;
 
 /**
- * 服务更新推送
+ * 新增服务推送
  * 
  * @author zai
- * 2020-02-04 11:34:37
+ * 2020-02-10 19:43:35
  */
-public class DiscoveryServiceUpdateResp  implements IMessage{
+public class DiscoveryAddServiceResp  implements IMessage{
 	
-	public static final String ACTION = "DISCOVERY.SERVICE.UPDATE.RESP";
+	public static final String ACTION = "GG.DISCOVERY.ADD.SERVICE.RESP";
 	
 	@Override
 	public String getActionId() {
@@ -25,11 +25,11 @@ public class DiscoveryServiceUpdateResp  implements IMessage{
 	private ServiceInfo serviceInfo;
 	
 
-	public DiscoveryServiceUpdateResp() {
+	public DiscoveryAddServiceResp() {
 		
 	}
 
-	public DiscoveryServiceUpdateResp(ServiceInfo serviceInfo) {
+	public DiscoveryAddServiceResp(ServiceInfo serviceInfo) {
 		super();
 		this.serviceInfo = serviceInfo;
 	}

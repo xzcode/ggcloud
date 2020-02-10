@@ -1,8 +1,7 @@
 package com.xzcode.ggcloud.discovery.server;
 
-import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryRegisterReq;
-import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryReportReq;
 import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryServiceListReq;
+import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryServiceRegisterReq;
 import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryServiceUpdateReq;
 import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
 import com.xzcode.ggcloud.discovery.server.events.ConnActiveEventListener;
@@ -44,8 +43,7 @@ public class DiscoveryServer {
 		
 		ggServer.addEventListener(GGEvents.Connection.CLOSED, new ConnCloseEventListener(config));
 		
-		ggServer.onMessage(DiscoveryRegisterReq.ACTION, new RegisterReqHandler(config));
-		ggServer.onMessage(DiscoveryReportReq.ACTION, new RegisterReqHandler(config));
+		ggServer.onMessage(DiscoveryServiceRegisterReq.ACTION, new RegisterReqHandler(config));
 		ggServer.onMessage(DiscoveryServiceListReq.ACTION, new ServiceListReqHandler(config));
 		ggServer.onMessage(DiscoveryServiceUpdateReq.ACTION, new ServiceUpdateReqHandler(config));
 		

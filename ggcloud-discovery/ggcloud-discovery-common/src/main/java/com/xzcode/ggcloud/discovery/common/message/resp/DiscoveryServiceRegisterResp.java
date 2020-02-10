@@ -9,9 +9,9 @@ import xzcode.ggserver.core.common.message.model.IMessage;
  * @author zai
  * 2019-10-04 16:44:38
  */
-public class DiscoveryRegisterResp implements IMessage{
+public class DiscoveryServiceRegisterResp implements IMessage{
 	
-	public static final String ACTION = "DISCOVERY.REGISTER.RESP";
+	public static final String ACTION = "DISCOVERY.SERVICE.REGISTER.RESP";
 	
 	@Override
 	public String getActionId() {
@@ -34,16 +34,16 @@ public class DiscoveryRegisterResp implements IMessage{
 	private String message;
 	
 
-	public DiscoveryRegisterResp(boolean success) {
+	public DiscoveryServiceRegisterResp(boolean success) {
 		super();
 		this.success = success;
 	}
-	public DiscoveryRegisterResp(boolean success, String message) {
+	public DiscoveryServiceRegisterResp(boolean success, String message) {
 		this.success = success;
 		this.message = message;
 	}
 
-	public DiscoveryRegisterResp() {
+	public DiscoveryServiceRegisterResp() {
 		super();
 	}
 

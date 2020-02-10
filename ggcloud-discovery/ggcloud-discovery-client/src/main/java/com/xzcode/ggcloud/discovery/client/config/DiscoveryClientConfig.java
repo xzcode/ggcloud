@@ -1,17 +1,21 @@
 package com.xzcode.ggcloud.discovery.client.config;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import com.xzcode.ggcloud.discovery.client.DiscoveryClient;
 import com.xzcode.ggcloud.discovery.client.registry.RegistryInfo;
 import com.xzcode.ggcloud.discovery.client.registry.RegistryManager;
-import com.xzcode.ggcloud.discovery.client.services.DiscoveryClientServiceManager;
 import com.xzcode.ggcloud.discovery.common.constant.DiscoveryConstant;
+import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 import com.xzcode.ggcloud.discovery.common.util.DiscoveryServiceIdUtil;
 
 import xzcode.ggserver.core.client.GGClient;
+import xzcode.ggserver.core.common.executor.DefaultTaskExecutor;
+import xzcode.ggserver.core.common.executor.ITaskExecutor;
 import xzcode.ggserver.core.common.session.GGSession;
 
 /**
@@ -23,18 +27,22 @@ import xzcode.ggserver.core.common.session.GGSession;
  */
 public class DiscoveryClientConfig {
 	
+	//discoveryClient对象
+	protected DiscoveryClient discoveryClient;
+	
 	//GGClient对象
 	protected GGClient ggclient;
+	
+	protected ITaskExecutor taskExecutor = new DefaultTaskExecutor("discovery-client-", 1);
 	
 	//GGSession对象
 	protected GGSession session;
 	
 	//服务管理器
-	protected DiscoveryClientServiceManager discoveryClientServiceManager = new DiscoveryClientServiceManager();
+	protected ServiceManager serviceManager = new ServiceManager();
 	
 	//注册中心信息
 	protected List<RegistryInfo> registries = new ArrayList<>();
-	
 	
 	//注册中心管理器
 	protected RegistryManager registryManager = new RegistryManager(registries);
@@ -63,11 +71,14 @@ public class DiscoveryClientConfig {
 	//所在分区
 	protected String zone = "default";
 	
+	//额外数据更新次数
+	protected AtomicInteger extraDataUpdateTimes = new AtomicInteger(0);
+	
 
 	/**
 	 * 额外数据
 	 */
-	private Map<String, String> extraData;
+	private Map<String, String> extraData = new ConcurrentHashMap<>(6);
 	
 	/**
 	 * 添加额外参数
@@ -78,10 +89,8 @@ public class DiscoveryClientConfig {
 	 * 2020-02-04 11:19:05
 	 */
 	public void addExtraData(String key, String value) {
-		if (extraData == null) {
-			extraData = new LinkedHashMap<>();
-		}
 		extraData.put(key, value);
+		extraDataUpdateTimes.incrementAndGet();
 	}
 	
 	public Map<String, String> getExtraData() {
@@ -100,12 +109,12 @@ public class DiscoveryClientConfig {
 		this.ggclient = ggclient;
 	}
 
-	public DiscoveryClientServiceManager getServiceManager() {
-		return discoveryClientServiceManager;
+	public ServiceManager getServiceManager() {
+		return serviceManager;
 	}
 
-	public void setServiceManager(DiscoveryClientServiceManager discoveryClientServiceManager) {
-		this.discoveryClientServiceManager = discoveryClientServiceManager;
+	public void setServiceManager(ServiceManager serviceManager) {
+		this.serviceManager = serviceManager;
 	}
 
 	public List<RegistryInfo> getRegistries() {
@@ -194,5 +203,19 @@ public class DiscoveryClientConfig {
 	public GGSession getSession() {
 		return session;
 	}
-
+	
+	public DiscoveryClient getDiscoveryClient() {
+		return discoveryClient;
+	}
+	
+	public void setDiscoveryClient(DiscoveryClient discoveryClient) {
+		this.discoveryClient = discoveryClient;
+	}
+	public ITaskExecutor getTaskExecutor() {
+		return taskExecutor;
+	}
+	
+	public AtomicInteger getExtraDataUpdateTimes() {
+		return extraDataUpdateTimes;
+	}
 }

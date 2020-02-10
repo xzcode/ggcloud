@@ -1,9 +1,9 @@
 package com.xzcode.ggcloud.discovery.server.events;
 
-import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceDownResp;
+import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceUnregisterResp;
+import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
 import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
 import com.xzcode.ggcloud.discovery.server.constant.DiscoveryServerSessionKeys;
-import com.xzcode.ggcloud.discovery.server.services.ServiceInfo;
 
 import xzcode.ggserver.core.common.event.IEventListener;
 import xzcode.ggserver.core.common.event.model.EventData;
@@ -13,9 +13,6 @@ import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 public class ConnCloseEventListener implements IEventListener<Void>{
 	
 	private DiscoveryServerConfig config;
-	
-	
-
 
 	public ConnCloseEventListener(DiscoveryServerConfig config) {
 		super();
@@ -34,8 +31,8 @@ public class ConnCloseEventListener implements IEventListener<Void>{
 		if (serviceInfo == null) {
 			return;
 		}
-		config.getServiceManager().removeServiceInfo(serviceInfo);
-		DiscoveryServiceDownResp resp = new DiscoveryServiceDownResp();
+		config.getServiceManager().removeService(serviceInfo);
+		DiscoveryServiceUnregisterResp resp = new DiscoveryServiceUnregisterResp();
 		resp.setServiceName(serviceInfo.getServiceName());
 		resp.setServiceId(serviceInfo.getServiceId());
 		session.send(resp);

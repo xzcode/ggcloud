@@ -1,80 +1,93 @@
 package com.xzcode.ggcloud.discovery.client;
 
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import com.xzcode.ggcloud.discovery.client.config.DiscoveryClientConfig;
+import com.xzcode.ggcloud.discovery.client.events.ConnCloseEventListener;
+import com.xzcode.ggcloud.discovery.client.events.ConnOpenEventListener;
 import com.xzcode.ggcloud.discovery.client.handler.RegisterRespHandler;
+import com.xzcode.ggcloud.discovery.client.handler.ServiceUnregisterRespHandler;
 import com.xzcode.ggcloud.discovery.client.handler.ServiceListRespHandler;
+import com.xzcode.ggcloud.discovery.client.handler.ServiceUpdateRespHandler;
 import com.xzcode.ggcloud.discovery.client.registry.RegistryInfo;
-import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryRegisterReq;
 import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryServiceListReq;
 import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryServiceUpdateReq;
-import com.xzcode.ggcloud.discovery.common.message.req.model.ServiceInfoModel;
-import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryRegisterResp;
+import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceRegisterResp;
+import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceUnregisterResp;
 import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceListResp;
+import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceUpdateResp;
+import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
 
 import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.constant.ProtocolTypeConstants;
 import xzcode.ggserver.core.common.event.GGEvents;
-import xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
 import xzcode.ggserver.core.common.session.GGSession;
 import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 
 public class DiscoveryClient {
 	
-	
 	private DiscoveryClientConfig config;
 	
 	public DiscoveryClient(DiscoveryClientConfig config) {
 		this.config = config;
+		this.config.setDiscoveryClient(this);
 	}
 
 	public void start() {
 		GGClientConfig ggConfig = new GGClientConfig();
 		ggConfig.setPingPongEnabled(true);
-		ggConfig.setWorkThreadSize(1);
+		ggConfig.setTaskExecutor(config.getTaskExecutor());
 		ggConfig.setProtocolType(ProtocolTypeConstants.TCP);
-		ggConfig.setWorkerGroupThreadFactory(new GGThreadFactory("discovery-worker-", false));
 		ggConfig.init();
 		
 		GGClient ggClient = new GGClient(ggConfig);
 		config.setGGclient(ggClient);
 		
-		ggClient.onMessage(DiscoveryRegisterResp.ACTION, new RegisterRespHandler(config));
+		ggClient.onMessage(DiscoveryServiceRegisterResp.ACTION, new RegisterRespHandler(config));
 		ggClient.onMessage(DiscoveryServiceListResp.ACTION, new ServiceListRespHandler(config));
+		ggClient.onMessage(DiscoveryServiceUpdateResp.ACTION, new ServiceUpdateRespHandler(config));
+		ggClient.onMessage(DiscoveryServiceUnregisterResp.ACTION, new ServiceUnregisterRespHandler(config));
 		
-		ggClient.addEventListener(GGEvents.Connection.CLOSED, e -> {
-			config.getRegistryManager().getRegistriedInfo().setActive(false);
-			//断开连接，触发重连
-			connect();
-		});
-		ggClient.addEventListener(GGEvents.Connection.OPENED, e -> {
-			config.getRegistryManager().getRegistriedInfo().setActive(true);
-			
-			//打开连接，发送注册请求
-			//发送注册请求
-			GGSession session = e.getSession();
-			config.setSession(session);
-			
-			DiscoveryRegisterReq req = new DiscoveryRegisterReq();
-			req.setAuthToken(config.getAuthToken());
-			ServiceInfoModel serviceInfo = new ServiceInfoModel();
-			
-			serviceInfo.setRegion(config.getRegion());
-			serviceInfo.setZone(config.getZone());
-			serviceInfo.setServiceId(config.getServiceId());
-			serviceInfo.setServiceName(config.getServiceName());
-			
-			req.setServiceInfo(serviceInfo);
-			
-			session.send(req);
-			
-		});
+		ggClient.addEventListener(GGEvents.Connection.CLOSED, new ConnCloseEventListener(config));
+		ggClient.addEventListener(GGEvents.Connection.OPENED, new ConnOpenEventListener(config));
+		
 		
 		connect();
 		
+		startCheckTask();
+		
 	}
 	
-	private void connect() {
+	/**
+	 * 启动检查任务
+	 * 
+	 * @author zai
+	 * 2020-02-10 18:58:31
+	 */
+	public void startCheckTask() {
+		this.config.getTaskExecutor().scheduleWithFixedDelay(5, 10, TimeUnit.SECONDS, () -> {
+			checkAndUpdateService();
+		});
+	}
+	
+	/**
+	 * 检查并更新服务信息到注册中心
+	 * 
+	 * @author zai
+	 * 2020-02-10 19:00:52
+	 */
+	public void	checkAndUpdateService() {
+		AtomicInteger extraDataUpdateTimes = config.getExtraDataUpdateTimes();
+		int times = extraDataUpdateTimes.get();
+		if (times > 0) {
+			this.updateService();
+			extraDataUpdateTimes.getAndAdd(-times);
+		}
+	}
+	
+	public void connect() {
 		GGClient ggClient = config.getGGclient();
 		RegistryInfo registry = config.getRegistryManager().getRandomRegistry();
 		ggClient.connect(registry.getDomain(), registry.getPort())
@@ -97,13 +110,14 @@ public class DiscoveryClient {
 	 * @author zai
 	 * 2020-02-04 17:11:08
 	 */
-	public void updateService() {
+	private void updateService() {
 		GGSession session = config.getSession();
 		if (session == null) {
 			return;
 		}
 		DiscoveryServiceUpdateReq req = new DiscoveryServiceUpdateReq();
-		ServiceInfoModel serviceInfo = new ServiceInfoModel();
+		
+		ServiceInfo serviceInfo = new ServiceInfo();
 		
 		serviceInfo.setRegion(config.getRegion());
 		serviceInfo.setZone(config.getZone());

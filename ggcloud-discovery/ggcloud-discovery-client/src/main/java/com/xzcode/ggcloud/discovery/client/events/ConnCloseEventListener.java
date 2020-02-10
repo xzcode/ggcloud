@@ -16,7 +16,9 @@ public class ConnCloseEventListener implements IEventListener<Void>{
 
 	@Override
 	public void onEvent(EventData<Void> eventData) {
-		
+		config.getRegistryManager().getRegistriedInfo().setActive(false);
+		//断开连接，触发重连
+		config.getDiscoveryClient().connect();
 	}
 
 

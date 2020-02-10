@@ -2,7 +2,7 @@ package com.xzcode.ggcloud.discovery.common.message.resp;
 
 import java.util.List;
 
-import com.xzcode.ggcloud.discovery.common.message.req.model.ServiceInfoModel;
+import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
 
 import xzcode.ggserver.core.common.message.model.IMessage;
 
@@ -20,25 +20,24 @@ public class DiscoveryServiceListResp  implements IMessage{
 	public String getActionId() {
 		return ACTION;
 	}
-	
 	/**
 	 * 服务列表
 	 */
-	private List<ServiceInfoModel> serviceList;
+	private List<ServiceInfo> serviceList;
 	
 
 	public DiscoveryServiceListResp() {
 	}
 
-	public DiscoveryServiceListResp(List<ServiceInfoModel> serviceList) {
+	public DiscoveryServiceListResp(List<ServiceInfo> serviceList) {
 		this.serviceList = serviceList;
 	}
 
-	public List<ServiceInfoModel> getServiceList() {
+	public List<ServiceInfo> getServiceList() {
 		return serviceList;
 	}
 
-	public void setServiceList(List<ServiceInfoModel> serviceList) {
+	public void setServiceList(List<ServiceInfo> serviceList) {
 		this.serviceList = serviceList;
 	}
 	
