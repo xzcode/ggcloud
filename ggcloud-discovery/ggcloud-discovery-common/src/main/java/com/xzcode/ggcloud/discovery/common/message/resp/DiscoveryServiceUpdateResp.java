@@ -12,7 +12,7 @@ import xzcode.ggserver.core.common.message.model.IMessage;
  */
 public class DiscoveryServiceUpdateResp  implements IMessage{
 	
-	public static final String ACTION = "DISCOVERY.SERVICE.UPDATE.RESP";
+	public static final String ACTION = "GG.DISCOVERY.SERVICE.UPDATE.RESP";
 	
 	@Override
 	public String getActionId() {

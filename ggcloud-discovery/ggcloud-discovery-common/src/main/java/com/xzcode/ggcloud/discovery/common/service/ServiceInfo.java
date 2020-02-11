@@ -47,9 +47,9 @@ public class ServiceInfo {
 	protected String zone = "default";
 	
 	/**
-	 * 额外数据
+	 * 自定义数据
 	 */
-	private Map<String, String> extraData = new LinkedHashMap<>();;
+	private Map<String, String> customData = new LinkedHashMap<>();;
 	
 	/**
 	 * 服务过期延迟（毫秒）
@@ -62,15 +62,15 @@ public class ServiceInfo {
 	private long timeoutTimestamp;
 	
 	/**
-	 * 添加额外参数
+	 * 添加自定义参数
 	 * 
 	 * @param key
 	 * @param value
 	 * @author zai
 	 * 2020-02-04 11:19:05
 	 */
-	public void addExtraData(String key, String value) {
-		extraData.put(key, value);
+	public void addCustomData(String key, String value) {
+		customData.put(key, value);
 	}
 	
 	/**
@@ -125,11 +125,11 @@ public class ServiceInfo {
 		this.serviceId = serviceId;
 	}
 	
-	public Map<String, String> getExtraData() {
-		return extraData;
+	public Map<String, String> getCustomData() {
+		return customData;
 	}
-	public void setExtraData(Map<String, String> extraData) {
-		this.extraData = extraData;
+	public void setCustomData(Map<String, String> extraData) {
+		this.customData = extraData;
 	}
 	
 	public GGSession getSession() {

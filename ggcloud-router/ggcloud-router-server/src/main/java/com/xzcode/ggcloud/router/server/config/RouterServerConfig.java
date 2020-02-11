@@ -19,7 +19,9 @@ public class RouterServerConfig extends GGServerConfig{
 	
 	protected IChannelGroupManager channelGroupManager;
 	
-	protected String routerGroupId;
+	protected String routerGroup;
+	
+	protected String actionIdPrefix;
 	
 	protected DiscoveryClient discoveryClient;
 
@@ -54,12 +56,20 @@ public class RouterServerConfig extends GGServerConfig{
 		return discoveryClient;
 	}
 	
-	public String getRouterGroupId() {
-		return routerGroupId;
+	public String getRouterGroup() {
+		return routerGroup;
 	}
 	
-	public void setRouterGroupId(String routerGroup) {
-		this.routerGroupId = routerGroup;
+	public void setRouterGroup(String routerGroup) {
+		this.routerGroup = routerGroup;
+	}
+	
+	public String getActionIdPrefix() {
+		return actionIdPrefix;
+	}
+	
+	public void setActionIdPrefix(String actionIdPrefix) {
+		this.actionIdPrefix = actionIdPrefix;
 	}
 	
 }

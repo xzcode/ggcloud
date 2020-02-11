@@ -1,7 +1,7 @@
 package com.xzcode.ggcloud.router.server;
 
 import com.xzcode.ggcloud.discovery.client.DiscoveryClient;
-import com.xzcode.ggcloud.router.common.constant.RouterServiceExtraDataKeys;
+import com.xzcode.ggcloud.router.common.constant.RouterServiceCustomDataKeys;
 import com.xzcode.ggcloud.router.common.message.disconnect.req.RouterDisconnectReq;
 import com.xzcode.ggcloud.router.common.message.register.req.RouterChannelRegisterReq;
 import com.xzcode.ggcloud.router.server.config.RouterServerConfig;
@@ -32,8 +32,8 @@ public class RouterServer implements IGGServer {
 		}
 		DiscoveryClient discoveryClient = config.getDiscoveryClient();
 		if (discoveryClient != null) {
-			discoveryClient.getConfig().addExtraData(RouterServiceExtraDataKeys.ROUTER_SERVICE_GROUP, config.getRouterGroupId());
-			discoveryClient.updateService();
+			discoveryClient.getConfig().addCustomData(RouterServiceCustomDataKeys.ROUTER_SERVICE_GROUP, config.getRouterGroup());
+			discoveryClient.getConfig().addCustomData(RouterServiceCustomDataKeys.ROUTER_SERVICE_ACTION_ID_PREFIX, config.getActionIdPrefix());
 		}
 	}
 

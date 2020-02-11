@@ -15,6 +15,7 @@ import com.xzcode.ggcloud.router.client.router.service.IRouterServiceProvider;
 import com.xzcode.ggcloud.router.client.router.service.listener.IAddRouterServiceListener;
 import com.xzcode.ggcloud.router.client.router.service.listener.IRemoveRouterServiceListener;
 import com.xzcode.ggcloud.router.client.router.service.listener.IRouterServiceListener;
+import com.xzcode.ggcloud.router.common.constant.RouterServiceCustomDataKeys;
 
 import xzcode.ggserver.core.common.message.Pack;
 
@@ -80,7 +81,7 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
 			
 			IRouterService routerService = getService(service.getServiceId());
 			if (routerService != null) {
-				routerService.addAllExtraData(service.getExtraData());
+				routerService.addAllExtraData(service.getCustomData());
 			}
 			
 		});
@@ -101,14 +102,21 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
 	 * 2020-02-06 18:24:17
 	 */
 	private void registerRouterService(ServiceInfo service) {
+		Map<String, String> customData = service.getCustomData();
+		String routerGroup = customData.get(RouterServiceCustomDataKeys.ROUTER_SERVICE_GROUP);
+		if (!routerGroup.equals(config.getRouterGroup())) {
+			return;
+		}
+		String actionIdPrefix = customData.get(RouterServiceCustomDataKeys.ROUTER_SERVICE_ACTION_ID_PREFIX);
+		
 		//创建新服务对象
 		DefaultRouterService routerService = new DefaultRouterService(config, service.getServiceId());
         routerService.setHost(service.getHost());
         routerService.setPort(service.getPort());
         routerService.setServiceId(service.getServiceId());
         routerService.setServcieName(service.getServiceName());
-        routerService.addAllExtraData(service.getExtraData());
-        routerService.setServiceMatcher(new DefaultDiscoveryRouterServiceActionPrefixMatcher(service));
+        routerService.addAllExtraData(service.getCustomData());
+        routerService.setServiceMatcher(new RouterServiceActionPrefixMatcher(actionIdPrefix));
         addService(routerService);
         routerService.init();
 	}

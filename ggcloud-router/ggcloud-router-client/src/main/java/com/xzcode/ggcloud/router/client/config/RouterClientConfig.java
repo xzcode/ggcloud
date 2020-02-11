@@ -11,7 +11,7 @@ import com.xzcode.ggcloud.router.client.router.service.IRouterServiceProvider;
 import com.xzcode.ggcloud.router.client.router.service.impl.DefaultDiscoveryServicePorvider;
 import com.xzcode.ggcloud.router.client.router.service.impl.DefaultServicePorvider;
 import com.xzcode.ggcloud.router.client.router.service.impl.RouterUsereIdMetadataPackHandler;
-import com.xzcode.ggcloud.router.common.constant.RouterServiceExtraDataKeys;
+import com.xzcode.ggcloud.router.common.constant.RouterServiceCustomDataKeys;
 import com.xzcode.ggcloud.router.common.meta.impl.RouterSessionIdMetadataProvider;
 import com.xzcode.ggcloud.router.common.meta.impl.RouterSessionIdMetadataResolver;
 
@@ -33,7 +33,7 @@ public class RouterClientConfig {
 	/**
 	 * 路由组id
 	 */
-	protected String routerGroupId;
+	protected String routerGroup;
 	
 	/**
 	 * 注册中心客户端
@@ -135,13 +135,13 @@ public class RouterClientConfig {
 		
 		this.routingServer.addBeforeDeserializeFilter(new RouteReceiveMessageFilter(this));
 		
-		if (routerGroupId == null) {
-			routerGroupId = UUID.randomUUID().toString();
+		if (routerGroup == null) {
+			routerGroup = UUID.randomUUID().toString();
 		}
 
 		DiscoveryClient discoveryClient = getDiscoveryClient();
 		if (discoveryClient != null) {
-			discoveryClient.getConfig().addExtraData(RouterServiceExtraDataKeys.ROUTER_SERVICE_GROUP, getRouterGroupId());
+			discoveryClient.getConfig().addCustomData(RouterServiceCustomDataKeys.ROUTER_SERVICE_GROUP, getRouterGroup());
 			serviceProvider = new DefaultDiscoveryServicePorvider(this);
 		}
 		
@@ -244,12 +244,12 @@ public class RouterClientConfig {
 		this.routerClient = routerClient;
 	}
 
-	public String getRouterGroupId() {
-		return routerGroupId;
+	public String getRouterGroup() {
+		return routerGroup;
 	}
 
-	public void setRouterGroupId(String routerGroupId) {
-		this.routerGroupId = routerGroupId;
+	public void setRouterGroup(String routerGroupId) {
+		this.routerGroup = routerGroupId;
 	}
 	
 	

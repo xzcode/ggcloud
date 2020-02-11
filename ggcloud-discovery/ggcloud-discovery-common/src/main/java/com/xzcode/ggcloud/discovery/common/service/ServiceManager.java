@@ -89,12 +89,13 @@ public class ServiceManager {
 					group = new ServiceGroup();
 					serviceGroups.put(service.getServiceName(), group);
 				}
-				group.addServiceInfo(service);
 			}
-			if (this.registerListeners != null) {
-				for (IRegisterServiceListener listener : registerListeners) {
-					listener.onRegister(service);						
-				}
+			
+		}
+		group.addServiceInfo(service);
+		if (this.registerListeners != null) {
+			for (IRegisterServiceListener listener : registerListeners) {
+				listener.onRegister(service);						
 			}
 		}
 		
@@ -131,7 +132,7 @@ public class ServiceManager {
 		if (group != null) {
 			ServiceInfo oldService = group.getServiceInfo(service.getServiceId());
 			if (oldService != null) {
-				oldService.setExtraData(service.getExtraData());
+				oldService.setCustomData(service.getCustomData());
 				
 				if (this.updateListeners != null) {
 					for (IUpdateServiceListener listener : updateListeners) {

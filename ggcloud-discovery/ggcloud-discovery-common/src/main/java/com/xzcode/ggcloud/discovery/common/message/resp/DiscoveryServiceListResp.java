@@ -14,7 +14,7 @@ import xzcode.ggserver.core.common.message.model.IMessage;
  */
 public class DiscoveryServiceListResp  implements IMessage{
 	
-	public static final String ACTION = "DISCOVERY.SERVICE.LIST.RESP";
+	public static final String ACTION = "GG.DISCOVERY.SERVICE.LIST.RESP";
 	
 	@Override
 	public String getActionId() {

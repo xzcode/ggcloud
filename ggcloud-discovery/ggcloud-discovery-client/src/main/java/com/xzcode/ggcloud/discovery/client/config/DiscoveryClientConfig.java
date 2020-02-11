@@ -71,34 +71,34 @@ public class DiscoveryClientConfig {
 	//所在分区
 	protected String zone = "default";
 	
-	//额外数据更新次数
-	protected AtomicInteger extraDataUpdateTimes = new AtomicInteger(0);
+	//自定义数据更新次数
+	protected AtomicInteger customDataUpdateTimes = new AtomicInteger(0);
 	
 
 	/**
-	 * 额外数据
+	 * 自定义数据
 	 */
-	private Map<String, String> extraData = new ConcurrentHashMap<>(6);
+	private Map<String, String> customData = new ConcurrentHashMap<>(6);
 	
 	/**
-	 * 添加额外参数
+	 * 添加自定义参数
 	 * 
 	 * @param key
 	 * @param value
 	 * @author zai
 	 * 2020-02-04 11:19:05
 	 */
-	public void addExtraData(String key, String value) {
-		extraData.put(key, value);
-		extraDataUpdateTimes.incrementAndGet();
+	public void addCustomData(String key, String value) {
+		customData.put(key, value);
+		customDataUpdateTimes.incrementAndGet();
 	}
 	
-	public Map<String, String> getExtraData() {
-		return extraData;
+	public Map<String, String> getCustomData() {
+		return customData;
 	}
 	
-	public void setExtraData(Map<String, String> extraData) {
-		this.extraData = extraData;
+	public void setCustomData(Map<String, String> extraData) {
+		this.customData = extraData;
 	}
 
 	public GGClient getGGclient() {
@@ -215,7 +215,7 @@ public class DiscoveryClientConfig {
 		return taskExecutor;
 	}
 	
-	public AtomicInteger getExtraDataUpdateTimes() {
-		return extraDataUpdateTimes;
+	public AtomicInteger getCustomDataUpdateTimes() {
+		return customDataUpdateTimes;
 	}
 }

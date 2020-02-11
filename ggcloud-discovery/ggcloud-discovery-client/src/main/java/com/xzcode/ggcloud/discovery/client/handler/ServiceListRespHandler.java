@@ -32,6 +32,7 @@ public class ServiceListRespHandler implements IRequestMessageHandler<DiscoveryS
 	public void handle(Request<DiscoveryServiceListResp> request) {
 		
 		DiscoveryServiceListResp resp = request.getMessage();
+		//TODO 检查获取服务集合,内容属性存在null值问题
 		List<ServiceInfo> serviceList = resp.getServiceList();
 		
 		if (serviceList == null) {

@@ -39,10 +39,8 @@ public class ServiceUpdateRespHandler implements IRequestMessageHandler<Discover
 		ServiceManager serviceManager = config.getServiceManager();
 		ServiceInfo service = serviceManager.getService(updateModel.getServiceId());
 		if (service != null) {
-			service.getExtraData().putAll(updateModel.getExtraData());
+			service.getCustomData().putAll(updateModel.getCustomData());
 			serviceManager.updateService(service);
-		}else {
-			serviceManager.registerService(service);
 		}
 		
 	}

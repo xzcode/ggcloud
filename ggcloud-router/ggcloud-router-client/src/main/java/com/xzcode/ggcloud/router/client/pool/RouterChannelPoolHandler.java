@@ -53,7 +53,7 @@ public class RouterChannelPoolHandler implements ChannelPoolHandler, IMakePackSu
 		ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
 			@Override
 			public void channelActive(ChannelHandlerContext ctx) throws Exception {
-				ch.writeAndFlush(makePack(new Response(null, RouterChannelRegisterReq.ACTION_ID, new RouterChannelRegisterReq(routerClientConfig.getRouterGroupId()))));
+				ch.writeAndFlush(makePack(new Response(null, RouterChannelRegisterReq.ACTION_ID, new RouterChannelRegisterReq(routerClientConfig.getRouterGroup()))));
 				super.channelActive(ctx);
 				
 			}

@@ -79,7 +79,7 @@ public class DiscoveryClient {
 	 * 2020-02-10 19:00:52
 	 */
 	public void	checkAndUpdateService() {
-		AtomicInteger extraDataUpdateTimes = config.getExtraDataUpdateTimes();
+		AtomicInteger extraDataUpdateTimes = config.getCustomDataUpdateTimes();
 		int times = extraDataUpdateTimes.get();
 		if (times > 0) {
 			this.updateService();
@@ -124,7 +124,7 @@ public class DiscoveryClient {
 		serviceInfo.setServiceId(config.getServiceId());
 		serviceInfo.setServiceName(config.getServiceName());
 		
-		serviceInfo.setExtraData(config.getExtraData());
+		serviceInfo.setCustomData(config.getCustomData());
 		
 		req.setServiceInfo(serviceInfo);
 		session.send(req);

@@ -10,7 +10,7 @@ import xzcode.ggserver.core.common.message.model.IMessage;
  */
 public class DiscoveryServiceUnregisterResp implements IMessage{
 	
-	public static final String ACTION = "DISCOVERY.SERVICE.UNREGISTER.RESP";
+	public static final String ACTION = "GG.DISCOVERY.SERVICE.UNREGISTER.RESP";
 	
 	@Override
 	public String getActionId() {

@@ -106,13 +106,13 @@ public class DefaultRouterService implements IRouterService{
 		
 		//监听连接打开
 		distClient.addEventListener(GGEvents.Connection.OPENED, e -> {
-			LOGGER.warn("RouterService[{}] Channel Opened: {}", config.getRouterGroupId() , e.getChannel());
+			LOGGER.warn("RouterService[{}] Channel Opened: {}", config.getRouterGroup() , e.getChannel());
 			avaliableConnections.incrementAndGet();
 		});
 		
 		//监听连接关闭
 		distClient.addEventListener(GGEvents.Connection.CLOSED, e -> {
-			LOGGER.warn("RouterService[{}] Channel Closed: {}", config.getRouterGroupId(), e.getChannel());
+			LOGGER.warn("RouterService[{}] Channel Closed: {}", config.getRouterGroup(), e.getChannel());
 			int i = avaliableConnections.get();
 			if (i > 0) {
 				i = avaliableConnections.decrementAndGet();				
