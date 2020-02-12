@@ -34,7 +34,6 @@ public class ServiceUpdateReqHandler implements IRequestMessageHandler<Discovery
 		ServiceInfo service = req.getServiceInfo();
 		service.setSession(session);
 		service.setHost(session.getHost());
-		service.setPort(session.getPort());
 		
 		serviceManager.updateService(service);
 		

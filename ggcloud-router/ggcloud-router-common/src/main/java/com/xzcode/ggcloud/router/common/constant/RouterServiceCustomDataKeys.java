@@ -8,9 +8,14 @@ package com.xzcode.ggcloud.router.common.constant;
  */
 public interface RouterServiceCustomDataKeys {
 	/**
-	 * 路由服务自定义数据前缀
+	 * 路由服务指令前缀
 	 */
 	String ROUTER_SERVICE_ACTION_ID_PREFIX = "ROUTER_SERVICE_ACTION_ID_PREFIX";
+	
+	/**
+	 * 路由服务端口
+	 */
+	String ROUTER_SERVICE_PORT = "ROUTER_SERVICE_PORT";
 	
 	/**
 	 * 路由服务组

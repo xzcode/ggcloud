@@ -139,10 +139,9 @@ public class RouterClientConfig {
 			routerGroup = UUID.randomUUID().toString();
 		}
 
-		DiscoveryClient discoveryClient = getDiscoveryClient();
-		if (discoveryClient != null) {
-			discoveryClient.getConfig().addCustomData(RouterServiceCustomDataKeys.ROUTER_SERVICE_GROUP, getRouterGroup());
-			serviceProvider = new DefaultDiscoveryServicePorvider(this);
+		if (this.discoveryClient != null) {
+			this.discoveryClient.getConfig().addCustomData(RouterServiceCustomDataKeys.ROUTER_SERVICE_GROUP, getRouterGroup());
+			setServiceProvider(new DefaultDiscoveryServicePorvider(this));
 		}
 		
 		if (serviceProvider == null) {

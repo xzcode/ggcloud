@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import com.xzcode.ggcloud.discovery.client.config.DiscoveryClientConfig;
 import com.xzcode.ggcloud.discovery.client.events.ConnCloseEventListener;
 import com.xzcode.ggcloud.discovery.client.events.ConnOpenEventListener;
+import com.xzcode.ggcloud.discovery.client.handler.AddServiceRespHandler;
 import com.xzcode.ggcloud.discovery.client.handler.RegisterRespHandler;
 import com.xzcode.ggcloud.discovery.client.handler.ServiceUnregisterRespHandler;
 import com.xzcode.ggcloud.discovery.client.handler.ServiceListRespHandler;
@@ -15,6 +16,7 @@ import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryServiceListReq;
 import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryServiceUpdateReq;
 import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceRegisterResp;
 import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceUnregisterResp;
+import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryAddServiceResp;
 import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceListResp;
 import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceUpdateResp;
 import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
@@ -49,6 +51,7 @@ public class DiscoveryClient {
 		ggClient.onMessage(DiscoveryServiceListResp.ACTION, new ServiceListRespHandler(config));
 		ggClient.onMessage(DiscoveryServiceUpdateResp.ACTION, new ServiceUpdateRespHandler(config));
 		ggClient.onMessage(DiscoveryServiceUnregisterResp.ACTION, new ServiceUnregisterRespHandler(config));
+		ggClient.onMessage(DiscoveryAddServiceResp.ACTION, new AddServiceRespHandler(config));
 		
 		ggClient.addEventListener(GGEvents.Connection.CLOSED, new ConnCloseEventListener(config));
 		ggClient.addEventListener(GGEvents.Connection.OPENED, new ConnOpenEventListener(config));

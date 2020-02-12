@@ -57,7 +57,6 @@ public class RegisterReqHandler implements IRequestMessageHandler<DiscoveryServi
 			serviceInfo.setServiceName(infoModel.getServiceName());
 			serviceInfo.setServiceId(infoModel.getServiceId());
 			serviceInfo.setHost(session.getHost());
-			serviceInfo.setPort(session.getPort());
 			serviceInfo.setTimeoutDelay(config.getServiceTimeoutDelay());
 			serviceInfo.setSession(session);
 			serviceManager.registerService(serviceInfo);

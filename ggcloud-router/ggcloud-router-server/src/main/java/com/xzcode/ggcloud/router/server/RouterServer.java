@@ -34,6 +34,7 @@ public class RouterServer implements IGGServer {
 		if (discoveryClient != null) {
 			discoveryClient.getConfig().addCustomData(RouterServiceCustomDataKeys.ROUTER_SERVICE_GROUP, config.getRouterGroup());
 			discoveryClient.getConfig().addCustomData(RouterServiceCustomDataKeys.ROUTER_SERVICE_ACTION_ID_PREFIX, config.getActionIdPrefix());
+			discoveryClient.getConfig().addCustomData(RouterServiceCustomDataKeys.ROUTER_SERVICE_PORT, String.valueOf(config.getPort()));
 		}
 	}
 

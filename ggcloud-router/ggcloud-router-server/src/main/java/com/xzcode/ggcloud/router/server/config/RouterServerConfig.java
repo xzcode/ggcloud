@@ -63,13 +63,10 @@ public class RouterServerConfig extends GGServerConfig{
 	public void setRouterGroup(String routerGroup) {
 		this.routerGroup = routerGroup;
 	}
-	
-	public String getActionIdPrefix() {
-		return actionIdPrefix;
-	}
-	
 	public void setActionIdPrefix(String actionIdPrefix) {
 		this.actionIdPrefix = actionIdPrefix;
 	}
-	
+	public String getActionIdPrefix() {
+		return actionIdPrefix;
+	}
 }

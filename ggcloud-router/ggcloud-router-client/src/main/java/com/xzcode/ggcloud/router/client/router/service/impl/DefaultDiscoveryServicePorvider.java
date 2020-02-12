@@ -104,15 +104,16 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
 	private void registerRouterService(ServiceInfo service) {
 		Map<String, String> customData = service.getCustomData();
 		String routerGroup = customData.get(RouterServiceCustomDataKeys.ROUTER_SERVICE_GROUP);
-		if (!routerGroup.equals(config.getRouterGroup())) {
+		if (!config.getRouterGroup().equals(routerGroup)) {
 			return;
 		}
 		String actionIdPrefix = customData.get(RouterServiceCustomDataKeys.ROUTER_SERVICE_ACTION_ID_PREFIX);
+		int servicePort = Integer.valueOf(customData.get(RouterServiceCustomDataKeys.ROUTER_SERVICE_PORT));
 		
 		//创建新服务对象
 		DefaultRouterService routerService = new DefaultRouterService(config, service.getServiceId());
         routerService.setHost(service.getHost());
-        routerService.setPort(service.getPort());
+        routerService.setPort(servicePort);
         routerService.setServiceId(service.getServiceId());
         routerService.setServcieName(service.getServiceName());
         routerService.addAllExtraData(service.getCustomData());

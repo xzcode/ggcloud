@@ -24,12 +24,9 @@ public class DefaultRouterClient implements RouterClient{
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultRouterClient.class);
 	
 	private RouterClientConfig config;
-	private IRouterServiceProvider serviceProvider;
 	
 	public DefaultRouterClient(RouterClientConfig config) {
 		this.config = config;
-		this.serviceProvider = config.getServiceProvider();
-		this.config.setRouterClient(this);
 		this.config.init();
 	}
 	
@@ -37,7 +34,7 @@ public class DefaultRouterClient implements RouterClient{
 	public IGGFuture route(Pack pack) {
 		try {
 			//进行服务匹配
-			IRouterService matchService = serviceProvider.matchService(pack);
+			IRouterService matchService = config.getServiceProvider().matchService(pack);
 			if (matchService != null) {
 				return matchService.dispatch(pack);
 			}

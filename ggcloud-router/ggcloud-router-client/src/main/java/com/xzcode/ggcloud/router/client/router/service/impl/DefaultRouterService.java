@@ -162,6 +162,9 @@ public class DefaultRouterService implements IRouterService{
 								LOGGER.info("Router Service Init Connections ----> [{}], channel: [{}]", getHost() + ":" + getPort(), channel);						
 							}
 							if (channel == null) {
+								if (LOGGER.isInfoEnabled()) {
+									LOGGER.info("Router Service Init Failed! ----> channel is null");						
+								}
 								return;
 							}
 							if (LOGGER.isInfoEnabled()) {

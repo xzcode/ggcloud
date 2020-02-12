@@ -18,27 +18,22 @@ public class ServiceInfo {
 	 * 会话
 	 */
 	
-	private transient GGSession session;
+	protected transient GGSession session;
 	
 	/**
 	 * 服务id
 	 */
-	private String serviceId;
+	protected String serviceId;
 	
 	/**
 	 * 服务名称
 	 */
-	private String serviceName;
+	protected String serviceName;
 	
 	/**
 	 * 服务ip地址
 	 */
-	private String host;
-	
-	/**
-	 * 服务ip地址
-	 */
-	private int port;
+	protected String host;
 	
 	//所在地区
 	protected String region = "default";
@@ -49,17 +44,17 @@ public class ServiceInfo {
 	/**
 	 * 自定义数据
 	 */
-	private Map<String, String> customData = new LinkedHashMap<>();;
+	protected Map<String, String> customData = new LinkedHashMap<>();;
 	
 	/**
 	 * 服务过期延迟（毫秒）
 	 */
-	private long timeoutDelay;
+	protected long timeoutDelay;
 	
 	/**
 	 * 超时时间戳
 	 */
-	private long timeoutTimestamp;
+	protected long timeoutTimestamp;
 	
 	/**
 	 * 添加自定义参数
@@ -107,14 +102,6 @@ public class ServiceInfo {
 
 	public void setHost(String ip) {
 		this.host = ip;
-	}
-
-	public int getPort() {
-		return port;
-	}
-
-	public void setPort(int port) {
-		this.port = port;
 	}
 
 	public String getServiceId() {
