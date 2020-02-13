@@ -1,6 +1,7 @@
 package com.xzcode.ggcloud.discovery.server.handler;
 
 import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryServiceUpdateReq;
+import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryAddServiceResp;
 import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceUpdateResp;
 import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
 import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
@@ -40,7 +41,8 @@ public class ServiceUpdateReqHandler implements IRequestMessageHandler<Discovery
 		ServiceInfo updated = serviceManager.getService(service.getServiceId());
 		DiscoveryServiceUpdateResp resp = new DiscoveryServiceUpdateResp(updated);
 		
-		session.send(resp);
+		//发送给所有服务客户端,服务信息更新
+		serviceManager.sendToAllServices(resp);
 	}
 
 

@@ -7,9 +7,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryAddServiceResp;
 import com.xzcode.ggcloud.discovery.common.service.listener.IRegisterServiceListener;
 import com.xzcode.ggcloud.discovery.common.service.listener.IUnregisterServiceListener;
 import com.xzcode.ggcloud.discovery.common.service.listener.IUpdateServiceListener;
+
+import xzcode.ggserver.core.common.message.model.IMessage;
+import xzcode.ggserver.core.common.session.GGSession;
 
 /**
  * 服务管理器
@@ -220,6 +224,21 @@ public class ServiceManager {
 			}
 		}
 		return list;
+	}
+	
+	/**
+	 * 发送消息给所有服务
+	 * 
+	 * @param message
+	 * @author zai
+	 * 2020-02-13 09:38:54
+	 */
+	public void sendToAllServices(IMessage message) {
+		List<ServiceInfo> serviceList = getServiceList();
+		for (ServiceInfo info : serviceList) {
+			GGSession infoSession = info.getSession();
+			infoSession.send(message);
+		}
 	}
 	
 }

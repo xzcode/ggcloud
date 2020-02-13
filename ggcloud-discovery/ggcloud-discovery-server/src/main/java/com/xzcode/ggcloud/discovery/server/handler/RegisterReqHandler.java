@@ -51,7 +51,6 @@ public class RegisterReqHandler implements IRequestMessageHandler<DiscoveryServi
 		ServiceInfoModel infoModel = req.getServiceInfo();
 		ServiceInfo serviceInfo = session.getAttribute(DiscoveryServerSessionKeys.SERVICE_INFO, ServiceInfo.class);
 		ServiceManager serviceManager = config.getServiceManager();
-		List<ServiceInfo> serviceList = serviceManager.getServiceList();
 		if (serviceInfo == null) {
 			serviceInfo = new ServiceInfo();
 			serviceInfo.setServiceName(infoModel.getServiceName());
@@ -65,10 +64,7 @@ public class RegisterReqHandler implements IRequestMessageHandler<DiscoveryServi
 		session.send(new DiscoveryServiceRegisterResp(true));
 		
 		//发送给所有服务客户端,新服务已上线
-		for (ServiceInfo info : serviceList) {
-			GGSession infoSession = info.getSession();
-			infoSession.send(new DiscoveryAddServiceResp(serviceInfo));
-		}
+		serviceManager.sendToAllServices(new DiscoveryAddServiceResp(serviceInfo));
 	}
 
 

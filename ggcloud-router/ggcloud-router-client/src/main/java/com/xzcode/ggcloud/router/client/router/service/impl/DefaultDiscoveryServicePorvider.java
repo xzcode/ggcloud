@@ -82,6 +82,8 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
 			IRouterService routerService = getService(service.getServiceId());
 			if (routerService != null) {
 				routerService.addAllExtraData(service.getCustomData());
+			}else {
+				registerRouterService(service);
 			}
 			
 		});

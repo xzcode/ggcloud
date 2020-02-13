@@ -27,6 +27,7 @@ public class DefaultRouterClient implements RouterClient{
 	
 	public DefaultRouterClient(RouterClientConfig config) {
 		this.config = config;
+		this.config.setRouterClient(this);
 		this.config.init();
 	}
 	
