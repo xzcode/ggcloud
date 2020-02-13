@@ -2,6 +2,7 @@ package com.xzcode.ggcloud.discovery.server.events;
 
 import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceUnregisterResp;
 import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
+import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
 import com.xzcode.ggcloud.discovery.server.constant.DiscoveryServerSessionKeys;
 
@@ -35,7 +36,10 @@ public class ConnCloseEventListener implements IEventListener<Void>{
 		DiscoveryServiceUnregisterResp resp = new DiscoveryServiceUnregisterResp();
 		resp.setServiceName(serviceInfo.getServiceName());
 		resp.setServiceId(serviceInfo.getServiceId());
-		session.send(resp);
+		
+		ServiceManager serviceManager = config.getServiceManager();
+		serviceManager.sendToAllServices(resp);
+		
 		GGLoggerUtil.getLogger(this).warn("Service unregristry! serviceName: {}, serviceId: {}", serviceInfo.getServiceName(), serviceInfo.getServiceId());
 		
 	}

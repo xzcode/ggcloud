@@ -110,7 +110,11 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
 			return;
 		}
 		String actionIdPrefix = customData.get(RouterServiceCustomDataKeys.ROUTER_SERVICE_ACTION_ID_PREFIX);
-		int servicePort = Integer.valueOf(customData.get(RouterServiceCustomDataKeys.ROUTER_SERVICE_PORT));
+		String servicePortString = customData.get(RouterServiceCustomDataKeys.ROUTER_SERVICE_PORT);
+		if (actionIdPrefix == null || servicePortString == null) {
+			return;
+		}
+		Integer servicePort = Integer.valueOf(servicePortString);
 		
 		//创建新服务对象
 		DefaultRouterService routerService = new DefaultRouterService(config, service.getServiceId());
