@@ -1,9 +1,11 @@
 package com.xzcode.ggcloud.router.client.router.service.impl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.xzcode.ggcloud.discovery.client.DiscoveryClient;
@@ -11,6 +13,7 @@ import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
 import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
 import com.xzcode.ggcloud.router.client.router.service.IRouterService;
+import com.xzcode.ggcloud.router.client.router.service.IRouterServiceMatcher;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceProvider;
 import com.xzcode.ggcloud.router.client.router.service.listener.IAddRouterServiceListener;
 import com.xzcode.ggcloud.router.client.router.service.listener.IRemoveRouterServiceListener;
@@ -143,8 +146,20 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
 		IRouterService service = services.remove(serviceId);
 		if (service != null) {
 			service.shutdown();
+			removeActionServiceCache(service);
 		}
 		return service;
+	}
+	
+	private void removeActionServiceCache(IRouterService service) {
+		Iterator<String> it = actionServiceCache.keySet().iterator();
+		RouterServiceActionPrefixMatcher serviceMatcher = (RouterServiceActionPrefixMatcher) service.getServiceMatcher();
+		while (it.hasNext()) {
+			String actionId  = it.next();
+			if (actionId.startsWith(serviceMatcher.getPrefix())) {
+				it.remove();
+			}
+		}
 	}
 
 	@Override

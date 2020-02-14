@@ -27,5 +27,9 @@ public class RouterServiceActionPrefixMatcher implements IRouterServiceMatcher {
 	public boolean match(Pack pack) {
 		return pack.getActionString().startsWith(prefix);
 	}
+	
+	public String getPrefix() {
+		return prefix;
+	}
 
 }
