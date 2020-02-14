@@ -185,6 +185,7 @@ public class DefaultRouterService implements IRouterService{
 	 * @author zai
 	 * 2020-02-07 11:08:07
 	 */
+	@Override
 	public boolean isAvailable() {
 		return this.avaliableConnections.get() >= config.getRouterClientChannelPoolMaxSize();
 	}

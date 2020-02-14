@@ -48,13 +48,13 @@ public class RegisterReqHandler implements IRequestMessageHandler<DiscoveryServi
 			}
 			
 		}
-		ServiceInfoModel infoModel = req.getServiceInfo();
+		ServiceInfo infoModel = req.getServiceInfo();
 		ServiceInfo serviceInfo = session.getAttribute(DiscoveryServerSessionKeys.SERVICE_INFO, ServiceInfo.class);
+		
 		ServiceManager serviceManager = config.getServiceManager();
+		
 		if (serviceInfo == null) {
-			serviceInfo = new ServiceInfo();
-			serviceInfo.setServiceName(infoModel.getServiceName());
-			serviceInfo.setServiceId(infoModel.getServiceId());
+			serviceInfo = infoModel;
 			serviceInfo.setHost(session.getHost());
 			serviceInfo.setTimeoutDelay(config.getServiceTimeoutDelay());
 			serviceInfo.setSession(session);

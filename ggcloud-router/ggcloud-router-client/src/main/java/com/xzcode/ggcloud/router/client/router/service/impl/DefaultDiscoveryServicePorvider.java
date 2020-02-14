@@ -68,8 +68,6 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
 		
 		//添加注册中心服务管器的服务注册监听器
 		this.serviceManager.addRegisterListener(service -> {
-			//优先移除旧服务
-			removeService(service.getServiceId());
 			//注册路由服务
 			registerRouterService(service);
 		});
@@ -119,8 +117,31 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
 		}
 		Integer servicePort = Integer.valueOf(servicePortString);
 		
+		String serviceId = service.getServiceId();
+		
+		//检查是否存在id一样的旧服务
+		IRouterService oldService = getService(serviceId);
+		if (oldService != null) {
+			RouterServiceActionPrefixMatcher serviceMatcher = (RouterServiceActionPrefixMatcher) oldService.getServiceMatcher();
+			if (!actionIdPrefix.equals(serviceMatcher.getPrefix())) {
+				//移除信息不一致的旧服务
+				removeService(serviceId);
+			}
+			else if (servicePort != oldService.getPort()) {
+				//移除端口信息不一致的旧服务
+				removeService(serviceId);
+			}
+			else if (!oldService.isAvailable()) {
+				//移除不可用的旧服务
+				removeService(serviceId);
+			}else {
+				return;
+			}
+		}
+		
+		
 		//创建新服务对象
-		DefaultRouterService routerService = new DefaultRouterService(config, service.getServiceId());
+		DefaultRouterService routerService = new DefaultRouterService(config, serviceId);
         routerService.setHost(service.getHost());
         routerService.setPort(servicePort);
         routerService.setServiceId(service.getServiceId());

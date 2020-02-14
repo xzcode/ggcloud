@@ -40,6 +40,7 @@ public class DiscoveryClient {
 	public void start() {
 		GGClientConfig ggConfig = new GGClientConfig();
 		ggConfig.setPingPongEnabled(true);
+		ggConfig.setPrintPingPongInfo(config.isPrintPingPongInfo());
 		ggConfig.setTaskExecutor(config.getTaskExecutor());
 		ggConfig.setProtocolType(ProtocolTypeConstants.TCP);
 		ggConfig.init();

@@ -1,6 +1,7 @@
 package com.xzcode.ggcloud.discovery.common.message.req;
 
 import com.xzcode.ggcloud.discovery.common.message.req.model.ServiceInfoModel;
+import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
 
 import xzcode.ggserver.core.common.message.model.IMessage;
 
@@ -24,21 +25,21 @@ public class DiscoveryServiceRegisterReq implements IMessage {
 	private String authToken;
 	
 	//服务信息
-	private ServiceInfoModel serviceInfo;
+	private ServiceInfo serviceInfo;
 	
 
 	public DiscoveryServiceRegisterReq() {
 	}
 
-	public DiscoveryServiceRegisterReq(ServiceInfoModel serviceInfo) {
+	public DiscoveryServiceRegisterReq(ServiceInfo serviceInfo) {
 		this.serviceInfo = serviceInfo;
 	}
 
-	public ServiceInfoModel getServiceInfo() {
+	public ServiceInfo getServiceInfo() {
 		return serviceInfo;
 	}
 
-	public void setServiceInfo(ServiceInfoModel serviceInfo) {
+	public void setServiceInfo(ServiceInfo serviceInfo) {
 		this.serviceInfo = serviceInfo;
 	}
 	

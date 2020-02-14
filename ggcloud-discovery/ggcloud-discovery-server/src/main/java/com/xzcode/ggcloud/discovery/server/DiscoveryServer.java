@@ -32,6 +32,7 @@ public class DiscoveryServer {
 		
 		GGServerConfig ggConfig = new GGServerConfig();
 		ggConfig.setPingPongEnabled(true);
+		ggConfig.setPrintPingPongInfo(config.isPrintPingPongInfo());
 		ggConfig.setProtocolType(ProtocolTypeConstants.TCP);
 		ggConfig.setPort(config.getPort());
 		ggConfig.setBossGroupThreadFactory(new GGThreadFactory("discovery-boss-", false));

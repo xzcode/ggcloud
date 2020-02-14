@@ -17,6 +17,9 @@ public class DiscoveryServerConfig {
 	//ggserver对象
 	private IGGServer server;
 	
+	//是否打印pingpong包信息
+	protected boolean 	printPingPongInfo = false;
+	
 	//服务管理器
 	private ServiceManager serviceManager = new ServiceManager();
 	
@@ -103,6 +106,13 @@ public class DiscoveryServerConfig {
 		this.serviceTimeoutDelay = serviceTimeout;
 	}
 	
+	public boolean isPrintPingPongInfo() {
+		return printPingPongInfo;
+	}
+	
+	public void setPrintPingPongInfo(boolean printPingPongInfo) {
+		this.printPingPongInfo = printPingPongInfo;
+	}
 	
 
 }

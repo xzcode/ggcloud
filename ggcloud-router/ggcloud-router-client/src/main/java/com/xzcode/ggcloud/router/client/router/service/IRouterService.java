@@ -112,4 +112,13 @@ public interface IRouterService {
 	 * 2020-02-06 16:47:04
 	 */
 	public void shutdown();
+
+	/**
+	 * 是否可用
+	 * 
+	 * @return
+	 * @author zai
+	 * 2020-02-14 12:41:17
+	 */
+	boolean isAvailable();
 }

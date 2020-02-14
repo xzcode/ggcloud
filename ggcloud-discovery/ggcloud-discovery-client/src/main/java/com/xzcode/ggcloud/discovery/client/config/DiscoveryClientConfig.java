@@ -30,6 +30,8 @@ public class DiscoveryClientConfig {
 	//discoveryClient对象
 	protected DiscoveryClient discoveryClient;
 	
+	protected boolean 	printPingPongInfo = false;
+	
 	//GGClient对象
 	protected GGClient ggclient;
 	
@@ -37,6 +39,9 @@ public class DiscoveryClientConfig {
 	
 	//GGSession对象
 	protected GGSession session;
+	
+	//是否打印pingpong包信息
+	protected boolean 	pingPongEnabled = false;
 	
 	//服务管理器
 	protected ServiceManager serviceManager = new ServiceManager();
@@ -218,4 +223,21 @@ public class DiscoveryClientConfig {
 	public AtomicInteger getCustomDataUpdateTimes() {
 		return customDataUpdateTimes;
 	}
+	
+	public boolean isPingPongEnabled() {
+		return pingPongEnabled;
+	}
+	
+	public void setPingPongEnabled(boolean pingPongEnabled) {
+		this.pingPongEnabled = pingPongEnabled;
+	}
+	
+	public boolean isPrintPingPongInfo() {
+		return printPingPongInfo;
+	}
+	
+	public void setPrintPingPongInfo(boolean printPingPongInfo) {
+		this.printPingPongInfo = printPingPongInfo;
+	}
+	
 }
