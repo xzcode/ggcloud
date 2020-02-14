@@ -226,6 +226,10 @@ public class ServiceManager {
 		return list;
 	}
 	
+	public void clearAllServices() {
+		serviceGroups.clear();
+	}
+	
 	/**
 	 * 发送消息给所有服务
 	 * 

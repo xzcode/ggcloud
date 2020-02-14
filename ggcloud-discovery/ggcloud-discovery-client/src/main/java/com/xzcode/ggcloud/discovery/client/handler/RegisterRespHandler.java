@@ -1,6 +1,10 @@
 package com.xzcode.ggcloud.discovery.client.handler;
 
+import java.util.List;
+
+import com.xzcode.ggcloud.discovery.client.DiscoveryClient;
 import com.xzcode.ggcloud.discovery.client.config.DiscoveryClientConfig;
+import com.xzcode.ggcloud.discovery.client.listener.IClientRegisterSuccessListener;
 import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryServiceListReq;
 import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceRegisterResp;
 
@@ -31,6 +35,11 @@ public class RegisterRespHandler implements IRequestMessageHandler<DiscoveryServ
 		DiscoveryServiceRegisterResp resp = request.getMessage();
 		if (resp.isSuccess()) {
 			config.getSession().send(DiscoveryServiceListReq.DEFAULT_INSTANT);
+			DiscoveryClient discoveryClient = config.getDiscoveryClient();
+			List<IClientRegisterSuccessListener> registerSuccessListeners = discoveryClient.getRegisterSuccessListeners();
+			for (IClientRegisterSuccessListener listener : registerSuccessListeners) {
+				listener.onRegisterSuccess();
+			}
 		}
 	}
 

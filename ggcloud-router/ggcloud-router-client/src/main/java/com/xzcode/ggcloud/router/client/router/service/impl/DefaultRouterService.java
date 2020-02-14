@@ -1,5 +1,7 @@
 package com.xzcode.ggcloud.router.client.router.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -13,6 +15,9 @@ import com.xzcode.ggcloud.router.client.event.RouterClientEvents;
 import com.xzcode.ggcloud.router.client.pool.RouterChannelPoolHandler;
 import com.xzcode.ggcloud.router.client.router.service.IRouterService;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceMatcher;
+import com.xzcode.ggcloud.router.client.router.service.listener.IRemoveRouterServiceListener;
+import com.xzcode.ggcloud.router.client.router.service.listener.IRouterServiceActiveListener;
+import com.xzcode.ggcloud.router.client.router.service.listener.IRouterServiceInActiveListener;
 
 import io.netty.channel.Channel;
 import io.netty.channel.pool.ChannelPool;
@@ -68,7 +73,17 @@ public class DefaultRouterService implements IRouterService{
 	/**
 	 * 额外数据
 	 */
-	protected Map<String, String> extraData = new ConcurrentHashMap<>();
+	protected Map<String, String> customData = new ConcurrentHashMap<>();
+	
+	/**
+	 * 服务生效监听
+	 */
+	protected List<IRouterServiceActiveListener> activeListeners = new ArrayList<>();
+	
+	/**
+	 * 服务失效监听器
+	 */
+	protected List<IRouterServiceInActiveListener> inActiveListeners = new ArrayList<>();
 	
 	/**
 	 * 是否已关闭
@@ -220,6 +235,15 @@ public class DefaultRouterService implements IRouterService{
 		sessionManager.clearAllSession();
 		config.getRoutingServer().emitEvent(new EventData<IRouterService>(RouterClientEvents.RouterService.SHUTDOWN, this));
 	}
+	
+	
+	public void addActiveListener(IRouterServiceActiveListener listener) {
+		this.activeListeners.add(listener);
+	}
+	
+	public void addInActiveListener(IRouterServiceInActiveListener listener) {
+		this.inActiveListeners.add(listener);
+	}
 
 	
 	public void setServiceMatcher(IRouterServiceMatcher serviceMatcher) {
@@ -250,25 +274,25 @@ public class DefaultRouterService implements IRouterService{
 
 	@Override
 	public String getExtraData(String key) {
-		return this.extraData.get(key);
+		return this.customData.get(key);
 	}
 	
 	public void removeExtraData(String key) {
-		this.extraData.remove(key);
+		this.customData.remove(key);
 	}
 	public void addExtraData(String key, String data) {
-		this.extraData.put(key, data);
+		this.customData.put(key, data);
 	}
 	public void addAllExtraData(Map<String, String> extraData) {
-		this.extraData.putAll(extraData);
+		this.customData.putAll(extraData);
 	}
 	public void replaceExtraData(Map<String, String> extraData) {
-		this.extraData.clear();
-		this.extraData.putAll(extraData);
+		this.customData.clear();
+		this.customData.putAll(extraData);
 	}
 	
 	public Map<String, String> getExtraDatas() {
-		return extraData;
+		return customData;
 	}
 
 	public void setServiceId(String serviceId) {

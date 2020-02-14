@@ -9,6 +9,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.xzcode.ggcloud.discovery.client.DiscoveryClient;
+import com.xzcode.ggcloud.discovery.client.config.DiscoveryClientConfig;
+import com.xzcode.ggcloud.discovery.client.registry.RegistryInfo;
 import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
 import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
@@ -66,6 +68,16 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
 		this.config = config;
 		this.serviceManager = discoveryClient.getConfig().getServiceManager();
 		
+		//添加连接注册中心成功回调
+		discoveryClient.addRegisterSuccessListener(() -> {
+			for (Entry<String, IRouterService> entry : services.entrySet()) {
+				IRouterService routerService = entry.getValue();
+				if (!routerService.isAvailable()) {
+					removeService(routerService.getServiceId());
+				}
+			}
+		});
+		
 		//添加注册中心服务管器的服务注册监听器
 		this.serviceManager.addRegisterListener(service -> {
 			//注册路由服务
@@ -89,11 +101,11 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
 			
 		});
 		
-		List<ServiceInfo> serviceList = this.serviceManager.getServiceList();
+		/*List<ServiceInfo> serviceList = this.serviceManager.getServiceList();
 		for (ServiceInfo serviceInfo : serviceList) {
 			//注册路由服务
 			registerRouterService(serviceInfo);
-		}
+		}*/
 		
 	}
 	
@@ -149,6 +161,7 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
         routerService.addAllExtraData(service.getCustomData());
         routerService.setServiceMatcher(new RouterServiceActionPrefixMatcher(actionIdPrefix));
         addService(routerService);
+        
         routerService.init();
 	}
 
