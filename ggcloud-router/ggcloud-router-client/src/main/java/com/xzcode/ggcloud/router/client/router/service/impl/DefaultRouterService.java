@@ -15,7 +15,6 @@ import com.xzcode.ggcloud.router.client.event.RouterClientEvents;
 import com.xzcode.ggcloud.router.client.pool.RouterChannelPoolHandler;
 import com.xzcode.ggcloud.router.client.router.service.IRouterService;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceMatcher;
-import com.xzcode.ggcloud.router.client.router.service.listener.IRemoveRouterServiceListener;
 import com.xzcode.ggcloud.router.client.router.service.listener.IRouterServiceActiveListener;
 import com.xzcode.ggcloud.router.client.router.service.listener.IRouterServiceInActiveListener;
 
