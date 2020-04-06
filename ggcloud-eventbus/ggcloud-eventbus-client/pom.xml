@@ -2,22 +2,23 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>xzcode</groupId>
-    <artifactId>ggcloud</artifactId>
+    <artifactId>ggcloud-eventbus</artifactId>
     <version>0.2.0-SNAPSHOT</version>
   </parent>
-
-  <artifactId>ggcloud-eventbus</artifactId>
-  <packaging>pom</packaging>
-
+  
+  <artifactId>ggcloud-eventbus-client</artifactId>
+  
   <dependencies>
   
-	
-	
+	<dependency>
+	    <groupId>xzcode</groupId>
+	    <artifactId>ggcloud-eventbus-common</artifactId>
+	    <version>${project.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>xzcode</groupId>
+		<artifactId>ggserver-core-client</artifactId>
+	</dependency>
   
   </dependencies>
-  <modules>
-	<module>ggcloud-eventbus-server</module>
-  	<module>ggcloud-eventbus-client</module>	
-	<module>ggcloud-eventbus-common</module>
-  </modules>
 </project>
