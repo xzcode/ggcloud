@@ -1,7 +1,7 @@
 package com.xzcode.ggcloud.eventbus.client.handler;
 
 import com.xzcode.ggcloud.eventbus.client.config.EventbusClientConfig;
-import com.xzcode.ggcloud.eventbus.common.message.resp.AuthResp;
+import com.xzcode.ggcloud.eventbus.common.message.resp.EventPublishResp;
 
 import xzcode.ggserver.core.common.message.request.Request;
 import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
@@ -12,12 +12,12 @@ import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler
  * @author zai
  * 2020-04-07 10:57:11
  */
-public class AnthRespHandler implements IRequestMessageHandler<AuthResp>{
+public class EventPublishRespHandler implements IRequestMessageHandler<EventPublishResp>{
 	
 	private EventbusClientConfig config;
 	
 
-	public AnthRespHandler(EventbusClientConfig config) {
+	public EventPublishRespHandler(EventbusClientConfig config) {
 		super();
 		this.config = config;
 	}
@@ -25,11 +25,8 @@ public class AnthRespHandler implements IRequestMessageHandler<AuthResp>{
 
 
 	@Override
-	public void handle(Request<AuthResp> request) {
-		AuthResp resp = request.getMessage();
-		if (resp.isSuccess()) {
-			
-		}
+	public void handle(Request<EventPublishResp> request) {
+		EventPublishResp resp = request.getMessage();
 	}
 
 	

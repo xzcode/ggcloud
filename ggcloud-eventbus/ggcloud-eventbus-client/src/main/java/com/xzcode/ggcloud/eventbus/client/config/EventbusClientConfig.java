@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.xzcode.ggcloud.eventbus.client.DiscoveryClient;
+import com.xzcode.ggcloud.eventbus.client.EventbusClient;
 import com.xzcode.ggcloud.eventbus.client.registry.RegistryInfo;
 import com.xzcode.ggcloud.eventbus.client.registry.RegistryManager;
 import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
@@ -28,7 +28,7 @@ import xzcode.ggserver.core.common.session.GGSession;
 public class EventbusClientConfig {
 	
 	//discoveryClient对象
-	protected DiscoveryClient discoveryClient;
+	protected EventbusClient discoveryClient;
 	
 	protected boolean 	printPingPongInfo = false;
 	
@@ -209,11 +209,11 @@ public class EventbusClientConfig {
 		return session;
 	}
 	
-	public DiscoveryClient getDiscoveryClient() {
+	public EventbusClient getDiscoveryClient() {
 		return discoveryClient;
 	}
 	
-	public void setDiscoveryClient(DiscoveryClient discoveryClient) {
+	public void setDiscoveryClient(EventbusClient discoveryClient) {
 		this.discoveryClient = discoveryClient;
 	}
 	public ITaskExecutor getTaskExecutor() {
