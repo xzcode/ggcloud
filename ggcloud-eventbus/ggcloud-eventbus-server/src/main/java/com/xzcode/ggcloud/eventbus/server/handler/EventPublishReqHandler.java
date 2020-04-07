@@ -12,7 +12,7 @@ import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler
  * @author zai
  * 2020-04-07 10:57:11
  */
-public abstract class EventPublishReqHandler implements IRequestMessageHandler<EventPublishReq>{
+public class EventPublishReqHandler implements IRequestMessageHandler<EventPublishReq>{
 	
 	private EventbusServerConfig config;
 	

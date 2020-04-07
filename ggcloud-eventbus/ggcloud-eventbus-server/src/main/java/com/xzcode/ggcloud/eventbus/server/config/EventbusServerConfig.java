@@ -1,9 +1,7 @@
 package com.xzcode.ggcloud.eventbus.server.config;
 
-import java.util.UUID;
-
 import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
-import com.xzcode.ggcloud.eventbus.common.service.ServiceManager;
+import com.xzcode.ggcloud.eventbus.server.subscription.SubscriptionManager;
 
 import xzcode.ggserver.core.server.IGGServer;
 
@@ -22,8 +20,8 @@ public class EventbusServerConfig {
 	//是否打印pingpong包信息
 	protected boolean 	printPingPongInfo = false;
 	
-	//服务管理器
-	private ServiceManager serviceManager = new ServiceManager();
+	//订阅管理器
+	private SubscriptionManager subscriptionManager = new SubscriptionManager();
 	
 	//服务端口
 	private int port = 16384;
@@ -75,12 +73,8 @@ public class EventbusServerConfig {
 		this.server = server;
 	}
 	
-	public ServiceManager getServiceManager() {
-		return serviceManager;
-	}
-	
-	public void setServiceManager(ServiceManager serviceManager) {
-		this.serviceManager = serviceManager;
+	public SubscriptionManager getSubscriptionManager() {
+		return subscriptionManager;
 	}
 
 	public String getRegion() {

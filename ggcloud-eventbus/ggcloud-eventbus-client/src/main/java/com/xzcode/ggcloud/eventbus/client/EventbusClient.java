@@ -10,7 +10,7 @@ import com.xzcode.ggcloud.eventbus.client.handler.AnthRespHandler;
 import com.xzcode.ggcloud.eventbus.client.handler.EventPublishRespHandler;
 import com.xzcode.ggcloud.eventbus.client.handler.EventSubscribeRespHandler;
 import com.xzcode.ggcloud.eventbus.client.listener.IClientRegisterSuccessListener;
-import com.xzcode.ggcloud.eventbus.client.registry.RegistryInfo;
+import com.xzcode.ggcloud.eventbus.client.subscription.Subscription;
 import com.xzcode.ggcloud.eventbus.common.message.resp.AuthResp;
 import com.xzcode.ggcloud.eventbus.common.message.resp.EventPublishResp;
 import com.xzcode.ggcloud.eventbus.common.message.resp.EventSubscribeResp;
@@ -60,7 +60,7 @@ public class EventbusClient {
 	
 	public void connect() {
 		GGClient ggClient = config.getGGclient();
-		RegistryInfo registry = config.getRegistryManager().getRandomRegistry();
+		Subscription registry = config.getRegistryManager().getRandomRegistry();
 		ggClient.connect(registry.getDomain(), registry.getPort())
 		.addListener(f -> {
 			if (!f.isSuccess()) {

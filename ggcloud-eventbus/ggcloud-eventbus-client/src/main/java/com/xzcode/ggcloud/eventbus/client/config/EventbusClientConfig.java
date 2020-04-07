@@ -7,8 +7,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.xzcode.ggcloud.eventbus.client.EventbusClient;
-import com.xzcode.ggcloud.eventbus.client.registry.RegistryInfo;
-import com.xzcode.ggcloud.eventbus.client.registry.RegistryManager;
+import com.xzcode.ggcloud.eventbus.client.subscription.EventSubscribeManager;
+import com.xzcode.ggcloud.eventbus.client.subscription.Subscription;
 import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
 import com.xzcode.ggcloud.eventbus.common.service.ServiceManager;
 import com.xzcode.ggcloud.eventbus.common.util.DiscoveryServiceIdUtil;
@@ -47,10 +47,10 @@ public class EventbusClientConfig {
 	protected ServiceManager serviceManager = new ServiceManager();
 	
 	//注册中心信息
-	protected List<RegistryInfo> registries = new ArrayList<>();
+	protected List<Subscription> registries = new ArrayList<>();
 	
 	//注册中心管理器
-	protected RegistryManager registryManager = new RegistryManager(registries);
+	protected EventSubscribeManager registryManager = new EventSubscribeManager(registries);
 	
 	//客户端汇报超时时间(秒)
 	protected long clientReportInterval = 30L * 1000L;
@@ -122,19 +122,19 @@ public class EventbusClientConfig {
 		this.serviceManager = serviceManager;
 	}
 
-	public List<RegistryInfo> getRegistries() {
+	public List<Subscription> getRegistries() {
 		return registries;
 	}
 
-	public void setRegistries(List<RegistryInfo> registries) {
+	public void setRegistries(List<Subscription> registries) {
 		this.registries = registries;
 	}
 
-	public RegistryManager getRegistryManager() {
+	public EventSubscribeManager getRegistryManager() {
 		return registryManager;
 	}
 
-	public void setRegistryManager(RegistryManager registryManager) {
+	public void setRegistryManager(EventSubscribeManager registryManager) {
 		this.registryManager = registryManager;
 	}
 

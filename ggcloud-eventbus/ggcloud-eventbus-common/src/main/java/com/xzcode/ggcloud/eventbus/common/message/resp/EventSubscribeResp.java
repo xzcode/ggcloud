@@ -3,10 +3,10 @@ package com.xzcode.ggcloud.eventbus.common.message.resp;
 import xzcode.ggserver.core.common.message.model.IMessage;
 
 /**
- * 事件订阅响应
+ * 事件订阅推送
  *
  * @author zai
- * 2020-04-06 18:50:10
+ * 2020-04-07 11:31:03
  */
 public class EventSubscribeResp implements IMessage {
 	
@@ -18,7 +18,7 @@ public class EventSubscribeResp implements IMessage {
 	}
 	
 	/**
-	 * 是否注册成功
+	 * 是否订阅成功
 	 */
 	private boolean success;
 	
