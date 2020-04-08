@@ -1,8 +1,8 @@
 package com.xzcode.ggcloud.session.group.server.config;
 
 import com.xzcode.ggcloud.session.group.common.constant.GGSesssionGroupConstant;
+import com.xzcode.ggcloud.session.group.common.group.manager.GGSessionGroupManager;
 
-import xzcode.ggserver.core.common.session.group.manager.GGSessionGroupManager;
 import xzcode.ggserver.core.server.IGGServer;
 
 /**

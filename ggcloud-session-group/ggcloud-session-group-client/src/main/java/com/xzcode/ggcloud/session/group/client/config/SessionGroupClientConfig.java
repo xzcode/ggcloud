@@ -1,13 +1,13 @@
 package com.xzcode.ggcloud.session.group.client.config;
 
 import com.xzcode.ggcloud.session.group.common.constant.GGSesssionGroupConstant;
+import com.xzcode.ggcloud.session.group.common.group.manager.GGSessionGroupManager;
 import com.xzcode.ggcloud.session.group.common.util.UuidUtil;
 
 import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.common.executor.DefaultTaskExecutor;
 import xzcode.ggserver.core.common.executor.ITaskExecutor;
 import xzcode.ggserver.core.common.session.GGSession;
-import xzcode.ggserver.core.common.session.group.manager.GGSessionGroupManager;
 
 /**
  * 配置

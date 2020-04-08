@@ -5,6 +5,8 @@ import com.xzcode.ggcloud.session.group.client.events.ConnCloseEventListener;
 import com.xzcode.ggcloud.session.group.client.events.ConnOpenEventListener;
 import com.xzcode.ggcloud.session.group.client.handler.AnthRespHandler;
 import com.xzcode.ggcloud.session.group.client.handler.SessionGroupRegisterRespHandler;
+import com.xzcode.ggcloud.session.group.common.group.GGSessionGroup;
+import com.xzcode.ggcloud.session.group.common.group.manager.GGSessionGroupManager;
 import com.xzcode.ggcloud.session.group.common.message.req.DataTransferReq;
 import com.xzcode.ggcloud.session.group.common.message.resp.AuthResp;
 import com.xzcode.ggcloud.session.group.common.message.resp.SessionGroupRegisterResp;
@@ -14,11 +16,9 @@ import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.constant.ProtocolTypeConstants;
 import xzcode.ggserver.core.common.event.GGEvents;
+import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.Pack;
 import xzcode.ggserver.core.common.message.model.IMessage;
-import xzcode.ggserver.core.common.message.response.Response;
-import xzcode.ggserver.core.common.session.group.GGSessionGroup;
-import xzcode.ggserver.core.common.session.group.manager.GGSessionGroupManager;
 import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 
 /**
@@ -78,7 +78,7 @@ public class SessionGroupClient {
 	public void send(IMessage message) {
 		GGSessionGroupManager sessionGroupManager = this.config.getSessionGroupManager();
 		GGSessionGroup defaultGroup = sessionGroupManager.getDefaultGroup();
-		Pack pack = defaultGroup.makePack(new Response(null, message.getActionId(), message));
+		Pack pack = defaultGroup.makePack(new MessageData<>(null, message.getActionId(), message));
 		DataTransferReq req = new DataTransferReq(this.config.getSessionGroupId());
 		req.setAction(pack.getAction());
 		req.setMessage(pack.getMessage());
