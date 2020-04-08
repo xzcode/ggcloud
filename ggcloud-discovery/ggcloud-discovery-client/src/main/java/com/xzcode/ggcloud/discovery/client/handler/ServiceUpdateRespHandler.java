@@ -6,7 +6,7 @@ import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceUpdateRe
 import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
 import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 
-import xzcode.ggserver.core.common.message.request.Request;
+import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
 
 /**
@@ -28,7 +28,7 @@ public class ServiceUpdateRespHandler implements IRequestMessageHandler<Discover
 
 
 	@Override
-	public void handle(Request<DiscoveryServiceUpdateResp> request) {
+	public void handle(MessageData<DiscoveryServiceUpdateResp> request) {
 		
 		DiscoveryServiceUpdateResp resp = request.getMessage();
 		ServiceInfo updateModel = resp.getServiceInfo();

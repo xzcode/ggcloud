@@ -3,7 +3,7 @@ package com.xzcode.ggcloud.eventbus.server.handler;
 import com.xzcode.ggcloud.eventbus.common.message.req.EventPublishReq;
 import com.xzcode.ggcloud.eventbus.server.config.EventbusServerConfig;
 
-import xzcode.ggserver.core.common.message.request.Request;
+import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
 
 /**
@@ -24,7 +24,7 @@ public class EventPublishReqHandler implements IRequestMessageHandler<EventPubli
 
 
 	@Override
-	public void handle(Request<EventPublishReq> request) {
+	public void handle(MessageData<EventPublishReq> request) {
 		EventPublishReq resp = request.getMessage();
 	}
 

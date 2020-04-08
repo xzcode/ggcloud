@@ -1,6 +1,6 @@
-package com.xzcode.ggcloud.eventbus.client.events;
+package com.xzcode.ggcloud.session.group.client.events;
 
-import com.xzcode.ggcloud.eventbus.client.config.SessionGroupClientConfig;
+import com.xzcode.ggcloud.session.group.client.config.SessionGroupClientConfig;
 import com.xzcode.ggcloud.session.group.common.message.req.AuthReq;
 
 import xzcode.ggserver.core.common.event.IEventListener;

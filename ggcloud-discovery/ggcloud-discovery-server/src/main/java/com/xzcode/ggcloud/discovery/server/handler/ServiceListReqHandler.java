@@ -7,7 +7,7 @@ import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceListResp
 import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
 import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
 
-import xzcode.ggserver.core.common.message.request.Request;
+import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
 import xzcode.ggserver.core.common.session.GGSession;
 
@@ -27,7 +27,7 @@ public class ServiceListReqHandler implements IRequestMessageHandler<DiscoverySe
 	}
 
 	@Override
-	public void handle(Request<DiscoveryServiceListReq> request) {
+	public void handle(MessageData<DiscoveryServiceListReq> request) {
 		GGSession session = request.getSession();
 		List<ServiceInfo> serviceList = config.getServiceManager().getServiceList();
 		DiscoveryServiceListResp resp = new DiscoveryServiceListResp(serviceList);

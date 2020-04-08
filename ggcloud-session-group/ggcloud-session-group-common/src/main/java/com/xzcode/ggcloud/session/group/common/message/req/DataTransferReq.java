@@ -5,59 +5,57 @@ import xzcode.ggserver.core.common.message.model.IMessage;
 /**
  * 数据传输请求
  *
- * @author zai
- * 2020-04-08 10:31:48
+ * @author zai 2020-04-08 10:31:48
  */
 public class DataTransferReq implements IMessage {
-	
-	public static final String ACTION = "GG.SESSION.GROUP.PUB.REQ";
-	
+
+	public static final String ACTION = "GG.SESSION.GROUP.DATA.TRANSFER.REQ";
+
 	@Override
 	public String getActionId() {
 		return ACTION;
 	}
-	
-	//事件id
-	private String eventId;
-	
-	//事件数据
-	private byte[] eventData;
-	
+
+	// 会话组id
+	private String sessionGroupId;
+
+	/* 消息标识 */
+	private byte[] action;
+
+	/* 消息体 */
+	private byte[] message;
 
 	public DataTransferReq() {
-		
+
 	}
 
-
-	
-
-
-	public DataTransferReq(String eventId, byte[] eventData) {
+	public DataTransferReq(String sessionGroupId) {
 		super();
-		this.eventId = eventId;
-		this.eventData = eventData;
+		this.sessionGroupId = sessionGroupId;
 	}
 
-
-
-
-
-	public String getEventId() {
-		return eventId;
+	public void setSessionGroupId(String sessionGroupId) {
+		this.sessionGroupId = sessionGroupId;
 	}
 
+	public String getSessionGroupId() {
+		return sessionGroupId;
+	}
 
-	public void setEventId(String eventId) {
-		this.eventId = eventId;
+	public byte[] getAction() {
+		return action;
 	}
-	
-	
-	public byte[] getEventData() {
-		return eventData;
+
+	public void setAction(byte[] action) {
+		this.action = action;
 	}
-	
-	public void setEventData(byte[] eventData) {
-		this.eventData = eventData;
+
+	public byte[] getMessage() {
+		return message;
 	}
-	
+
+	public void setMessage(byte[] message) {
+		this.message = message;
+	}
+
 }

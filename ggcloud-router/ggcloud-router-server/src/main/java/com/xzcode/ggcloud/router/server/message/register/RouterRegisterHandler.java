@@ -8,7 +8,7 @@ import com.xzcode.ggcloud.router.server.constant.RouterServerChannelAttrKeys;
 import io.netty.channel.Channel;
 import io.netty.util.AttributeKey;
 import xzcode.ggserver.core.common.channel.group.IChannelGroupManager;
-import xzcode.ggserver.core.common.message.request.Request;
+import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
 import xzcode.ggserver.core.common.message.response.Response;
 
@@ -35,7 +35,7 @@ public class RouterRegisterHandler implements IRequestMessageHandler<RouterChann
 	}
 
 	@Override
-	public void handle(Request<RouterChannelRegisterReq> request) {
+	public void handle(MessageData<RouterChannelRegisterReq> request) {
 		Channel channel = request.getChannel();
 		RouterChannelRegisterReq req = request.getMessage();
 		String routerGroupId = req.getRouterGroupId();

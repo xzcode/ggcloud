@@ -3,7 +3,7 @@ package com.xzcode.ggcloud.eventbus.server.handler;
 import com.xzcode.ggcloud.eventbus.common.message.req.EventSubscribeReq;
 import com.xzcode.ggcloud.eventbus.server.config.EventbusServerConfig;
 
-import xzcode.ggserver.core.common.message.request.Request;
+import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
 
 /**
@@ -25,7 +25,7 @@ public class EventSubscribeReqHandler implements IRequestMessageHandler<EventSub
 
 
 	@Override
-	public void handle(Request<EventSubscribeReq> request) {
+	public void handle(MessageData<EventSubscribeReq> request) {
 		EventSubscribeReq resp = request.getMessage();
 	}
 

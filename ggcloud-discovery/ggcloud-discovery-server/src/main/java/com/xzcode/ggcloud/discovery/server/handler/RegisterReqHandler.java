@@ -11,7 +11,7 @@ import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
 import com.xzcode.ggcloud.discovery.server.constant.DiscoveryServerSessionKeys;
 
-import xzcode.ggserver.core.common.message.request.Request;
+import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
 import xzcode.ggserver.core.common.session.GGSession;
 
@@ -35,7 +35,7 @@ public class RegisterReqHandler implements IRequestMessageHandler<DiscoveryServi
 
 
 	@Override
-	public void handle(Request<DiscoveryServiceRegisterReq> request) {
+	public void handle(MessageData<DiscoveryServiceRegisterReq> request) {
 		GGSession session = request.getSession();
 		DiscoveryServiceRegisterReq req = request.getMessage();
 		String serverAuthToken = config.getAuthToken();

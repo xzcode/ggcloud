@@ -6,10 +6,6 @@ package com.xzcode.ggcloud.session.group.server.constant;
  * @author zai
  * 2020-04-07 11:58:49
  */
-public interface EventbusSessionKeys {
+public interface SessionGroupServerSessionKeys {
 	
-	/**
-	 * 订阅信息
-	 */
-	String SUBSCRIPTION_INFO = "SUBSCRIPTION_INFO";
 }

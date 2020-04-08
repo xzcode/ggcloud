@@ -1,8 +1,8 @@
 package com.xzcode.ggcloud.session.group.server.config;
 
 import com.xzcode.ggcloud.session.group.common.constant.GGSesssionGroupConstant;
-import com.xzcode.ggcloud.session.group.server.subscription.SubscriptionManager;
 
+import xzcode.ggserver.core.common.session.group.manager.GGSessionGroupManager;
 import xzcode.ggserver.core.server.IGGServer;
 
 /**
@@ -16,11 +16,14 @@ public class SessionGroupServerConfig {
 	//sessionServer对象
 	private IGGServer sessionServer;
 	
+	//serviceServer对象
+	private IGGServer serviceServer;
+	
 	//是否打印pingpong包信息
 	protected boolean printPingPongInfo = false;
 	
-	//订阅管理器
-	private SubscriptionManager subscriptionManager = new SubscriptionManager();
+	//会话组管理器
+	private GGSessionGroupManager sessionGroupManager;
 	
 	//服务端口
 	private int port = GGSesssionGroupConstant.DEFAULT_SERVER_PORT;
@@ -52,8 +55,12 @@ public class SessionGroupServerConfig {
 		this.sessionServer = sessionServer;
 	}
 	
-	public SubscriptionManager getSubscriptionManager() {
-		return subscriptionManager;
+	public GGSessionGroupManager getSessionGroupManager() {
+		return sessionGroupManager;
+	}
+	
+	public void setSessionGroupManager(GGSessionGroupManager sessionGroupManager) {
+		this.sessionGroupManager = sessionGroupManager;
 	}
 
 	public boolean isPrintPingPongInfo() {
@@ -62,6 +69,15 @@ public class SessionGroupServerConfig {
 	
 	public void setPrintPingPongInfo(boolean printPingPongInfo) {
 		this.printPingPongInfo = printPingPongInfo;
+	}
+	
+	
+	public IGGServer getServiceServer() {
+		return serviceServer;
+	}
+	
+	public void setServiceServer(IGGServer serviceServer) {
+		this.serviceServer = serviceServer;
 	}
 	
 

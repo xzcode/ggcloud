@@ -6,8 +6,8 @@ import com.xzcode.ggcloud.router.server.constant.RouterServerChannelAttrKeys;
 
 import io.netty.channel.Channel;
 import io.netty.util.AttributeKey;
+import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.Pack;
-import xzcode.ggserver.core.common.message.request.Request;
 import xzcode.ggserver.core.common.session.GGSession;
 import xzcode.ggserver.core.common.session.factory.ISessionFactory;
 import xzcode.ggserver.core.common.session.manager.ISessionManager;
@@ -28,7 +28,7 @@ public class RouterServerSessionFactory implements ISessionFactory {
 	}
 
 	@Override
-	public GGSession getSession(Channel channel, Request<?> request) {
+	public GGSession getSession(Channel channel, MessageData<?> request) {
 		RouterSessionIdMetadata metadata = request.getMetadata(RouterSessionIdMetadata.class);
 		if (metadata == null) {
 			return null;

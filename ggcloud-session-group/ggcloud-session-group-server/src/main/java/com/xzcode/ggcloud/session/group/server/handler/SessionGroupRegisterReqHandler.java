@@ -1,20 +1,18 @@
-package xzcode.ggserver.core.common.prefebs.sessiongroup;
+package com.xzcode.ggcloud.session.group.server.handler;
 
 import java.nio.charset.Charset;
 
-import io.netty.channel.Channel;
+import com.xzcode.ggcloud.session.group.common.message.req.SessionGroupRegisterReq;
+import com.xzcode.ggcloud.session.group.common.message.resp.SessionGroupRegisterResp;
+
 import io.netty.util.AttributeKey;
 import xzcode.ggserver.core.common.channel.DefaultChannelAttributeKeys;
 import xzcode.ggserver.core.common.config.GGConfig;
 import xzcode.ggserver.core.common.handler.serializer.ISerializer;
-import xzcode.ggserver.core.common.message.request.Request;
+import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
-import xzcode.ggserver.core.common.message.response.Response;
 import xzcode.ggserver.core.common.message.response.support.IMakePackSupport;
 import xzcode.ggserver.core.common.prefebs.pingpong.model.GGPingPongInfo;
-import xzcode.ggserver.core.common.prefebs.pingpong.model.GGPing;
-import xzcode.ggserver.core.common.prefebs.pingpong.model.GGPong;
-import xzcode.ggserver.core.common.prefebs.sessiongroup.model.GGSessionGroupRegisterReq;
 import xzcode.ggserver.core.common.session.GGSession;
 import xzcode.ggserver.core.common.session.group.manager.GGSessionGroupManager;
 
@@ -24,24 +22,26 @@ import xzcode.ggserver.core.common.session.group.manager.GGSessionGroupManager;
  * @author zai
  * 2020-01-16 17:04:11
  */
-public class GGSessionGroupRegisterReqHandler implements IRequestMessageHandler<GGSessionGroupRegisterReq> , IMakePackSupport{
+public class SessionGroupRegisterReqHandler implements IRequestMessageHandler<SessionGroupRegisterReq> , IMakePackSupport{
 	
 	protected GGConfig config;
 	
 	protected static final AttributeKey<GGPingPongInfo> PING_PONG_INFO_KEY = AttributeKey.valueOf(DefaultChannelAttributeKeys.PING_INFO);
 	
-	public GGSessionGroupRegisterReqHandler(GGConfig config) {
+	public SessionGroupRegisterReqHandler(GGConfig config) {
 		this.config = config;
 	}
 
 	@Override
-	public void handle(Request<GGSessionGroupRegisterReq> request) {
-		GGSessionGroupRegisterReq req = request.getMessage();
-		String groupId = req.getGroupId();
+	public void handle(MessageData<SessionGroupRegisterReq> request) {
 		GGSession session = request.getSession();
+		SessionGroupRegisterReq req = request.getMessage();
+		String groupId = req.getGroupId();
 		GGSessionGroupManager sessionGroupManager = config.getSessionGroupManager();
 		
 		sessionGroupManager.addSession(groupId, session);
+		session.setReady(true);
+		session.send(new SessionGroupRegisterResp(true));
 		
 	}
 

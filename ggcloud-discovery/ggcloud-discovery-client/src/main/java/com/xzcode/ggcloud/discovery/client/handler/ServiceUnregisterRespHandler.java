@@ -4,7 +4,7 @@ import com.xzcode.ggcloud.discovery.client.config.DiscoveryClientConfig;
 import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceUnregisterResp;
 import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 
-import xzcode.ggserver.core.common.message.request.Request;
+import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
 
 /**
@@ -27,7 +27,7 @@ public class ServiceUnregisterRespHandler implements IRequestMessageHandler<Disc
 
 
 	@Override
-	public void handle(Request<DiscoveryServiceUnregisterResp> request) {
+	public void handle(MessageData<DiscoveryServiceUnregisterResp> request) {
 		DiscoveryServiceUnregisterResp resp = request.getMessage();
 		String serviceName = resp.getServiceName();
 		String serviceId = resp.getServiceId();

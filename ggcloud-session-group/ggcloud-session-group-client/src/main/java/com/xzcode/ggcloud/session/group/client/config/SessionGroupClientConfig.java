@@ -1,4 +1,4 @@
-package com.xzcode.ggcloud.eventbus.client.config;
+package com.xzcode.ggcloud.session.group.client.config;
 
 import com.xzcode.ggcloud.session.group.common.constant.GGSesssionGroupConstant;
 import com.xzcode.ggcloud.session.group.common.util.UuidUtil;
@@ -159,6 +159,14 @@ public class SessionGroupClientConfig {
 
 	public void setConnectionSize(int connectionSize) {
 		this.connectionSize = connectionSize;
+	}
+	
+	public void setSessionGroupManager(GGSessionGroupManager sessionGroupManager) {
+		this.sessionGroupManager = sessionGroupManager;
+	}
+	
+	public GGSessionGroupManager getSessionGroupManager() {
+		return sessionGroupManager;
 	}
 
 }

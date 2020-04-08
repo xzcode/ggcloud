@@ -1,4 +1,4 @@
-package com.xzcode.ggcloud.eventbus.client.listener;
+package com.xzcode.ggcloud.session.group.client.listener;
 
 public interface IClientRegisterSuccessListener {
 	

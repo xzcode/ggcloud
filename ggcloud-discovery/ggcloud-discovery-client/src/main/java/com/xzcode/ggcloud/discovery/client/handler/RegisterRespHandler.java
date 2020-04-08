@@ -8,7 +8,7 @@ import com.xzcode.ggcloud.discovery.client.listener.IClientRegisterSuccessListen
 import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryServiceListReq;
 import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceRegisterResp;
 
-import xzcode.ggserver.core.common.message.request.Request;
+import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
 
 /**
@@ -31,7 +31,7 @@ public class RegisterRespHandler implements IRequestMessageHandler<DiscoveryServ
 
 
 	@Override
-	public void handle(Request<DiscoveryServiceRegisterResp> request) {
+	public void handle(MessageData<DiscoveryServiceRegisterResp> request) {
 		DiscoveryServiceRegisterResp resp = request.getMessage();
 		if (resp.isSuccess()) {
 			config.getSession().send(DiscoveryServiceListReq.DEFAULT_INSTANT);

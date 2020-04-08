@@ -7,7 +7,7 @@ import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceListResp
 import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
 import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 
-import xzcode.ggserver.core.common.message.request.Request;
+import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
 
 /**
@@ -29,7 +29,7 @@ public class ServiceListRespHandler implements IRequestMessageHandler<DiscoveryS
 
 
 	@Override
-	public void handle(Request<DiscoveryServiceListResp> request) {
+	public void handle(MessageData<DiscoveryServiceListResp> request) {
 		
 		DiscoveryServiceListResp resp = request.getMessage();
 		//检查获取服务集合,内容属性存在null值问题

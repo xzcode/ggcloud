@@ -1,12 +1,12 @@
-package com.xzcode.ggcloud.eventbus.client.handler;
+package com.xzcode.ggcloud.session.group.client.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.xzcode.ggcloud.eventbus.client.config.SessionGroupClientConfig;
+import com.xzcode.ggcloud.session.group.client.config.SessionGroupClientConfig;
 import com.xzcode.ggcloud.session.group.common.message.resp.SessionGroupRegisterResp;
 
-import xzcode.ggserver.core.common.message.request.Request;
+import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
 import xzcode.ggserver.core.common.session.GGSession;
 
@@ -27,11 +27,13 @@ public class SessionGroupRegisterRespHandler implements IRequestMessageHandler<S
 	}
 
 	@Override
-	public void handle(Request<SessionGroupRegisterResp> request) {
+	public void handle(MessageData<SessionGroupRegisterResp> request) {
 		GGSession session = request.getSession();
 		SessionGroupRegisterResp resp = request.getMessage();
+		//会话组注册成功
 		if (resp.isSuccess()) {
-			
+			//设置会话准备就绪
+			session.setReady(true);
 		}
 	}
 	
