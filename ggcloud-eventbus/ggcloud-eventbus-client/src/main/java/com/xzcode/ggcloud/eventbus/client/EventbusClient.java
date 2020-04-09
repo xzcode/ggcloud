@@ -27,6 +27,7 @@ public class EventbusClient {
 		sessionGroupClientConfig.setAuthToken(this.config.getAuthToken());
 		sessionGroupClientConfig.setTaskExecutor(new DefaultTaskExecutor("gg-evt-cli-", this.config.getWorkThreadSize()));
 		sessionGroupClientConfig.setConnectionSize(this.config.getConnectionSize());
+		sessionGroupClientConfig.setClientReportInterval(clientReportInterval);
 		
 		SessionGroupClient sessionGroupClient = new SessionGroupClient(sessionGroupClientConfig);
 		
