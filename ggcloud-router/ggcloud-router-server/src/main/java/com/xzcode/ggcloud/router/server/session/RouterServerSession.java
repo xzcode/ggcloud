@@ -7,6 +7,7 @@ import io.netty.channel.Channel;
 import xzcode.ggserver.core.common.event.GGEvents;
 import xzcode.ggserver.core.common.event.model.EventData;
 import xzcode.ggserver.core.common.future.IGGFuture;
+import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.response.Response;
 import xzcode.ggserver.core.common.session.impl.AbstractAttrMapSession;
 import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
@@ -31,7 +32,7 @@ public class RouterServerSession extends AbstractAttrMapSession<RouterServerConf
 	public IGGFuture disconnect() {
 		emitEvent(new EventData<Object>(this, GGEvents.Connection.CLOSED, null));
 		config.getSessionManager().remove(this.getSessonId());
-		return send(new Response(RouterDisconnectResp.ACTION_ID, null));
+		return send(new MessageData<>(RouterDisconnectResp.ACTION_ID, null));
 	}
 
 	@Override

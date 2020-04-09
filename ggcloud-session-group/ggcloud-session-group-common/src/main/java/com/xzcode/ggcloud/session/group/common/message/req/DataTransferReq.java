@@ -18,6 +18,9 @@ public class DataTransferReq implements IMessage {
 
 	// 会话组id
 	private String sessionGroupId;
+	
+	// 传递的会话id
+	private String tranferSessionId;
 
 	/* 消息标识 */
 	private byte[] action;
@@ -56,6 +59,14 @@ public class DataTransferReq implements IMessage {
 
 	public void setMessage(byte[] message) {
 		this.message = message;
+	}
+	
+	public String getTranferSessionId() {
+		return tranferSessionId;
+	}
+	
+	public void setTranferSessionId(String tranferSessionId) {
+		this.tranferSessionId = tranferSessionId;
 	}
 
 }

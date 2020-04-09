@@ -9,7 +9,7 @@ import io.netty.util.AttributeKey;
 import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.Pack;
 import xzcode.ggserver.core.common.session.GGSession;
-import xzcode.ggserver.core.common.session.factory.ISessionFactory;
+import xzcode.ggserver.core.common.session.factory.ChannelSessionFactory;
 import xzcode.ggserver.core.common.session.manager.ISessionManager;
 
 /**
@@ -17,7 +17,7 @@ import xzcode.ggserver.core.common.session.manager.ISessionManager;
  * 
  * @author zai 2019-12-16 15:51:34
  */
-public class RouterServerSessionFactory implements ISessionFactory {
+public class RouterServerSessionFactory implements ChannelSessionFactory {
 
 	protected RouterServerConfig config;
 

@@ -231,7 +231,7 @@ public class DefaultRouterService implements IRouterService{
 	public void shutdown() {
 		this.shutdown = true;
 		ISessionManager sessionManager = this.distClient.getSessionManager();
-		sessionManager.clearAllSession();
+		sessionManager.disconnectAllSession();
 		config.getRoutingServer().emitEvent(new EventData<IRouterService>(RouterClientEvents.RouterService.SHUTDOWN, this));
 	}
 	
