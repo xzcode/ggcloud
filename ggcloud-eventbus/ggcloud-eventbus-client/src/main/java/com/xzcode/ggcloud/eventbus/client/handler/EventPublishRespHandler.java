@@ -4,7 +4,7 @@ import com.xzcode.ggcloud.eventbus.client.config.EventbusClientConfig;
 import com.xzcode.ggcloud.eventbus.common.message.resp.EventPublishResp;
 
 import xzcode.ggserver.core.common.message.MessageData;
-import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
+import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
 
 /**
  * 客户端认证请求
@@ -12,7 +12,7 @@ import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler
  * @author zai
  * 2020-04-07 10:57:11
  */
-public class EventPublishRespHandler implements IRequestMessageHandler<EventPublishResp>{
+public class EventPublishRespHandler implements MessageDataHandler<EventPublishResp>{
 	
 	private EventbusClientConfig config;
 	

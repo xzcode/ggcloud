@@ -7,7 +7,7 @@ import com.xzcode.ggcloud.session.group.client.config.SessionGroupClientConfig;
 import com.xzcode.ggcloud.session.group.common.message.resp.SessionGroupRegisterResp;
 
 import xzcode.ggserver.core.common.message.MessageData;
-import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
+import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
 import xzcode.ggserver.core.common.session.GGSession;
 
 /**
@@ -16,7 +16,7 @@ import xzcode.ggserver.core.common.session.GGSession;
  * @author zai
  * 2020-01-16 17:04:11
  */
-public class SessionGroupRegisterRespHandler implements IRequestMessageHandler<SessionGroupRegisterResp>{
+public class SessionGroupRegisterRespHandler implements MessageDataHandler<SessionGroupRegisterResp>{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(SessionGroupRegisterRespHandler.class);
 	

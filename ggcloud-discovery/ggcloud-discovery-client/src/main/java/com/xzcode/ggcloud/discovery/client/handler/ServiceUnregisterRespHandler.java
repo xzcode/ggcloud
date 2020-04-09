@@ -5,7 +5,7 @@ import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceUnregist
 import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 
 import xzcode.ggserver.core.common.message.MessageData;
-import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
+import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
 
 /**
  * 客户端注册请求处理
@@ -14,7 +14,7 @@ import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler
  * @author zai
  * 2019-10-04 14:29:53
  */
-public class ServiceUnregisterRespHandler implements IRequestMessageHandler<DiscoveryServiceUnregisterResp>{
+public class ServiceUnregisterRespHandler implements MessageDataHandler<DiscoveryServiceUnregisterResp>{
 	
 	private DiscoveryClientConfig config;
 	

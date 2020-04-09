@@ -3,7 +3,7 @@ package com.xzcode.ggcloud.eventbus.server.subscription;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import xzcode.ggserver.core.common.session.group.GGSessionGroup;
+import xzcode.ggserver.core.common.session.GGSession;
 
 /**
  * 事件订阅处理器
@@ -25,7 +25,7 @@ public class SubscriptionManager {
 	 * @author zai
 	 * 2020-04-07 11:45:20
 	 */
-	public void addSubscription(String eventId, GGSessionGroup sessionGroup) {
+	public void addSubscription(String eventId, GGSession session) {
 		Subscription subscription = subscriptions.get(eventId);
 		if (subscription == null) {
 			subscription = new Subscription(eventId);
@@ -34,7 +34,7 @@ public class SubscriptionManager {
 				subscription = putIfAbsent;
 			}
 		}
-		subscription.addSubscription(sessionGroup);
+		subscription.addSubscription(session);
 	}
 	
 	/**
@@ -45,10 +45,10 @@ public class SubscriptionManager {
 	 * @author zai
 	 * 2020-04-07 15:40:47
 	 */
-	public void removeSubscription(String eventId, GGSessionGroup sessionGroup) {
+	public void removeSubscription(String eventId, GGSession session) {
 		Subscription subscription = subscriptions.get(eventId);
 		if (subscription != null) {
-			subscription.removeSubscription(sessionGroup);
+			subscription.removeSubscription(session);
 		}
 	}
 	

@@ -3,6 +3,7 @@ package com.xzcode.ggcloud.session.group.server.config;
 import com.xzcode.ggcloud.session.group.common.constant.GGSesssionGroupConstant;
 import com.xzcode.ggcloud.session.group.common.group.manager.GGSessionGroupManager;
 
+import xzcode.ggserver.core.common.executor.ITaskExecutor;
 import xzcode.ggserver.core.server.IGGServer;
 
 /**
@@ -16,14 +17,21 @@ public class SessionGroupServerConfig {
 	//sessionServer对象
 	private IGGServer sessionServer;
 	
-	//serviceServer对象
+	//业务服务端对象
 	private IGGServer serviceServer;
+	
+	//是否开启业务服务端
+	private boolean enableServiceServer = false;
 	
 	//是否打印pingpong包信息
 	protected boolean printPingPongInfo = false;
 	
 	//会话组管理器
 	private GGSessionGroupManager sessionGroupManager;
+	
+	//工作线程数
+	protected int workThreadSize = 8;
+	
 	
 	//服务端口
 	private int port = GGSesssionGroupConstant.DEFAULT_SERVER_PORT;
@@ -79,6 +87,22 @@ public class SessionGroupServerConfig {
 	public void setServiceServer(IGGServer serviceServer) {
 		this.serviceServer = serviceServer;
 	}
-	
 
+	public boolean isEnableServiceServer() {
+		return enableServiceServer;
+	}
+
+	public void setEnableServiceServer(boolean enableServiceService) {
+		this.enableServiceServer = enableServiceService;
+	}
+
+	public int getWorkThreadSize() {
+		return workThreadSize;
+	}
+
+	public void setWorkThreadSize(int workThreadSize) {
+		this.workThreadSize = workThreadSize;
+	}
+
+	
 }

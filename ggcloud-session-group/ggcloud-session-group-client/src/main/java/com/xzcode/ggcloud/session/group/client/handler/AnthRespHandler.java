@@ -6,7 +6,7 @@ import com.xzcode.ggcloud.session.group.common.message.req.SessionGroupRegisterR
 import com.xzcode.ggcloud.session.group.common.message.resp.AuthResp;
 
 import xzcode.ggserver.core.common.message.MessageData;
-import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
+import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
 import xzcode.ggserver.core.common.session.GGSession;
 import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 
@@ -15,7 +15,7 @@ import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
  *
  * @author zai 2020-04-07 10:57:11
  */
-public class AnthRespHandler implements IRequestMessageHandler<AuthResp> {
+public class AnthRespHandler implements MessageDataHandler<AuthResp> {
 
 	private SessionGroupClientConfig config;
 

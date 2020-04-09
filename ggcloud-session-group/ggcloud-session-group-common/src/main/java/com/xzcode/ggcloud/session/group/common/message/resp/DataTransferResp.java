@@ -10,43 +10,50 @@ import xzcode.ggserver.core.common.message.model.IMessage;
  */
 public class DataTransferResp implements IMessage {
 
-	public static final String ACTION = "GG.SESSION.GROUP.DATA.TRANSFER.RESP";
+	public static final String ACTION_ID = "GG.SESSION.GROUP.DATA.TRANSFER.RESP";
 
 	@Override
 	public String getActionId() {
-		return ACTION;
+		return ACTION_ID;
 	}
 
-	// 事件id
-	private String eventId;
+	
+	// 传递的会话id
+	private String tranferSessionId;
 
-	// 事件数据
-	private byte[] eventData;
+	/* 消息标识 */
+	private byte[] action;
+
+	/* 消息体 */
+	private byte[] message;
 
 	public DataTransferResp() {
 
 	}
 
-	public DataTransferResp(String eventId, byte[] eventData) {
-		super();
-		this.eventId = eventId;
-		this.eventData = eventData;
+	public String getTranferSessionId() {
+		return tranferSessionId;
 	}
 
-	public String getEventId() {
-		return eventId;
+	public void setTranferSessionId(String tranferSessionId) {
+		this.tranferSessionId = tranferSessionId;
 	}
 
-	public void setEventId(String eventId) {
-		this.eventId = eventId;
+	public byte[] getAction() {
+		return action;
 	}
 
-	public byte[] getEventData() {
-		return eventData;
+	public void setAction(byte[] action) {
+		this.action = action;
 	}
 
-	public void setEventData(byte[] eventData) {
-		this.eventData = eventData;
+	public byte[] getMessage() {
+		return message;
 	}
+
+	public void setMessage(byte[] message) {
+		this.message = message;
+	}
+
 
 }

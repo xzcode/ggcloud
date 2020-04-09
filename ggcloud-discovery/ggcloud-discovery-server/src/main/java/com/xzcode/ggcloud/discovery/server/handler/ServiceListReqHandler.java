@@ -8,7 +8,7 @@ import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
 import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
 
 import xzcode.ggserver.core.common.message.MessageData;
-import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
+import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
 import xzcode.ggserver.core.common.session.GGSession;
 
 /**
@@ -18,7 +18,7 @@ import xzcode.ggserver.core.common.session.GGSession;
  * @author zai
  * 2019-10-04 14:29:53
  */
-public class ServiceListReqHandler implements IRequestMessageHandler<DiscoveryServiceListReq>{
+public class ServiceListReqHandler implements MessageDataHandler<DiscoveryServiceListReq>{
 	
 	private DiscoveryServerConfig config;
 

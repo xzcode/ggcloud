@@ -7,7 +7,7 @@ import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
 import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 
 import xzcode.ggserver.core.common.message.MessageData;
-import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
+import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
 
 /**
  * 服务更新推送处理
@@ -16,7 +16,7 @@ import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler
  * @author zai
  * 2019-10-04 14:29:53
  */
-public class ServiceUpdateRespHandler implements IRequestMessageHandler<DiscoveryServiceUpdateResp>{
+public class ServiceUpdateRespHandler implements MessageDataHandler<DiscoveryServiceUpdateResp>{
 	
 	private DiscoveryClientConfig config;
 	

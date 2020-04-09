@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.xzcode.ggcloud.eventbus.common.message.resp.EventMessageResp;
 
-import xzcode.ggserver.core.common.session.group.GGSessionGroup;
+import xzcode.ggserver.core.common.session.GGSession;
 
 /***
  * 订阅信息
@@ -20,7 +20,7 @@ public class Subscription {
 	private String eventId;
 	
 	//订阅的会话集合
-	private Map<String, GGSessionGroup> sessions = new ConcurrentHashMap<>();
+	private Map<String, GGSession> sessions = new ConcurrentHashMap<>();
 	
 	
 	public Subscription(String eventId) {
@@ -29,21 +29,23 @@ public class Subscription {
 	}
 	
 	public void publish(EventMessageResp resp) {
-		for (Entry<String, GGSessionGroup> entry : sessions.entrySet()) {
-			GGSessionGroup group = entry.getValue();
-			group.sendToRandomOne(resp);
+		for (Entry<String, GGSession> entry : sessions.entrySet()) {
+			GGSession session = entry.getValue();
+			session.send(resp);
 		}
 		
 	}
 
-	public void addSubscription(GGSessionGroup sessionGroup) {
-		sessions.put(sessionGroup.getGroupId(), sessionGroup);
+	public void addSubscription(GGSession session) {
+		sessions.put(session.getSessonId(), session);
 	}
 	
-	public void removeSubscription(GGSessionGroup sessionGroup) {
-		sessions.remove(sessionGroup.getGroupId());
+	public void removeSubscription(GGSession session) {
+		sessions.remove(session.getSessonId());
 	}
 	
-	
+	public String getEventId() {
+		return eventId;
+	}
 	
 }

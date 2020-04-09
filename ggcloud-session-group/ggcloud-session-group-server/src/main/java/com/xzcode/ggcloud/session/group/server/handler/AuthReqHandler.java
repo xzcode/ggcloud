@@ -5,7 +5,7 @@ import com.xzcode.ggcloud.session.group.common.message.resp.AuthResp;
 import com.xzcode.ggcloud.session.group.server.config.SessionGroupServerConfig;
 
 import xzcode.ggserver.core.common.message.MessageData;
-import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
+import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
 import xzcode.ggserver.core.common.session.GGSession;
 
 /**
@@ -13,7 +13,7 @@ import xzcode.ggserver.core.common.session.GGSession;
  *
  * @author zai 2020-04-07 10:57:11
  */
-public class AuthReqHandler implements IRequestMessageHandler<AuthReq> {
+public class AuthReqHandler implements MessageDataHandler<AuthReq> {
 
 	private SessionGroupServerConfig config;
 

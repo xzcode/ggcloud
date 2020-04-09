@@ -1,15 +1,15 @@
 package com.xzcode.ggcloud.session.group.server.session;
 
 import com.xzcode.ggcloud.session.group.common.group.manager.GGSessionGroupManager;
+import com.xzcode.ggcloud.session.group.common.message.resp.DataTransferResp;
 
 import io.netty.channel.Channel;
 import xzcode.ggserver.core.common.config.GGConfig;
 import xzcode.ggserver.core.common.future.GGDefaultFuture;
 import xzcode.ggserver.core.common.future.IGGFuture;
+import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.Pack;
 import xzcode.ggserver.core.common.session.impl.AbstractAttrMapSession;
-import xzcode.ggserver.core.common.session.listener.ISessionDisconnectListener;
-import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 
 /**
  * 业务服务端session
@@ -43,7 +43,11 @@ public class ServiceServerSession extends AbstractAttrMapSession<GGConfig>{
 
 	@Override
 	public IGGFuture send(Pack pack) {
-		return sessionGroupManager.sendToRandomOne(groupId, pack);
+		DataTransferResp resp = new DataTransferResp();
+		resp.setAction(pack.getAction());
+		resp.setMessage(pack.getMessage());
+		resp.setTranferSessionId(this.getSessonId());
+		return sessionGroupManager.sendToRandomOne(groupId, makePack(new MessageData<>(resp.getActionId(), resp)));
 	}
 
 	@Override

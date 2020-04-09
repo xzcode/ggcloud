@@ -17,7 +17,8 @@ public class ConnCloseEventListener implements IEventListener<Void>{
 
 	@Override
 	public void onEvent(EventData<Void> eventData) {
-		
+		//断开连接后，创建新连接
+		this.config.getSessionGroupClient().connectOne(config.getServerHost(), config.getServerPort());
 	}
 
 

@@ -9,7 +9,7 @@ import io.netty.channel.Channel;
 import io.netty.util.AttributeKey;
 import xzcode.ggserver.core.common.channel.group.IChannelGroupManager;
 import xzcode.ggserver.core.common.message.MessageData;
-import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
+import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
 import xzcode.ggserver.core.common.message.response.Response;
 
 /**
@@ -18,7 +18,7 @@ import xzcode.ggserver.core.common.message.response.Response;
  * @author zai
  * 2019-12-19 16:13:42
  */
-public class RouterRegisterHandler implements IRequestMessageHandler<RouterChannelRegisterReq>{
+public class RouterRegisterHandler implements MessageDataHandler<RouterChannelRegisterReq>{
 	
 	protected AttributeKey<String> routerKey = AttributeKey.valueOf(RouterServerChannelAttrKeys.ROUTER_GROUP_ID_KEY);
 	
