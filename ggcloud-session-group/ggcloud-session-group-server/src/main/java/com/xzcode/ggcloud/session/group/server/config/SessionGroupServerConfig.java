@@ -1,5 +1,7 @@
 package com.xzcode.ggcloud.session.group.server.config;
 
+import java.util.concurrent.ThreadFactory;
+
 import com.xzcode.ggcloud.session.group.common.constant.GGSesssionGroupConstant;
 import com.xzcode.ggcloud.session.group.common.group.manager.GGSessionGroupManager;
 
@@ -38,6 +40,9 @@ public class SessionGroupServerConfig {
 	
 	//认证token
 	private String authToken = GGSesssionGroupConstant.DEFAULT_AUTH_TOKEN;
+	
+	//工作线程工厂
+	protected ThreadFactory workThreadFactory;
 	
 	public String getAuthToken() {
 		return authToken;
@@ -104,5 +109,11 @@ public class SessionGroupServerConfig {
 		this.workThreadSize = workThreadSize;
 	}
 
+	public ThreadFactory getWorkThreadFactory() {
+		return workThreadFactory;
+	}
 	
+	public void setWorkThreadFactory(ThreadFactory workThreadFactory) {
+		this.workThreadFactory = workThreadFactory;
+	}
 }

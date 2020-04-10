@@ -1,27 +1,26 @@
 package com.xzcode.ggcloud.eventbus.client.config;
 
 import com.xzcode.ggcloud.eventbus.client.EventbusClient;
-import com.xzcode.ggcloud.eventbus.client.subscription.EventSubscribeManager;
 import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
-
-import xzcode.ggserver.core.client.GGClient;
+import com.xzcode.ggcloud.eventbus.common.subscription.SubscriptionManager;
+import com.xzcode.ggcloud.session.group.client.SessionGroupClient;
 
 /**
- * 配置
- * 
- * 
- * @author zai 2019-10-04 17:23:47
+ * EventbusClient配置
+ *
+ * @author zai
+ * 2020-04-10 11:58:47
  */
 public class EventbusClientConfig {
 
-	// discoveryClient对象
+	// eventbusClient对象
 	protected EventbusClient eventbusClient;
+	
+	// sessionGroupClient对象
+	protected SessionGroupClient sessionGroupClient;
 
 	//是否输出底层ping pong信息
 	protected boolean printPingPongInfo = false;
-
-	// GGClient对象
-	protected GGClient ggclient;
 
 	// 工作线程数
 	protected int workThreadSize = 8;
@@ -29,11 +28,16 @@ public class EventbusClientConfig {
 	// 连接数
 	protected int connectionSize = 8;
 
-	// 是否打印pingpong包信息
 
-	// 注册中心管理器
-	protected EventSubscribeManager registryManager = new EventSubscribeManager();
+	// 订阅管理器
+	protected SubscriptionManager subscriptionManager = new SubscriptionManager();
 
+	//服务端地址
+	protected String serverHost = "localhost";
+	
+	//服务端端口
+	protected int port = EventbusConstant.DEFAULT_SERVER_PORT;
+	
 	// 验证token
 	protected String authToken = EventbusConstant.DEFAULT_AUTH_TOKEN;
 
@@ -53,14 +57,6 @@ public class EventbusClientConfig {
 		this.printPingPongInfo = printPingPongInfo;
 	}
 
-	public GGClient getGgclient() {
-		return ggclient;
-	}
-
-	public void setGgclient(GGClient ggclient) {
-		this.ggclient = ggclient;
-	}
-
 	public int getWorkThreadSize() {
 		return workThreadSize;
 	}
@@ -69,12 +65,14 @@ public class EventbusClientConfig {
 		this.workThreadSize = workThreadSize;
 	}
 
-	public EventSubscribeManager getRegistryManager() {
-		return registryManager;
+	
+
+	public SubscriptionManager getSubscriptionManager() {
+		return subscriptionManager;
 	}
 
-	public void setRegistryManager(EventSubscribeManager registryManager) {
-		this.registryManager = registryManager;
+	public void setSubscriptionManager(SubscriptionManager subscriptionManager) {
+		this.subscriptionManager = subscriptionManager;
 	}
 
 	public String getAuthToken() {
@@ -92,6 +90,32 @@ public class EventbusClientConfig {
 	public void setConnectionSize(int connectionSize) {
 		this.connectionSize = connectionSize;
 	}
+
+	public SessionGroupClient getSessionGroupClient() {
+		return sessionGroupClient;
+	}
+
+	public void setSessionGroupClient(SessionGroupClient sessionGroupClient) {
+		this.sessionGroupClient = sessionGroupClient;
+	}
+
+	public String getServerHost() {
+		return serverHost;
+	}
+
+	public void setServerHost(String serverHost) {
+		this.serverHost = serverHost;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+	
+	
 	
 	
 

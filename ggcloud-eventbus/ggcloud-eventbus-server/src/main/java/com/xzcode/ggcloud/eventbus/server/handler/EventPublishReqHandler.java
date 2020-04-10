@@ -1,16 +1,17 @@
 package com.xzcode.ggcloud.eventbus.server.handler;
 
 import com.xzcode.ggcloud.eventbus.common.message.req.EventPublishReq;
+import com.xzcode.ggcloud.eventbus.common.message.resp.EventMessageResp;
 import com.xzcode.ggcloud.eventbus.server.config.EventbusServerConfig;
 
 import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
 
 /**
- * 客户端认证请求
+ * 事件发布请求
  *
  * @author zai
- * 2020-04-07 10:57:11
+ * 2020-04-10 14:49:48
  */
 public class EventPublishReqHandler implements MessageDataHandler<EventPublishReq>{
 	
@@ -24,8 +25,13 @@ public class EventPublishReqHandler implements MessageDataHandler<EventPublishRe
 
 
 	@Override
-	public void handle(MessageData<EventPublishReq> request) {
-		EventPublishReq resp = request.getMessage();
+	public void handle(MessageData<EventPublishReq> messageData) {
+		EventPublishReq req = messageData.getMessage();
+		String eventId = req.getEventId();
+		byte[] eventData = req.getEventData();
+		
+		EventMessageResp resp = new EventMessageResp(eventId, eventData);
+		this.config.getSubscriptionManager().publish(resp);
 	}
 
 	

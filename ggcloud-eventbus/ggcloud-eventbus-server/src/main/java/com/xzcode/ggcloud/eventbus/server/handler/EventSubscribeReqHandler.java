@@ -5,6 +5,7 @@ import com.xzcode.ggcloud.eventbus.server.config.EventbusServerConfig;
 
 import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
+import xzcode.ggserver.core.common.session.GGSession;
 
 /**
  * 客户端认证请求
@@ -25,8 +26,12 @@ public class EventSubscribeReqHandler implements MessageDataHandler<EventSubscri
 
 
 	@Override
-	public void handle(MessageData<EventSubscribeReq> request) {
-		EventSubscribeReq resp = request.getMessage();
+	public void handle(MessageData<EventSubscribeReq> messageData) {
+		EventSubscribeReq req = messageData.getMessage();
+		String eventId = req.getEventId();
+		GGSession session = messageData.getSession();
+		//添加监听
+		this.config.getSubscriptionManager().addSubscription(eventId, session);
 	}
 
 	

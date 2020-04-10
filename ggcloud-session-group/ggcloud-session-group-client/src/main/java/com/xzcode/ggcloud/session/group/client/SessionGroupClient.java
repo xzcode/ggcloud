@@ -18,6 +18,7 @@ import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.constant.ProtocolTypeConstants;
 import xzcode.ggserver.core.common.event.GGEvents;
 import xzcode.ggserver.core.common.executor.DefaultTaskExecutor;
+import xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
 import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 
 /**
@@ -38,15 +39,16 @@ public class SessionGroupClient {
 	
 	private void init() {
 		
-		if (this.config.getTaskExecutor() == null) {
-			this.config.setTaskExecutor(new DefaultTaskExecutor("gg-group-cli-", this.config.getWorkThreadSize()));
+		if (this.config.getWorkThreadFactory() == null) {
+			this.config.setWorkThreadFactory(new GGThreadFactory("gg-group-cli-", false));
 		}
 		
 		GGClientConfig sessionClientConfig = new GGClientConfig();
 
 		sessionClientConfig.setPingPongEnabled(true);
 		sessionClientConfig.setPrintPingPongInfo(this.config.isPrintPingPongInfo());
-		sessionClientConfig.setTaskExecutor(this.config.getTaskExecutor());
+		sessionClientConfig.setWorkThreadSize(this.config.getWorkThreadSize());
+		sessionClientConfig.setWorkerGroupThreadFactory(this.config.getWorkThreadFactory());
 		sessionClientConfig.setProtocolType(ProtocolTypeConstants.TCP);
 		sessionClientConfig.setSessionFactory(new SessionGroupSessionFactory(sessionClientConfig));
 		sessionClientConfig.init();
@@ -71,7 +73,7 @@ public class SessionGroupClient {
 		if (this.config.isEnableServiceClient() && this.config.getServiceClient() == null) {
 			
 			GGClientConfig serviceClientConfig = new GGClientConfig();
-			serviceClientConfig.setTaskExecutor(config.getTaskExecutor());
+			serviceClientConfig.setWorkerGroup(sessionClientConfig.getWorkerGroup());
 			serviceClientConfig.init();
 			
 			GGClient serviceClient = new GGClient(serviceClientConfig);

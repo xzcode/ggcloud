@@ -34,9 +34,10 @@ public class SessionGroupServer {
 	public SessionGroupServer(SessionGroupServerConfig config) {
 		super();
 		this.config = config;
+		init();
 	}
 
-	public void start() {
+	public void init() {
 		
 		GGThreadFactory bossThreadFactory = new GGThreadFactory("gg-group-boss-", false);
 		GGThreadFactory workThreadFactory = new GGThreadFactory("gg-group-worker-", false);
@@ -61,7 +62,7 @@ public class SessionGroupServer {
 		sessionServer.onMessage(AuthReq.ACTION, new AuthReqHandler(config));
 		sessionServer.onMessage(SessionGroupRegisterReq.ACTION_ID, new SessionGroupRegisterReqHandler(config));
 		sessionServer.onMessage(DataTransferReq.ACTION, new DataTransferReqHandler(config));
-		sessionServer.start();
+		
 		this.config.setSessionServer(sessionServer);
 		
 		
@@ -73,6 +74,10 @@ public class SessionGroupServer {
 		IGGServer serviceServer = new GGServer(serviceServerConfig);
 		this.config.setSessionServer(serviceServer);
 		
+	}
+	
+	public void start() {
+		this.config.getSessionServer().start();
 	}
 	
 	public void setConfig(SessionGroupServerConfig config) {

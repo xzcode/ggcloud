@@ -10,11 +10,11 @@ import xzcode.ggserver.core.common.message.model.IMessage;
  */
 public class EventSubscribeReq implements IMessage {
 	
-	public static final String ACTION = "GG.EVENTBUS.EVENT.SUB.REQ";
+	public static final String ACTION_ID = "GG.EVENTBUS.EVENT.SUB.REQ";
 	
 	@Override
 	public String getActionId() {
-		return ACTION;
+		return ACTION_ID;
 	}
 	
 	//事件id

@@ -1,9 +1,8 @@
-package com.xzcode.ggcloud.eventbus.client.subscription;
+package com.xzcode.ggcloud.eventbus.common.subscription;
 
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
-
+import com.xzcode.ggcloud.eventbus.common.message.resp.EventMessageResp;
 import xzcode.ggserver.core.common.session.GGSession;
 
 /**
@@ -12,7 +11,7 @@ import xzcode.ggserver.core.common.session.GGSession;
  * @author zai
  * 2020-04-07 11:18:51
  */
-public class EventSubscribeManager {
+public class SubscriptionManager {
 	
 	
 	//事件订阅集合
@@ -38,6 +37,14 @@ public class EventSubscribeManager {
 		subscription.addSubscription(session);
 	}
 	
+	/**
+	 * 移除订阅
+	 *
+	 * @param eventId
+	 * @param sessionGroup
+	 * @author zai
+	 * 2020-04-07 15:40:47
+	 */
 	public void removeSubscription(String eventId, GGSession session) {
 		Subscription subscription = subscriptions.get(eventId);
 		if (subscription != null) {
@@ -45,8 +52,19 @@ public class EventSubscribeManager {
 		}
 	}
 	
-	public void removeSubscription(GGSession session) {
-		
+	/**
+	 * 发布消息
+	 *
+	 * @param resp
+	 * @author zai
+	 * 2020-04-10 14:07:07
+	 */
+	public void publish(EventMessageResp resp) {
+		String eventId = resp.getEventId();
+		Subscription subscription = subscriptions.get(eventId);
+		if (subscription != null) {
+			subscription.publish(resp);
+		}
 	}
 	
 }

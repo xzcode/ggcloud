@@ -16,8 +16,13 @@
 	    <version>${project.version}</version>
 	</dependency>
 	<dependency>
+	    <groupId>xzcode</groupId>
+	    <artifactId>ggcloud-session-group-server</artifactId>
+	    <version>${project.version}</version>
+	</dependency>
+	<dependency>
 		<groupId>xzcode</groupId>
-		<artifactId>ggserver-core-client</artifactId>
+		<artifactId>ggserver-core-server</artifactId>
 	</dependency>
   
   </dependencies>

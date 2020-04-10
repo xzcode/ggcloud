@@ -7,10 +7,10 @@ import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
 
 /**
- * 客户端认证请求
+ * 事件发布响应
  *
  * @author zai
- * 2020-04-07 10:57:11
+ * 2020-04-10 14:52:35
  */
 public class EventPublishRespHandler implements MessageDataHandler<EventPublishResp>{
 	
@@ -26,7 +26,7 @@ public class EventPublishRespHandler implements MessageDataHandler<EventPublishR
 
 	@Override
 	public void handle(MessageData<EventPublishResp> request) {
-		EventPublishResp resp = request.getMessage();
+		//EventPublishResp resp = request.getMessage();
 	}
 
 	

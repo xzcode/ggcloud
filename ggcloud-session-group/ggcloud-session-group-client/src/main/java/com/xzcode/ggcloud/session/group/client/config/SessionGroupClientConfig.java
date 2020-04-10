@@ -1,12 +1,14 @@
 package com.xzcode.ggcloud.session.group.client.config;
 
+import java.util.concurrent.ThreadFactory;
+
 import com.xzcode.ggcloud.session.group.client.SessionGroupClient;
 import com.xzcode.ggcloud.session.group.common.constant.GGSesssionGroupConstant;
 import com.xzcode.ggcloud.session.group.common.group.manager.GGSessionGroupManager;
 
 import xzcode.ggserver.core.client.GGClient;
-import xzcode.ggserver.core.common.executor.ITaskExecutor;
 import xzcode.ggserver.core.common.utils.RandomIdUtil;
+import xzcode.ggserver.core.server.IGGServer;
 
 /**
  * 配置
@@ -22,11 +24,18 @@ public class SessionGroupClientConfig {
 	// 会话客户端
 	protected GGClient sessionClient;
 	
+	//开启业务客户端
+	protected boolean enableServiceClient;
+	
 	//业务客户端
 	protected GGClient serviceClient;
 	
-	//开启业务客户端
-	protected boolean enableServiceClient;
+	//开启业务服务端
+	protected boolean enableServiceServer;
+	
+	//业务客户端
+	protected IGGServer serviceServer;
+	
 
 	protected GGSessionGroupManager sessionGroupManager;
 
@@ -39,6 +48,9 @@ public class SessionGroupClientConfig {
 	//工作线程数
 	protected int workThreadSize = 8;
 	
+	//工作线程工厂
+	protected ThreadFactory workThreadFactory;
+	
 	
 	// 连接数
 	protected int connectionSize = 8;
@@ -50,9 +62,6 @@ public class SessionGroupClientConfig {
 
 	// 会话组id
 	protected String sessionGroupId = RandomIdUtil.newRandomStringId24();
-
-	// 任务执行器
-	protected ITaskExecutor taskExecutor;
 
 
 	// 验证token
@@ -82,14 +91,6 @@ public class SessionGroupClientConfig {
 
 	public void setSessionGroupId(String sessionGroupId) {
 		this.sessionGroupId = sessionGroupId;
-	}
-
-	public ITaskExecutor getTaskExecutor() {
-		return taskExecutor;
-	}
-
-	public void setTaskExecutor(ITaskExecutor taskExecutor) {
-		this.taskExecutor = taskExecutor;
 	}
 
 	public void setSessionClient(GGClient sessionClient) {
@@ -171,6 +172,29 @@ public class SessionGroupClientConfig {
 	public void setReconnectInterval(long reconnectInterval) {
 		this.reconnectInterval = reconnectInterval;
 	}
+
+	public ThreadFactory getWorkThreadFactory() {
+		return workThreadFactory;
+	}
+
+	public void setWorkThreadFactory(ThreadFactory workThreadFactory) {
+		this.workThreadFactory = workThreadFactory;
+	}
 	
+	public void setEnableServiceServer(boolean enableServiceServer) {
+		this.enableServiceServer = enableServiceServer;
+	}
+	
+	public boolean isEnableServiceServer() {
+		return enableServiceServer;
+	}
+	
+	public IGGServer getServiceServer() {
+		return serviceServer;
+	}
+	
+	public void setServiceServer(IGGServer serviceServer) {
+		this.serviceServer = serviceServer;
+	}
 
 }

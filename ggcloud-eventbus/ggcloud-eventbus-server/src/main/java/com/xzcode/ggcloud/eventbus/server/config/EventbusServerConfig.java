@@ -1,11 +1,11 @@
 package com.xzcode.ggcloud.eventbus.server.config;
 
-import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
-import com.xzcode.ggcloud.eventbus.server.subscription.SubscriptionManager;
+import java.util.concurrent.ThreadFactory;
 
-import xzcode.ggserver.core.common.executor.DefaultTaskExecutor;
-import xzcode.ggserver.core.common.executor.ITaskExecutor;
-import xzcode.ggserver.core.server.IGGServer;
+import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
+import com.xzcode.ggcloud.eventbus.common.subscription.SubscriptionManager;
+import com.xzcode.ggcloud.eventbus.server.EventbusServer;
+import com.xzcode.ggcloud.session.group.server.SessionGroupServer;
 
 /**
  * 配置
@@ -16,17 +16,26 @@ import xzcode.ggserver.core.server.IGGServer;
  */
 public class EventbusServerConfig {
 	
-	//ggserver对象
-	private IGGServer server;
+	//eventbusServer对象
+	protected EventbusServer eventbusServer;
+	
+	//sessionGroupServer对象
+	protected SessionGroupServer sessionGroupServer;
 	
 	//订阅管理器
-	private SubscriptionManager subscriptionManager = new SubscriptionManager();
+	protected SubscriptionManager subscriptionManager = new SubscriptionManager();
 	
+	//是否输出底层ping pong信息
+	protected boolean printPingPongInfo = false;
+
+	// 工作线程数
+	protected int workThreadSize = 8;
 	
-	protected ITaskExecutor taskExecutor = new DefaultTaskExecutor("gg-evt-server-", 1);
+	// 连接数
+	protected int connectionSize = 8;
 	
 	//服务端口
-	private int port = 16384;
+	private int port = EventbusConstant.DEFAULT_SERVER_PORT;
 	
 	//认证token
 	private String authToken = EventbusConstant.DEFAULT_AUTH_TOKEN;
@@ -47,16 +56,53 @@ public class EventbusServerConfig {
 		this.port = port;
 	}
 	
-	public IGGServer getServer() {
-		return server;
+	public EventbusServer getEventbusServer() {
+		return eventbusServer;
 	}
 	
-	public void setServer(IGGServer server) {
-		this.server = server;
+	public void setEventbusServer(EventbusServer eventbusServer) {
+		this.eventbusServer = eventbusServer;
 	}
 	
 	public SubscriptionManager getSubscriptionManager() {
 		return subscriptionManager;
 	}
+	
+	
+	public SessionGroupServer getSessionGroupServer() {
+		return sessionGroupServer;
+	}
+	
+	public void setSessionGroupServer(SessionGroupServer sessionGroupServer) {
+		this.sessionGroupServer = sessionGroupServer;
+	}
 
+	public boolean isPrintPingPongInfo() {
+		return printPingPongInfo;
+	}
+
+	public void setPrintPingPongInfo(boolean printPingPongInfo) {
+		this.printPingPongInfo = printPingPongInfo;
+	}
+
+	public int getWorkThreadSize() {
+		return workThreadSize;
+	}
+
+	public void setWorkThreadSize(int workThreadSize) {
+		this.workThreadSize = workThreadSize;
+	}
+
+	public int getConnectionSize() {
+		return connectionSize;
+	}
+
+	public void setConnectionSize(int connectionSize) {
+		this.connectionSize = connectionSize;
+	}
+
+	public void setSubscriptionManager(SubscriptionManager subscriptionManager) {
+		this.subscriptionManager = subscriptionManager;
+	}
+	
 }

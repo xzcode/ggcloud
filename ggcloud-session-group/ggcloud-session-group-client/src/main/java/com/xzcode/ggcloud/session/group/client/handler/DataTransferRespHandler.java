@@ -11,6 +11,8 @@ import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
 import xzcode.ggserver.core.common.message.request.task.MessageDataTask;
 import xzcode.ggserver.core.common.session.GGSession;
 import xzcode.ggserver.core.common.session.manager.ISessionManager;
+import xzcode.ggserver.core.server.IGGServer;
+import xzcode.ggserver.core.server.config.GGServerConfig;
 
 /**
  * 数据传输推送
@@ -32,17 +34,33 @@ public class DataTransferRespHandler implements MessageDataHandler<DataTransferR
 		
 		DataTransferResp resp = messageData.getMessage();
 		
-		//开启服务客户端
+		String tranferSessionId = resp.getTranferSessionId();
+		
+		//判断是否开启业务客户端
 		if (this.config.isEnableServiceClient()) {
-			String tranferSessionId = resp.getTranferSessionId();
 			GGClient serviceClient = this.config.getServiceClient();
 			GGClientConfig serviceClientConfig = serviceClient.getConfig();
 			ISessionManager sessionManager = serviceClient.getSessionManager();
 			GGSession session = sessionManager.getSession(tranferSessionId);
-			//提交任务到业务客户端
-			Pack pack = new Pack(session, resp.getAction(), resp.getMessage());
-			serviceClient.submitTask(new MessageDataTask(pack , serviceClientConfig));
+			if (session != null) {
+				//提交任务到业务客户端
+				Pack pack = new Pack(session, resp.getAction(), resp.getMessage());
+				serviceClient.submitTask(new MessageDataTask(pack , serviceClientConfig));
+			}
 			
+		}
+		
+		//判断是否开启业务服务端
+		if (this.config.isEnableServiceServer() && this.config.getServiceServer() != null) {
+			IGGServer serviceServer = this.config.getServiceServer();
+			GGServerConfig serviceServerConfig = serviceServer.getConfig();
+			ISessionManager sessionManager = serviceServerConfig.getSessionManager();
+			GGSession session = sessionManager.getSession(tranferSessionId);
+			if (session != null) {
+				//提交任务到业务客户端
+				Pack pack = new Pack(session, resp.getAction(), resp.getMessage());
+				serviceServer.submitTask(new MessageDataTask(pack , serviceServerConfig));
+			}
 		}
 		
 	}

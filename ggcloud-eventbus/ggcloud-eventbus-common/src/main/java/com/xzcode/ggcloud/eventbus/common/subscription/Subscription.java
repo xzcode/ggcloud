@@ -1,4 +1,4 @@
-package com.xzcode.ggcloud.eventbus.server.subscription;
+package com.xzcode.ggcloud.eventbus.common.subscription;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -33,11 +33,13 @@ public class Subscription {
 			GGSession session = entry.getValue();
 			session.send(resp);
 		}
-		
 	}
 
 	public void addSubscription(GGSession session) {
 		sessions.put(session.getSessonId(), session);
+		session.addDisconnectListener(se -> {
+			removeSubscription(se);
+		});
 	}
 	
 	public void removeSubscription(GGSession session) {
