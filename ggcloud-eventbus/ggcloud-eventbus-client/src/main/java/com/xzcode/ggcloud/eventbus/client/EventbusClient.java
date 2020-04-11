@@ -4,6 +4,7 @@ import java.nio.charset.Charset;
 
 import com.xzcode.ggcloud.eventbus.client.config.EventbusClientConfig;
 import com.xzcode.ggcloud.eventbus.client.subscriber.Subscriber;
+import com.xzcode.ggcloud.eventbus.client.subscriber.SubscriberInfo;
 import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
 import com.xzcode.ggcloud.eventbus.common.message.req.EventPublishReq;
 import com.xzcode.ggcloud.session.group.client.SessionGroupClient;
@@ -16,6 +17,7 @@ import xzcode.ggserver.core.common.handler.serializer.ISerializer;
 import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.Pack;
 import xzcode.ggserver.core.common.message.response.support.IMakePackSupport;
+import xzcode.ggserver.core.common.utils.GenericClassUtil;
 import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 
 public class EventbusClient implements IMakePackSupport{
@@ -39,7 +41,7 @@ public class EventbusClient implements IMakePackSupport{
 		sessionGroupClientConfig.setAuthToken(this.config.getAuthToken());
 		sessionGroupClientConfig.setWorkThreadFactory(new GGThreadFactory("gg-evt-cli-", false));
 		sessionGroupClientConfig.setConnectionSize(this.config.getConnectionSize());
-		
+		sessionGroupClientConfig.setPrintPingPongInfo(this.config.isPrintPingPongInfo());
 		SessionGroupClient sessionGroupClient = new SessionGroupClient(sessionGroupClientConfig);
 		
 		//包日志输出控制
@@ -85,8 +87,23 @@ public class EventbusClient implements IMakePackSupport{
 		}
 	}
 	
+	/**
+	 * 注册事件订阅
+	 *
+	 * @param <T>
+	 * @param eventId
+	 * @param subscriber
+	 * @author zai
+	 * 2020-04-11 22:54:45
+	 */
 	public <T> void subscribe(String eventId, Subscriber<T> subscriber) {
-		this.config.getSubscribeManager().addSubscriber(eventId, subscriber);
+		SubscriberInfo subscriberInfo = new SubscriberInfo();
+		Class<?> subscriberClass = GenericClassUtil.getGenericClass(subscriber.getClass());
+		subscriberInfo.setClazz(subscriberClass);
+		subscriberInfo.setSubscriber(subscriber);
+		subscriberInfo.setSubscriberId(subscriberClass.getName());
+		
+		this.config.getSubscribeManager().subscribe(eventId, subscriberInfo);
 	}
 
 	@Override

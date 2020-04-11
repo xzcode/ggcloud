@@ -40,6 +40,10 @@ public class SubscriberGroup {
 		this.subscriberInfos.remove(subscriberInfo.getSubscriberId());
 	}
 	
+	public SubscriberInfo getSubscriberInfo(String subscriberId) {
+		return this.subscriberInfos.get(subscriberId);
+	}
+	
 	public void remove(String subscriberId) {
 		this.subscriberInfos.remove(subscriberId);
 	}

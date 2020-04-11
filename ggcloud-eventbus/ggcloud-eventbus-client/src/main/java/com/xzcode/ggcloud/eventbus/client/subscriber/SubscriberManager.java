@@ -23,7 +23,7 @@ public class SubscriberManager {
 	 * @author zai
 	 * 2020-04-11 18:10:20
 	 */
-	public <T> void addSubscriber(String eventId, SubscriberInfo subscriber) {
+	public <T> void subscribe(String eventId, SubscriberInfo subscriberInfo) {
 		SubscriberGroup group = groups.get(eventId);
 		if (group == null) {
 			group = new SubscriberGroup(eventId);
@@ -32,7 +32,7 @@ public class SubscriberManager {
 				group = putIfAbsent;
 			}
 		}
-		group.add(subscriber);
+		group.add(subscriberInfo);
 	}
 	
 	/**
@@ -48,6 +48,23 @@ public class SubscriberManager {
 		if (group != null) {
 			group.remove(subscriber);
 		}
+	}
+	
+	/**
+	 * 获取订阅器相关信息
+	 *
+	 * @param eventId
+	 * @param subscriberId
+	 * @return
+	 * @author zai
+	 * 2020-04-12 01:41:29
+	 */
+	public SubscriberInfo getSubscriberInfo(String eventId, String subscriberId) {
+		SubscriberGroup group = this.groups.get(eventId);
+		if (group != null) {
+			return group.getSubscriberInfo(subscriberId);
+		}
+		return null;
 	}
 	
 	/**

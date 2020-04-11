@@ -1,6 +1,7 @@
 package com.xzcode.ggcloud.eventbus.client.handler;
 
 import com.xzcode.ggcloud.eventbus.client.config.EventbusClientConfig;
+import com.xzcode.ggcloud.eventbus.client.subscriber.SubscriberInfo;
 import com.xzcode.ggcloud.eventbus.client.subscriber.SubscriberManager;
 import com.xzcode.ggcloud.eventbus.common.message.resp.EventMessageResp;
 import com.xzcode.ggcloud.eventbus.common.message.resp.EventSubscribeResp;
@@ -8,6 +9,7 @@ import com.xzcode.ggcloud.eventbus.common.message.resp.EventSubscribeResp;
 import xzcode.ggserver.core.common.handler.serializer.ISerializer;
 import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
+import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 
 /**
  * 消息接收处理器
@@ -32,15 +34,21 @@ public class ReceiveMessageRespHandler implements MessageDataHandler<EventMessag
 
 	@Override
 	public void handle(MessageData<EventMessageResp> messageData) {
-		EventMessageResp resp = messageData.getMessage();
-		String eventId = resp.getEventId();
-		byte[] eventData = resp.getEventData();
-		this.serializer.deserialize(eventData, t);
-		
-		
-		
-		SubscriberManager subscribeManager = this.config.getSubscribeManager();
-		subscribeManager.trigger(eventId, eventbusMessage);
+		try {
+			EventMessageResp resp = messageData.getMessage();
+			String eventId = resp.getEventId();
+			String subscriberId = resp.getSubscriberId();
+			byte[] eventData = resp.getEventData();
+			
+			
+			SubscriberManager subscribeManager = this.config.getSubscribeManager();
+			SubscriberInfo subscriberInfo = subscribeManager.getSubscriberInfo(eventId, subscriberId);
+			Class<?> clazz = subscriberInfo.getClazz();
+			Object data = this.serializer.deserialize(eventData, clazz);
+			subscribeManager.trigger(eventId, subscriberId, data);
+		} catch (Exception e) {
+			GGLoggerUtil.getLogger(this).error("Eventbus receive message ERROR!", e);
+		}
 	}
 
 	

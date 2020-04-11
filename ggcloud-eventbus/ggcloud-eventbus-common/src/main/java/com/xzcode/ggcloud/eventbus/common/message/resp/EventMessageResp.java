@@ -32,10 +32,11 @@ public class EventMessageResp implements IMessage {
 
 	}
 
-	public EventMessageResp(String eventId, byte[] eventData) {
+	public EventMessageResp(String eventId, String subscriberId,byte[] eventData) {
 		super();
 		this.eventId = eventId;
 		this.eventData = eventData;
+		this.subscriberId = subscriberId;
 	}
 
 	public String getEventId() {
