@@ -1,5 +1,7 @@
 package com.xzcode.ggcloud.eventbus.common.message.resp;
 
+import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
+
 import xzcode.ggserver.core.common.message.model.IMessage;
 
 /**
@@ -9,7 +11,7 @@ import xzcode.ggserver.core.common.message.model.IMessage;
  */
 public class EventPublishResp implements IMessage {
 
-	public static final String ACTION = "GG.EVENTBUS.EVENT.PUB.RESP";
+	public static final String ACTION = EventbusConstant.ACTION_ID_PREFIX + "EVENT.PUB.RESP";
 
 	@Override
 	public String getActionId() {

@@ -1,5 +1,7 @@
 package com.xzcode.ggcloud.session.group.common.message.resp;
 
+import com.xzcode.ggcloud.session.group.common.constant.GGSesssionGroupConstant;
+
 import xzcode.ggserver.core.common.message.model.IMessage;
 
 /**
@@ -10,7 +12,7 @@ import xzcode.ggserver.core.common.message.model.IMessage;
  */
 public class DataTransferResp implements IMessage {
 
-	public static final String ACTION_ID = "GG.SESSION.GROUP.DATA.TRANSFER.RESP";
+	public static final String ACTION_ID = GGSesssionGroupConstant.ACTION_ID_PREFIX + "DATA.TRANSFER.RESP";
 
 	@Override
 	public String getActionId() {

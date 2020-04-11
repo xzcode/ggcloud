@@ -1,5 +1,7 @@
 package com.xzcode.ggcloud.eventbus.common.message.resp;
 
+import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
+
 import xzcode.ggserver.core.common.message.model.IMessage;
 
 /**
@@ -10,7 +12,7 @@ import xzcode.ggserver.core.common.message.model.IMessage;
  */
 public class AuthResp implements IMessage{
 	
-	public static final String ACTION = "GG.EVENT.BUS.AUTH.RESP";
+	public static final String ACTION = EventbusConstant.ACTION_ID_PREFIX + "AUTH.RESP";
 	
 	@Override
 	public String getActionId() {

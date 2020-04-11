@@ -1,4 +1,4 @@
-package com.xzcode.ggcloud.eventbus.common.subscription;
+package com.xzcode.ggcloud.eventbus.server.subscription;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

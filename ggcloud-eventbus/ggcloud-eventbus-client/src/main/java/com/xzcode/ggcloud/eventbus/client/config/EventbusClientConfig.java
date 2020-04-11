@@ -1,8 +1,8 @@
 package com.xzcode.ggcloud.eventbus.client.config;
 
 import com.xzcode.ggcloud.eventbus.client.EventbusClient;
+import com.xzcode.ggcloud.eventbus.client.subscriber.SubscriberManager;
 import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
-import com.xzcode.ggcloud.eventbus.common.subscription.SubscriptionManager;
 import com.xzcode.ggcloud.session.group.client.SessionGroupClient;
 
 /**
@@ -29,8 +29,8 @@ public class EventbusClientConfig {
 	protected int connectionSize = 8;
 
 
-	// 订阅管理器
-	protected SubscriptionManager subscriptionManager = new SubscriptionManager();
+	// 订阅者管理器
+	protected SubscriberManager subscribeManager = new SubscriberManager();
 
 	//服务端地址
 	protected String serverHost = "localhost";
@@ -40,6 +40,10 @@ public class EventbusClientConfig {
 	
 	// 验证token
 	protected String authToken = EventbusConstant.DEFAULT_AUTH_TOKEN;
+	
+	
+	//是否输出包信息
+	protected boolean printEventbusPackLog = false;
 
 	public EventbusClient getEventbusClient() {
 		return eventbusClient;
@@ -65,14 +69,12 @@ public class EventbusClientConfig {
 		this.workThreadSize = workThreadSize;
 	}
 
-	
-
-	public SubscriptionManager getSubscriptionManager() {
-		return subscriptionManager;
+	public SubscriberManager getSubscribeManager() {
+		return subscribeManager;
 	}
 
-	public void setSubscriptionManager(SubscriptionManager subscriptionManager) {
-		this.subscriptionManager = subscriptionManager;
+	public void setSubscribeManager(SubscriberManager subscriptionManager) {
+		this.subscribeManager = subscriptionManager;
 	}
 
 	public String getAuthToken() {
@@ -113,6 +115,14 @@ public class EventbusClientConfig {
 
 	public void setPort(int port) {
 		this.port = port;
+	}
+
+	public boolean isPrintEventbusPackLog() {
+		return printEventbusPackLog;
+	}
+
+	public void setPrintEventbusPackLog(boolean printEventbusPackLog) {
+		this.printEventbusPackLog = printEventbusPackLog;
 	}
 	
 	

@@ -9,6 +9,11 @@ package com.xzcode.ggcloud.eventbus.common.constant;
 public interface EventbusConstant {
 	
 	/**
+	 * 指令前缀
+	 */
+	String ACTION_ID_PREFIX = "GG.EVENTBUS.";
+	
+	/**
 	 * 默认服务端口
 	 */
 	int DEFAULT_SERVER_PORT = 16384;

@@ -9,6 +9,11 @@ package com.xzcode.ggcloud.session.group.common.constant;
 public interface GGSesssionGroupConstant {
 	
 	/**
+	 * 指令前缀
+	 */
+	String ACTION_ID_PREFIX = "GG.SESSION.GROUP.";
+	
+	/**
 	 * 默认服务器端口
 	 */
 	int DEFAULT_SERVER_PORT = 16384;

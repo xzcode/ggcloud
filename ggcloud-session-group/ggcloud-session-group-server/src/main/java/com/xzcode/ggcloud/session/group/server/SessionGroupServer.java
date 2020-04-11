@@ -1,5 +1,6 @@
 package com.xzcode.ggcloud.session.group.server;
 
+import com.xzcode.ggcloud.session.group.common.constant.GGSesssionGroupConstant;
 import com.xzcode.ggcloud.session.group.common.group.manager.GGSessionGroupManager;
 import com.xzcode.ggcloud.session.group.common.message.req.AuthReq;
 import com.xzcode.ggcloud.session.group.common.message.req.DataTransferReq;
@@ -40,17 +41,26 @@ public class SessionGroupServer {
 	public void init() {
 		
 		GGThreadFactory bossThreadFactory = new GGThreadFactory("gg-group-boss-", false);
-		GGThreadFactory workThreadFactory = new GGThreadFactory("gg-group-worker-", false);
+		if (this.config.getWorkThreadFactory() == null) {
+			this.config.setWorkThreadFactory(new GGThreadFactory("gg-group-worker-", false));
+		}
 		
 		GGServerConfig sessionServerConfig = new GGServerConfig();
 		sessionServerConfig.setPingPongEnabled(true);
-		sessionServerConfig.setPrintPingPongInfo(config.isPrintPingPongInfo());
+		sessionServerConfig.setPrintPingPongInfo(this.config.isPrintPingPongInfo());
 		sessionServerConfig.setProtocolType(ProtocolTypeConstants.TCP);
-		sessionServerConfig.setPort(config.getPort());
+		sessionServerConfig.setPort(this.config.getPort());
 		sessionServerConfig.setSessionFactory(new SessionGroupSessionFactory(sessionServerConfig));
 		sessionServerConfig.setBossGroupThreadFactory(bossThreadFactory);
-		sessionServerConfig.setWorkerGroupThreadFactory(workThreadFactory);
+		sessionServerConfig.setWorkerGroupThreadFactory(this.config.getWorkThreadFactory());
 		sessionServerConfig.setWorkThreadSize(this.config.getWorkThreadSize());
+		
+		if (!this.config.isPrintSessionGroupPackLog()) {
+			sessionServerConfig.getPackLogger().addPackLogFilter(pack -> {
+				String actionString = pack.getActionString();
+				return !(actionString.startsWith(GGSesssionGroupConstant.ACTION_ID_PREFIX));
+			});
+		}
 		sessionServerConfig.init();
 		
 		GGSessionGroupManager sessionGroupManager = new GGSessionGroupManager(sessionServerConfig);
@@ -66,13 +76,15 @@ public class SessionGroupServer {
 		this.config.setSessionServer(sessionServer);
 		
 		
+		
+		
 		GGServerConfig serviceServerConfig = new GGServerConfig();
 		serviceServerConfig.setBossGroup(sessionServerConfig.getBossGroup());
 		serviceServerConfig.setWorkerGroup(sessionServerConfig.getWorkerGroup());
 		serviceServerConfig.init();
 		
 		IGGServer serviceServer = new GGServer(serviceServerConfig);
-		this.config.setSessionServer(serviceServer);
+		this.config.setServiceServer(serviceServer);
 		
 	}
 	

@@ -8,8 +8,8 @@ import com.xzcode.ggcloud.session.group.server.config.SessionGroupServerConfig;
 import io.netty.util.AttributeKey;
 import xzcode.ggserver.core.common.channel.DefaultChannelAttributeKeys;
 import xzcode.ggserver.core.common.message.MessageData;
+import xzcode.ggserver.core.common.message.pingpong.model.GGPingPongInfo;
 import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
-import xzcode.ggserver.core.common.prefebs.pingpong.model.GGPingPongInfo;
 import xzcode.ggserver.core.common.session.GGSession;
 
 /**

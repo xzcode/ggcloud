@@ -1,5 +1,7 @@
 package com.xzcode.ggcloud.eventbus.common.message.resp;
 
+import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
+
 import xzcode.ggserver.core.common.message.model.IMessage;
 
 /**
@@ -10,7 +12,7 @@ import xzcode.ggserver.core.common.message.model.IMessage;
  */
 public class EventMessageResp implements IMessage {
 
-	public static final String ACTION = "GG.EVENTBUS.REC.MSG.RESP";
+	public static final String ACTION = EventbusConstant.ACTION_ID_PREFIX + "REC.MSG.RESP";
 
 	@Override
 	public String getActionId() {
@@ -19,6 +21,9 @@ public class EventMessageResp implements IMessage {
 
 	// 事件id
 	private String eventId;
+	
+	// 订阅器id
+	private String subscriberId;
 
 	// 事件数据
 	private byte[] eventData;
@@ -48,5 +53,15 @@ public class EventMessageResp implements IMessage {
 	public void setEventData(byte[] eventData) {
 		this.eventData = eventData;
 	}
+
+	public String getSubscriberId() {
+		return subscriberId;
+	}
+
+	public void setSubscriberId(String subscriberId) {
+		this.subscriberId = subscriberId;
+	}
+	
+	
 
 }

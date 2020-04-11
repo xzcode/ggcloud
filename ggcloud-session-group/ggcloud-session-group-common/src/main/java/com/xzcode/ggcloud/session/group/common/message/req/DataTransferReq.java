@@ -1,5 +1,7 @@
 package com.xzcode.ggcloud.session.group.common.message.req;
 
+import com.xzcode.ggcloud.session.group.common.constant.GGSesssionGroupConstant;
+
 import xzcode.ggserver.core.common.message.model.IMessage;
 
 /**
@@ -9,7 +11,7 @@ import xzcode.ggserver.core.common.message.model.IMessage;
  */
 public class DataTransferReq implements IMessage {
 
-	public static final String ACTION = "GG.SESSION.GROUP.DATA.TRANSFER.REQ";
+	public static final String ACTION = GGSesssionGroupConstant.ACTION_ID_PREFIX + "DATA.TRANSFER.REQ";
 
 	@Override
 	public String getActionId() {

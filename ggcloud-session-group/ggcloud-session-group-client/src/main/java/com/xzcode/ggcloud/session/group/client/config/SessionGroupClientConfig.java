@@ -59,6 +59,9 @@ public class SessionGroupClientConfig {
 	protected long reconnectInterval = 10L * 1000L;
 
 	protected boolean printPingPongInfo = false;
+	
+	//是否输出会话组包信息
+	protected boolean printSessionGroupPackLog = false;
 
 	// 会话组id
 	protected String sessionGroupId = RandomIdUtil.newRandomStringId24();
@@ -195,6 +198,14 @@ public class SessionGroupClientConfig {
 	
 	public void setServiceServer(IGGServer serviceServer) {
 		this.serviceServer = serviceServer;
+	}
+	
+	public boolean isPrintSessionGroupPackLog() {
+		return printSessionGroupPackLog;
+	}
+	
+	public void setPrintSessionGroupPackLog(boolean printSessionGroupPackLog) {
+		this.printSessionGroupPackLog = printSessionGroupPackLog;
 	}
 
 }

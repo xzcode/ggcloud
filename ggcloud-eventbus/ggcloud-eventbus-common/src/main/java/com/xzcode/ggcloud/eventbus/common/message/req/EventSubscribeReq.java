@@ -1,5 +1,7 @@
 package com.xzcode.ggcloud.eventbus.common.message.req;
 
+import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
+
 import xzcode.ggserver.core.common.message.model.IMessage;
 
 /**
@@ -10,7 +12,7 @@ import xzcode.ggserver.core.common.message.model.IMessage;
  */
 public class EventSubscribeReq implements IMessage {
 	
-	public static final String ACTION_ID = "GG.EVENTBUS.EVENT.SUB.REQ";
+	public static final String ACTION_ID = EventbusConstant.ACTION_ID_PREFIX + "EVENT.SUB.REQ";
 	
 	@Override
 	public String getActionId() {

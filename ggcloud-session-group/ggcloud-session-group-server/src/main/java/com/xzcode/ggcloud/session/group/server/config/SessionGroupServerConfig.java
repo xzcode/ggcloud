@@ -5,7 +5,6 @@ import java.util.concurrent.ThreadFactory;
 import com.xzcode.ggcloud.session.group.common.constant.GGSesssionGroupConstant;
 import com.xzcode.ggcloud.session.group.common.group.manager.GGSessionGroupManager;
 
-import xzcode.ggserver.core.common.executor.ITaskExecutor;
 import xzcode.ggserver.core.server.IGGServer;
 
 /**
@@ -43,6 +42,11 @@ public class SessionGroupServerConfig {
 	
 	//工作线程工厂
 	protected ThreadFactory workThreadFactory;
+	
+	
+	//是否输出会话组包信息
+	protected boolean printSessionGroupPackLog = false;
+
 	
 	public String getAuthToken() {
 		return authToken;
@@ -116,4 +120,14 @@ public class SessionGroupServerConfig {
 	public void setWorkThreadFactory(ThreadFactory workThreadFactory) {
 		this.workThreadFactory = workThreadFactory;
 	}
+
+	public boolean isPrintSessionGroupPackLog() {
+		return printSessionGroupPackLog;
+	}
+
+	public void setPrintSessionGroupPackLog(boolean printSessionGroupPackLog) {
+		this.printSessionGroupPackLog = printSessionGroupPackLog;
+	}
+	
+	
 }

@@ -6,6 +6,7 @@ import com.xzcode.ggcloud.session.group.client.events.ConnOpenEventListener;
 import com.xzcode.ggcloud.session.group.client.handler.AnthRespHandler;
 import com.xzcode.ggcloud.session.group.client.handler.DataTransferRespHandler;
 import com.xzcode.ggcloud.session.group.client.handler.SessionGroupRegisterRespHandler;
+import com.xzcode.ggcloud.session.group.common.constant.GGSesssionGroupConstant;
 import com.xzcode.ggcloud.session.group.common.group.manager.GGSessionGroupManager;
 import com.xzcode.ggcloud.session.group.common.message.req.DataTransferReq;
 import com.xzcode.ggcloud.session.group.common.message.resp.AuthResp;
@@ -19,6 +20,8 @@ import xzcode.ggserver.core.common.constant.ProtocolTypeConstants;
 import xzcode.ggserver.core.common.event.GGEvents;
 import xzcode.ggserver.core.common.executor.DefaultTaskExecutor;
 import xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
+import xzcode.ggserver.core.common.message.pingpong.model.GGPing;
+import xzcode.ggserver.core.common.message.pingpong.model.GGPong;
 import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 
 /**
@@ -43,6 +46,8 @@ public class SessionGroupClient {
 			this.config.setWorkThreadFactory(new GGThreadFactory("gg-group-cli-", false));
 		}
 		
+		
+		
 		GGClientConfig sessionClientConfig = new GGClientConfig();
 
 		sessionClientConfig.setPingPongEnabled(true);
@@ -51,6 +56,14 @@ public class SessionGroupClient {
 		sessionClientConfig.setWorkerGroupThreadFactory(this.config.getWorkThreadFactory());
 		sessionClientConfig.setProtocolType(ProtocolTypeConstants.TCP);
 		sessionClientConfig.setSessionFactory(new SessionGroupSessionFactory(sessionClientConfig));
+		
+		if (!this.config.isPrintSessionGroupPackLog()) {
+			sessionClientConfig.getPackLogger().addPackLogFilter(pack -> {
+				String actionString = pack.getActionString();
+				return !(actionString.startsWith(GGSesssionGroupConstant.ACTION_ID_PREFIX));
+			});
+		}
+		
 		sessionClientConfig.init();
 
 		GGSessionGroupManager sessionGroupManager = new GGSessionGroupManager(sessionClientConfig);
@@ -144,6 +157,15 @@ public class SessionGroupClient {
 			}
 			GGLoggerUtil.getLogger(this).warn("SessionGroupClient Connect Server[{}:{}] Successfully!", host, port);
 		});
+	}
+	
+	
+	public SessionGroupClientConfig getConfig() {
+		return config;
+	}
+	
+	public void setConfig(SessionGroupClientConfig config) {
+		this.config = config;
 	}
 
 }

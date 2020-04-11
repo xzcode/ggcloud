@@ -1,10 +1,12 @@
 package com.xzcode.ggcloud.eventbus.server;
 
+import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
 import com.xzcode.ggcloud.eventbus.common.message.req.EventPublishReq;
 import com.xzcode.ggcloud.eventbus.common.message.req.EventSubscribeReq;
 import com.xzcode.ggcloud.eventbus.server.config.EventbusServerConfig;
 import com.xzcode.ggcloud.eventbus.server.handler.EventPublishReqHandler;
 import com.xzcode.ggcloud.eventbus.server.handler.EventSubscribeReqHandler;
+import com.xzcode.ggcloud.session.group.common.constant.GGSesssionGroupConstant;
 import com.xzcode.ggcloud.session.group.server.SessionGroupServer;
 import com.xzcode.ggcloud.session.group.server.config.SessionGroupServerConfig;
 
@@ -29,8 +31,19 @@ public class EventbusServer {
 		sessionGroupServerConfig.setPrintPingPongInfo(this.config.isPrintPingPongInfo());
 		sessionGroupServerConfig.setWorkThreadFactory(new GGThreadFactory("gg-evt-serv-", false));
 		
+		
+		
+		
 		SessionGroupServer sessionGroupServer = new SessionGroupServer(sessionGroupServerConfig);
 		this.config.setSessionGroupServer(sessionGroupServer);
+		
+		//包日志输出控制
+		if (this.config.isPrintEventbusPackLog()) {
+			sessionGroupServerConfig.getSessionServer().getConfig().getPackLogger().addPackLogFilter(pack -> {
+				String actionString = pack.getActionString();
+				return !(actionString.startsWith(EventbusConstant.ACTION_ID_PREFIX));
+			});
+		}
 		
 		IGGServer serviceServer = sessionGroupServerConfig.getServiceServer();
 		

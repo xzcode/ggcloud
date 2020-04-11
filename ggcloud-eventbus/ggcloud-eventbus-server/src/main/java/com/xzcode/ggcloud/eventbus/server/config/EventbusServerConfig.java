@@ -1,10 +1,8 @@
 package com.xzcode.ggcloud.eventbus.server.config;
 
-import java.util.concurrent.ThreadFactory;
-
 import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
-import com.xzcode.ggcloud.eventbus.common.subscription.SubscriptionManager;
 import com.xzcode.ggcloud.eventbus.server.EventbusServer;
+import com.xzcode.ggcloud.eventbus.server.subscription.SubscriptionManager;
 import com.xzcode.ggcloud.session.group.server.SessionGroupServer;
 
 /**
@@ -39,6 +37,9 @@ public class EventbusServerConfig {
 	
 	//认证token
 	private String authToken = EventbusConstant.DEFAULT_AUTH_TOKEN;
+	
+	//是否输出包信息
+	protected boolean printEventbusPackLog = false;
 	
 	public String getAuthToken() {
 		return authToken;
@@ -104,5 +105,15 @@ public class EventbusServerConfig {
 	public void setSubscriptionManager(SubscriptionManager subscriptionManager) {
 		this.subscriptionManager = subscriptionManager;
 	}
+
+	public boolean isPrintEventbusPackLog() {
+		return printEventbusPackLog;
+	}
+
+	public void setPrintEventbusPackLog(boolean printEventbusPackLog) {
+		this.printEventbusPackLog = printEventbusPackLog;
+	}
+	
+	
 	
 }
