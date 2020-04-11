@@ -37,6 +37,8 @@ public class ReceiveMessageRespHandler implements MessageDataHandler<EventMessag
 		byte[] eventData = resp.getEventData();
 		this.serializer.deserialize(eventData, t);
 		
+		
+		
 		SubscriberManager subscribeManager = this.config.getSubscribeManager();
 		subscribeManager.trigger(eventId, eventbusMessage);
 	}
