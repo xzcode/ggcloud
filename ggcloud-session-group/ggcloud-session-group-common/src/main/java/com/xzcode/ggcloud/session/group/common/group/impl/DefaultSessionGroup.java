@@ -35,6 +35,7 @@ public class DefaultSessionGroup implements GGSessionGroup {
 	
 	
 	public DefaultSessionGroup(String groupId, GGConfig config) {
+		this.groupId = groupId;
 		this.config = config;
 	}
 
@@ -48,6 +49,9 @@ public class DefaultSessionGroup implements GGSessionGroup {
 			return;
 		}
 		this.sessionMap.put(session.getSessonId(), session);
+		session.addDisconnectListener(se -> {
+			removeSession(se);
+		});
 	}
 
 	public void removeSession(GGSession session) {

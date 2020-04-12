@@ -43,7 +43,7 @@ public class DataTransferReqHandler implements MessageDataHandler<DataTransferRe
 			
 			//创建session
 			if (tranferSessionId == null) {
-				tranferSessionId = RandomIdUtil.newRandomStringId24();
+				tranferSessionId = request.getSession().getSessonId();
 			}
 			ISessionManager sessionManager = serviceServerConfig.getSessionManager();
 			//创建业务服务端session

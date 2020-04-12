@@ -63,13 +63,12 @@ public class SessionGroupClient {
 				return !(actionString.startsWith(GGSesssionGroupConstant.ACTION_ID_PREFIX));
 			});
 		}
-		
-		sessionClientConfig.init();
 
+		sessionClientConfig.init();
+		
 		GGSessionGroupManager sessionGroupManager = new GGSessionGroupManager(sessionClientConfig);
-		sessionGroupManager.addSession(this.config.getSessionGroupId(), null);
-		sessionGroupManager.setDefaultGroup(this.config.getSessionGroupId());
 		this.config.setSessionGroupManager(sessionGroupManager);
+		
 
 		GGClient sessionClient = new GGClient(sessionClientConfig);
 		this.config.setSessionClient(sessionClient);
@@ -114,13 +113,6 @@ public class SessionGroupClient {
 	public void transferData(DataTransferReq message) {
 		
 		GGSessionGroupManager sessionGroupManager = this.config.getSessionGroupManager();
-		/*
-		 * GGSessionGroup defaultGroup = sessionGroupManager.getDefaultGroup(); Pack
-		 * pack = defaultGroup.makePack(new MessageData<>(null, message.getActionId(),
-		 * message)); DataTransferReq req = new DataTransferReq();
-		 * req.setAction(pack.getAction()); req.setMessage(pack.getMessage());
-		 */
-		sessionGroupManager.sendToDefaultGroupRandomOne(message);
 		sessionGroupManager.sendToRandomOne(this.config.getSessionGroupId(), message);
 	}
 

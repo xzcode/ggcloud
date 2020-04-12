@@ -76,6 +76,7 @@ public interface GGSessionGroup extends IMakePackSupport {
 	 * @return
 	 * @author zai 2020-04-07 14:49:06
 	 */
+	@SuppressWarnings("unchecked")
 	default IGGFuture sendToRandomOne(Pack pack) {
 		Map<String, GGSession> sessionMap = getSessionMap();
 		Set<Entry<String, GGSession>> entrySet = sessionMap.entrySet();
@@ -84,7 +85,7 @@ public interface GGSessionGroup extends IMakePackSupport {
 			return GGFailedFuture.DEFAULT_FAILED_FUTURE;
 		}
 		//获取随机会话
-		GGSession session = (GGSession) entrySet.toArray()[ThreadLocalRandom.current().nextInt(size)];
+		GGSession session = (GGSession) ((Entry<String, GGSession>)entrySet.toArray()[ThreadLocalRandom.current().nextInt(size)]).getValue();
 		if(!session.isReady()) {
 			//如果随机会话未就绪，遍历并获取就绪会话进行发送
 			for (Entry<String, GGSession> entry : entrySet) {

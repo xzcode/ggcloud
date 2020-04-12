@@ -32,9 +32,10 @@ public class EventbusClient implements IMakePackSupport{
 	public EventbusClient(EventbusClientConfig config) {
 		this.config = config;
 		this.config.setEventbusClient(this);
+		init();
 	}
 
-	public void start() {
+	public void init() {
 		
 		SessionGroupClientConfig sessionGroupClientConfig = new SessionGroupClientConfig();
 		sessionGroupClientConfig.setEnableServiceClient(true);
@@ -43,6 +44,8 @@ public class EventbusClient implements IMakePackSupport{
 		sessionGroupClientConfig.setConnectionSize(this.config.getConnectionSize());
 		sessionGroupClientConfig.setPrintPingPongInfo(this.config.isPrintPingPongInfo());
 		SessionGroupClient sessionGroupClient = new SessionGroupClient(sessionGroupClientConfig);
+		
+		this.config.setSessionGroupClient(sessionGroupClient);
 		
 		//包日志输出控制
 		if (this.config.isPrintEventbusPackLog()) {
@@ -55,8 +58,12 @@ public class EventbusClient implements IMakePackSupport{
 		this.serializer = sessionGroupClient.getConfig().getSessionClient().getSerializer();
 		this.charset = sessionGroupClient.getConfig().getSessionClient().getCharset();
 		
-		sessionGroupClient.start();
 		
+		
+	}
+	
+	public void start() {
+		this.config.getSessionGroupClient().start();
 	}
 	
 	/**

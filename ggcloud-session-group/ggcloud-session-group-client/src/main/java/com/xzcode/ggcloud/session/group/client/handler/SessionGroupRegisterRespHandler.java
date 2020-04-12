@@ -32,8 +32,11 @@ public class SessionGroupRegisterRespHandler implements MessageDataHandler<Sessi
 		SessionGroupRegisterResp resp = request.getMessage();
 		//会话组注册成功
 		if (resp.isSuccess()) {
+			//添加会话到管理器
+			this.config.getSessionGroupManager().addSession(this.config.getSessionGroupId(), session);
 			//设置会话准备就绪
 			session.setReady(true);
+			
 		}
 	}
 	

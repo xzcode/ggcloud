@@ -30,10 +30,6 @@ public class GGSessionGroupManager {
 	 */
 	protected Map<String, GGSessionGroup> sessionGroupMap = new ConcurrentHashMap<String, GGSessionGroup>();
 	
-	/**
-	 * 默认组
-	 */
-	protected GGSessionGroup defaultGroup;
 	
 	public GGSessionGroupManager(GGConfig config) {
 		super();
@@ -49,9 +45,7 @@ public class GGSessionGroupManager {
 	 * 2020-04-07 15:11:47
 	 */
 	public void addSession(String sessionGroupId, GGSession session) {
-		if (session == null) {
-			return;
-		}
+		
 		GGSessionGroup sessionGroup = this.sessionGroupMap.get(sessionGroupId);
 		if (sessionGroup == null) {
 			sessionGroup = new DefaultSessionGroup(sessionGroupId, this.config);
@@ -59,6 +53,9 @@ public class GGSessionGroupManager {
 			if (putIfAbsent != null) {
 				sessionGroup = putIfAbsent;
 			}
+		}
+		if (session == null) {
+			return;
 		}
 		sessionGroup.addSession(session);
 	}
@@ -98,20 +95,6 @@ public class GGSessionGroupManager {
 		return GGFailedFuture.DEFAULT_FAILED_FUTURE;
 	}
 	
-	/**
-	 * 发送到默认组内的随机一个session
-	 *
-	 * @param message
-	 * @return
-	 * @author zai
-	 * 2020-04-08 16:21:47
-	 */
-	public IGGFuture sendToDefaultGroupRandomOne(IMessage message) {
-		if (this.defaultGroup != null) {
-			return this.defaultGroup.sendToRandomOne(message);
-		}
-		return GGFailedFuture.DEFAULT_FAILED_FUTURE;
-	}
 
 	/**
 	 * 随机发送到一个会话中
@@ -143,24 +126,5 @@ public class GGSessionGroupManager {
 		}
 		return GGFailedFuture.DEFAULT_FAILED_FUTURE;
 	}
-	
-	/**
-	 * 设置默认组
-	 *
-	 * @param sessionGroupId
-	 * @author zai
-	 * 2020-04-08 16:18:20
-	 */
-	public void setDefaultGroup(String sessionGroupId) {
-		GGSessionGroup group = this.sessionGroupMap.get(sessionGroupId);
-		if (group != null) {
-			this.defaultGroup = group;
-		}
-	}
-	
-	public GGSessionGroup getDefaultGroup() {
-		return defaultGroup;
-	}
-	
 
 }
