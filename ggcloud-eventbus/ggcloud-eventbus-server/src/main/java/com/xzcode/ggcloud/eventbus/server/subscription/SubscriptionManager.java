@@ -1,5 +1,6 @@
 package com.xzcode.ggcloud.eventbus.server.subscription;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import com.xzcode.ggcloud.eventbus.common.message.resp.EventMessageResp;
@@ -35,6 +36,20 @@ public class SubscriptionManager {
 			}
 		}
 		subscription.addSubscription(session);
+	}
+	
+	/**
+	 * 添加多事件订阅
+	 *
+	 * @param eventIds
+	 * @param session
+	 * @author zai
+	 * 2020-04-12 15:54:32
+	 */
+	public void addSubscription(List<String> eventIds, GGSession session) {
+		for (String evtid : eventIds) {
+			this.addSubscription(evtid, session);
+		}
 	}
 	
 	/**

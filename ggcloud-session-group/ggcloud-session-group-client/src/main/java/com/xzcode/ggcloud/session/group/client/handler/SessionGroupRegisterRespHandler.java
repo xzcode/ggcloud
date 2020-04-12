@@ -4,8 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.xzcode.ggcloud.session.group.client.config.SessionGroupClientConfig;
+import com.xzcode.ggcloud.session.group.common.constant.GGSessionGroupEventConstant;
 import com.xzcode.ggcloud.session.group.common.message.resp.SessionGroupRegisterResp;
 
+import xzcode.ggserver.core.common.event.model.EventData;
 import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
 import xzcode.ggserver.core.common.session.GGSession;
@@ -36,6 +38,9 @@ public class SessionGroupRegisterRespHandler implements MessageDataHandler<Sessi
 			this.config.getSessionGroupManager().addSession(this.config.getSessionGroupId(), session);
 			//设置会话准备就绪
 			session.setReady(true);
+			
+			//触发会话注册成功事件
+			session.emitEvent(new EventData<Void>(session, GGSessionGroupEventConstant.SESSION_REGISTER_SUCCESS, null));
 			
 		}
 	}

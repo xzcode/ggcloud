@@ -1,14 +1,18 @@
 package com.xzcode.ggcloud.eventbus.client;
 
 import java.nio.charset.Charset;
+import java.util.List;
 
 import com.xzcode.ggcloud.eventbus.client.config.EventbusClientConfig;
 import com.xzcode.ggcloud.eventbus.client.subscriber.Subscriber;
 import com.xzcode.ggcloud.eventbus.client.subscriber.SubscriberInfo;
+import com.xzcode.ggcloud.eventbus.client.subscriber.SubscriberManager;
 import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
 import com.xzcode.ggcloud.eventbus.common.message.req.EventPublishReq;
+import com.xzcode.ggcloud.eventbus.common.message.req.EventSubscribeReq;
 import com.xzcode.ggcloud.session.group.client.SessionGroupClient;
 import com.xzcode.ggcloud.session.group.client.config.SessionGroupClientConfig;
+import com.xzcode.ggcloud.session.group.common.constant.GGSessionGroupEventConstant;
 import com.xzcode.ggcloud.session.group.common.message.req.DataTransferReq;
 
 import xzcode.ggserver.core.client.config.GGClientConfig;
@@ -17,6 +21,7 @@ import xzcode.ggserver.core.common.handler.serializer.ISerializer;
 import xzcode.ggserver.core.common.message.MessageData;
 import xzcode.ggserver.core.common.message.Pack;
 import xzcode.ggserver.core.common.message.response.support.IMakePackSupport;
+import xzcode.ggserver.core.common.session.GGSession;
 import xzcode.ggserver.core.common.utils.GenericClassUtil;
 import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 
@@ -43,12 +48,28 @@ public class EventbusClient implements IMakePackSupport{
 		sessionGroupClientConfig.setWorkThreadFactory(new GGThreadFactory("gg-evt-cli-", false));
 		sessionGroupClientConfig.setConnectionSize(this.config.getConnectionSize());
 		sessionGroupClientConfig.setPrintPingPongInfo(this.config.isPrintPingPongInfo());
+		
 		SessionGroupClient sessionGroupClient = new SessionGroupClient(sessionGroupClientConfig);
+		
+		//添加会话注册成功监听
+		sessionGroupClient.addEventListener(GGSessionGroupEventConstant.SESSION_REGISTER_SUCCESS, e -> {
+			SubscriberManager subscribeManager = this.config.getSubscribeManager();
+			//获取待注册的事件id集合
+			List<String> eventIds = subscribeManager.getEventIdList();
+			//发送订阅请求
+			EventSubscribeReq req = new EventSubscribeReq(eventIds);
+			
+			GGSession session = e.getSession();
+			
+			sessionGroupClient.transferData(session, req);
+			
+		});
+		
 		
 		this.config.setSessionGroupClient(sessionGroupClient);
 		
 		//包日志输出控制
-		if (this.config.isPrintEventbusPackLog()) {
+		if (!this.config.isPrintEventbusPackLog()) {
 			sessionGroupClientConfig.getSessionClient().getConfig().getPackLogger().addPackLogFilter(pack -> {
 				String actionString = pack.getActionString();
 				return !(actionString.startsWith(EventbusConstant.ACTION_ID_PREFIX));

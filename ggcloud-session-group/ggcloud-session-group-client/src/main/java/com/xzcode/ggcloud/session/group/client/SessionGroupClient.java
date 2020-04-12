@@ -1,5 +1,7 @@
 package com.xzcode.ggcloud.session.group.client;
 
+import java.nio.charset.Charset;
+
 import com.xzcode.ggcloud.session.group.client.config.SessionGroupClientConfig;
 import com.xzcode.ggcloud.session.group.client.events.ConnCloseEventListener;
 import com.xzcode.ggcloud.session.group.client.events.ConnOpenEventListener;
@@ -18,10 +20,15 @@ import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.constant.ProtocolTypeConstants;
 import xzcode.ggserver.core.common.event.GGEvents;
-import xzcode.ggserver.core.common.executor.DefaultTaskExecutor;
+import xzcode.ggserver.core.common.event.IEventManager;
+import xzcode.ggserver.core.common.event.IEventSupport;
 import xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
-import xzcode.ggserver.core.common.message.pingpong.model.GGPing;
-import xzcode.ggserver.core.common.message.pingpong.model.GGPong;
+import xzcode.ggserver.core.common.handler.serializer.ISerializer;
+import xzcode.ggserver.core.common.message.MessageData;
+import xzcode.ggserver.core.common.message.Pack;
+import xzcode.ggserver.core.common.message.model.IMessage;
+import xzcode.ggserver.core.common.message.response.support.IMakePackSupport;
+import xzcode.ggserver.core.common.session.GGSession;
 import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 
 /**
@@ -29,7 +36,7 @@ import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
  *
  * @author zai 2020-04-08 11:47:15
  */
-public class SessionGroupClient {
+public class SessionGroupClient implements IEventSupport, IMakePackSupport{
 
 	private SessionGroupClientConfig config;
 
@@ -104,7 +111,7 @@ public class SessionGroupClient {
 	}
 
 	/**
-	 * 发送消息
+	 * 消息传输
 	 *
 	 * @param message
 	 * @author zai
@@ -114,6 +121,43 @@ public class SessionGroupClient {
 		
 		GGSessionGroupManager sessionGroupManager = this.config.getSessionGroupManager();
 		sessionGroupManager.sendToRandomOne(this.config.getSessionGroupId(), message);
+	}
+	
+	/**
+	 * 消息传输
+	 *
+	 * @param message
+	 * @author zai
+	 * 2020-04-12 23:12:06
+	 */
+	public void transferData(IMessage message) {
+		this.transferData(null, message);
+	}
+	
+	
+	/**
+	 * 消息传输
+	 *
+	 * @param session
+	 * @param message
+	 * @author zai
+	 * 2020-04-12 23:12:21
+	 */
+	public void transferData(GGSession session, IMessage message) {
+		
+		DataTransferReq transferReq = new DataTransferReq();
+		
+		Pack publishPack = makePack(new MessageData<>(session, message.getActionId(), message));
+		
+		transferReq.setAction(publishPack.getAction());
+		transferReq.setMessage(publishPack.getMessage());
+		
+		GGSessionGroupManager sessionGroupManager = this.config.getSessionGroupManager();
+		if (session == null) {
+			sessionGroupManager.sendToRandomOne(this.config.getSessionGroupId(), message);
+		}else {
+			session.send(transferReq);
+		}
 	}
 
 	/**
@@ -159,5 +203,25 @@ public class SessionGroupClient {
 	public void setConfig(SessionGroupClientConfig config) {
 		this.config = config;
 	}
+
+
+	@Override
+	public IEventManager getEventManagerImpl() {
+		return this.config.getSessionClient();
+	}
+
+
+	@Override
+	public Charset getCharset() {
+		return this.config.getSessionClient().getCharset();
+	}
+
+
+	@Override
+	public ISerializer getSerializer() {
+		return this.config.getSessionClient().getSerializer();
+	}
+
+
 
 }

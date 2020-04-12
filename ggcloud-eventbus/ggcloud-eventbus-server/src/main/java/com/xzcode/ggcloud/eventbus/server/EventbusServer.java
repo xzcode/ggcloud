@@ -50,6 +50,8 @@ public class EventbusServer {
 		serviceServer.onMessage(EventPublishReq.ACTION_ID, new EventPublishReqHandler(config));
 		serviceServer.onMessage(EventSubscribeReq.ACTION_ID, new EventSubscribeReqHandler(config));
 		
+		
+		
 		sessionGroupServer.start();
 	}
 	

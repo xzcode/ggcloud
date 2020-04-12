@@ -1,5 +1,7 @@
 package com.xzcode.ggcloud.eventbus.client.subscriber;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -14,6 +16,17 @@ public class SubscriberManager {
 	
 	//事件订阅器组集合
 	private Map<String, SubscriberGroup> groups = new ConcurrentHashMap<String, SubscriberGroup>();
+	
+	/**
+	 * 获取事件id集合
+	 *
+	 * @return
+	 * @author zai
+	 * 2020-04-12 19:41:01
+	 */
+	public List<String> getEventIdList() {
+		return new ArrayList<String>(groups.keySet());
+	}
 	
 	/**
 	 * 添加订阅器

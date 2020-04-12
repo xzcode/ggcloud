@@ -10,7 +10,6 @@ import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
 import xzcode.ggserver.core.common.message.request.task.MessageDataTask;
 import xzcode.ggserver.core.common.session.GGSession;
 import xzcode.ggserver.core.common.session.manager.ISessionManager;
-import xzcode.ggserver.core.common.utils.RandomIdUtil;
 import xzcode.ggserver.core.server.IGGServer;
 import xzcode.ggserver.core.server.config.GGServerConfig;
 
@@ -58,6 +57,9 @@ public class DataTransferReqHandler implements MessageDataHandler<DataTransferRe
 			
 			//提交任务到业务服务端
 			Pack pack = new Pack(serviceSession, req.getAction(), req.getMessage());
+			if (pack.getActionString().equals("GG.EVENTBUS.EVENT.SUB.REQ")) {
+				System.out.println("GG.EVENTBUS.EVENT.SUB.REQ");
+			}
 			serviceServer.submitTask(new MessageDataTask(pack , serviceServerConfig));
 		}
 	}

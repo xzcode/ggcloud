@@ -26,7 +26,7 @@ public class EventbusClientConfig {
 	protected int workThreadSize = 8;
 	
 	// 连接数
-	protected int connectionSize = 8;
+	protected int connectionSize = 4;
 
 
 	// 订阅者管理器

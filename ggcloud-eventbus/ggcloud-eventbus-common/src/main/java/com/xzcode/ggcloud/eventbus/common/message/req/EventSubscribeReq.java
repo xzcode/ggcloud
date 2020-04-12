@@ -1,5 +1,7 @@
 package com.xzcode.ggcloud.eventbus.common.message.req;
 
+import java.util.List;
+
 import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
 
 import xzcode.ggserver.core.common.message.model.IMessage;
@@ -20,26 +22,26 @@ public class EventSubscribeReq implements IMessage {
 	}
 	
 	//事件id
-	private String eventId;
+	private List<String> eventIds;
 	
 
 	public EventSubscribeReq() {
 	}
 
 
-	public EventSubscribeReq(String eventId) {
+	public EventSubscribeReq(List<String> eventIds) {
 		super();
-		this.eventId = eventId;
+		this.eventIds = eventIds;
 	}
 
 
-	public String getEventId() {
-		return eventId;
+	public List<String> getEventIds() {
+		return eventIds;
 	}
 
 
-	public void setEventId(String eventId) {
-		this.eventId = eventId;
+	public void setEventIds(List<String> eventIds) {
+		this.eventIds = eventIds;
 	}
 	
 	

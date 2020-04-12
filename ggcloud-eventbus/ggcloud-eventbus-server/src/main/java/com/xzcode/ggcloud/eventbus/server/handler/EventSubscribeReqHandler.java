@@ -1,5 +1,7 @@
 package com.xzcode.ggcloud.eventbus.server.handler;
 
+import java.util.List;
+
 import com.xzcode.ggcloud.eventbus.common.message.req.EventSubscribeReq;
 import com.xzcode.ggcloud.eventbus.server.config.EventbusServerConfig;
 
@@ -28,10 +30,10 @@ public class EventSubscribeReqHandler implements MessageDataHandler<EventSubscri
 	@Override
 	public void handle(MessageData<EventSubscribeReq> messageData) {
 		EventSubscribeReq req = messageData.getMessage();
-		String eventId = req.getEventId();
+		List<String> eventIds = req.getEventIds();
 		GGSession session = messageData.getSession();
 		//添加监听
-		this.config.getSubscriptionManager().addSubscription(eventId, session);
+		this.config.getSubscriptionManager().addSubscription(eventIds, session);
 	}
 
 	

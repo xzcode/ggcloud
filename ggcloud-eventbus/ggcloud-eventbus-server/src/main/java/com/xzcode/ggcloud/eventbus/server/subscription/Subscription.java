@@ -31,7 +31,9 @@ public class Subscription {
 	public void publish(EventMessageResp resp) {
 		for (Entry<String, GGSession> entry : sessions.entrySet()) {
 			GGSession session = entry.getValue();
-			session.send(resp);
+			if (session != null) {
+				session.send(resp);
+			}
 		}
 	}
 
