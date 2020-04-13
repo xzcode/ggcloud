@@ -1,7 +1,7 @@
-package com.xzcode.ggcloud.session.group.server.session;
+package com.xzcode.ggcloud.session.group.client.session;
 
 import com.xzcode.ggcloud.session.group.common.group.manager.GGSessionGroupManager;
-import com.xzcode.ggcloud.session.group.common.message.resp.DataTransferResp;
+import com.xzcode.ggcloud.session.group.common.message.req.DataTransferReq;
 
 import io.netty.channel.Channel;
 import xzcode.ggserver.core.common.config.GGConfig;
@@ -14,19 +14,20 @@ import xzcode.ggserver.core.common.message.Pack;
 import xzcode.ggserver.core.common.session.impl.AbstractAttrMapSession;
 
 /**
- * 业务服务端session
+ * 业务客户端session
  *
  * @author zai
- * 2020-04-09 10:11:53
+ * 2020-04-13 17:01:32
  */
-public class ServiceServerSession extends AbstractAttrMapSession<GGConfig>{
+public class ServiceClientSession extends AbstractAttrMapSession<GGConfig>{
 	
-	
+	//会话组id
+	protected String groupId;
 	
 	//会话组管理器
 	protected GGSessionGroupManager sessionGroupManager;
 
-	public ServiceServerSession(String sessionId, String groupId, GGSessionGroupManager sessionGroupManager,GGConfig config) {
+	public ServiceClientSession(String sessionId, String groupId, GGSessionGroupManager sessionGroupManager,GGConfig config) {
 		super(sessionId, config);
 		this.sessionGroupManager = sessionGroupManager;
 		this.groupId = groupId;
@@ -46,7 +47,7 @@ public class ServiceServerSession extends AbstractAttrMapSession<GGConfig>{
 
 	@Override
 	public IGGFuture send(Pack pack) {
-		DataTransferResp resp = new DataTransferResp();
+		DataTransferReq resp = new DataTransferReq();
 		resp.setAction(pack.getAction());
 		resp.setMessage(pack.getMessage());
 		resp.setTranferSessionId(this.getSessonId());
@@ -68,6 +69,7 @@ public class ServiceServerSession extends AbstractAttrMapSession<GGConfig>{
 		return future;
 	}
 
+	
 	
 
 }

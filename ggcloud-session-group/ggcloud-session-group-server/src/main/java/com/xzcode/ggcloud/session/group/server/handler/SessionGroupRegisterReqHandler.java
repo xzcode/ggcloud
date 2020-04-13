@@ -4,6 +4,7 @@ import com.xzcode.ggcloud.session.group.common.group.manager.GGSessionGroupManag
 import com.xzcode.ggcloud.session.group.common.message.req.SessionGroupRegisterReq;
 import com.xzcode.ggcloud.session.group.common.message.resp.SessionGroupRegisterResp;
 import com.xzcode.ggcloud.session.group.server.config.SessionGroupServerConfig;
+import com.xzcode.ggcloud.session.group.server.constant.SessionGroupServerSessionKeys;
 
 import io.netty.util.AttributeKey;
 import xzcode.ggserver.core.common.channel.DefaultChannelAttributeKeys;
@@ -22,8 +23,6 @@ public class SessionGroupRegisterReqHandler implements MessageDataHandler<Sessio
 	
 	protected SessionGroupServerConfig config;
 	
-	protected static final AttributeKey<GGPingPongInfo> PING_PONG_INFO_KEY = AttributeKey.valueOf(DefaultChannelAttributeKeys.PING_INFO);
-	
 	public SessionGroupRegisterReqHandler(SessionGroupServerConfig config) {
 		this.config = config;
 	}
@@ -35,8 +34,10 @@ public class SessionGroupRegisterReqHandler implements MessageDataHandler<Sessio
 		String groupId = req.getGroupId();
 		GGSessionGroupManager sessionGroupManager = config.getSessionGroupManager();
 		
-		sessionGroupManager.addSession(groupId, session);
+		session.addAttribute(SessionGroupServerSessionKeys.GROUP_SESSION_GROUP_ID, groupId);
 		session.setReady(true);
+		sessionGroupManager.addSession(groupId, session);
+		
 		session.send(new SessionGroupRegisterResp(true));
 		
 	}

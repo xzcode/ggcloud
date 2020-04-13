@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import com.xzcode.ggcloud.eventbus.common.message.resp.EventMessageResp;
+import com.xzcode.ggcloud.eventbus.server.config.EventbusServerConfig;
+
 import xzcode.ggserver.core.common.session.GGSession;
 
 /**
@@ -14,10 +16,18 @@ import xzcode.ggserver.core.common.session.GGSession;
  */
 public class SubscriptionManager {
 	
+	private EventbusServerConfig config;
+	
 	
 	//事件订阅集合
 	private Map<String, Subscription> subscriptions = new ConcurrentHashMap<String, Subscription>();
 	
+	
+	public SubscriptionManager(EventbusServerConfig config) {
+		super();
+		this.config = config;
+	}
+
 	/**
 	 * 添加订阅
 	 *
@@ -29,7 +39,7 @@ public class SubscriptionManager {
 	public void addSubscription(String eventId, GGSession session) {
 		Subscription subscription = subscriptions.get(eventId);
 		if (subscription == null) {
-			subscription = new Subscription(eventId);
+			subscription = new Subscription(eventId, this.config);
 			Subscription putIfAbsent = subscriptions.putIfAbsent(eventId, subscription);
 			if (putIfAbsent != null) {
 				subscription = putIfAbsent;
@@ -49,6 +59,9 @@ public class SubscriptionManager {
 	public void addSubscription(List<String> eventIds, GGSession session) {
 		for (String evtid : eventIds) {
 			this.addSubscription(evtid, session);
+			session.addDisconnectListener(se -> {
+				removeSubscription(evtid, se);
+			});
 		}
 	}
 	

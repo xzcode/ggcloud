@@ -5,6 +5,8 @@ import com.xzcode.ggcloud.eventbus.client.subscriber.SubscriberManager;
 import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
 import com.xzcode.ggcloud.session.group.client.SessionGroupClient;
 
+import xzcode.ggserver.core.common.session.GGSession;
+
 /**
  * EventbusClient配置
  *
@@ -27,6 +29,9 @@ public class EventbusClientConfig {
 	
 	// 连接数
 	protected int connectionSize = 4;
+	
+	
+	protected GGSession defaultClientSession;
 
 
 	// 订阅者管理器
@@ -125,8 +130,12 @@ public class EventbusClientConfig {
 		this.printEventbusPackLog = printEventbusPackLog;
 	}
 	
+	public void setDefaultClientSession(GGSession defaultClientSession) {
+		this.defaultClientSession = defaultClientSession;
+	}
 	
-	
-	
+	public GGSession getDefaultClientSession() {
+		return defaultClientSession;
+	}
 
 }

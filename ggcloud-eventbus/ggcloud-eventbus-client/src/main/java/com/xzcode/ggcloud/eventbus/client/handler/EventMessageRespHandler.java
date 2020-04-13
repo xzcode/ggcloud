@@ -17,14 +17,14 @@ import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
  * @author zai
  * 2020-04-07 11:37:01
  */
-public class ReceiveMessageRespHandler implements MessageDataHandler<EventMessageResp>{
+public class EventMessageRespHandler implements MessageDataHandler<EventMessageResp>{
 	
 	private EventbusClientConfig config;
 	
 	private ISerializer serializer;
 	
 
-	public ReceiveMessageRespHandler(EventbusClientConfig config) {
+	public EventMessageRespHandler(EventbusClientConfig config) {
 		super();
 		this.config = config;
 		this.serializer = this.config.getSessionGroupClient().getConfig().getSessionClient().getSerializer();

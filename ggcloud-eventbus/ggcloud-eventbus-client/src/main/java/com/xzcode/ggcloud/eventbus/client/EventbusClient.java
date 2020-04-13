@@ -4,34 +4,39 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 import com.xzcode.ggcloud.eventbus.client.config.EventbusClientConfig;
+import com.xzcode.ggcloud.eventbus.client.handler.EventMessageRespHandler;
+import com.xzcode.ggcloud.eventbus.client.handler.EventPublishRespHandler;
+import com.xzcode.ggcloud.eventbus.client.handler.EventSubscribeRespHandler;
 import com.xzcode.ggcloud.eventbus.client.subscriber.Subscriber;
 import com.xzcode.ggcloud.eventbus.client.subscriber.SubscriberInfo;
 import com.xzcode.ggcloud.eventbus.client.subscriber.SubscriberManager;
 import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
 import com.xzcode.ggcloud.eventbus.common.message.req.EventPublishReq;
 import com.xzcode.ggcloud.eventbus.common.message.req.EventSubscribeReq;
+import com.xzcode.ggcloud.eventbus.common.message.resp.EventMessageResp;
+import com.xzcode.ggcloud.eventbus.common.message.resp.EventPublishResp;
+import com.xzcode.ggcloud.eventbus.common.message.resp.EventSubscribeResp;
 import com.xzcode.ggcloud.session.group.client.SessionGroupClient;
 import com.xzcode.ggcloud.session.group.client.config.SessionGroupClientConfig;
+import com.xzcode.ggcloud.session.group.client.session.ServiceClientSession;
 import com.xzcode.ggcloud.session.group.common.constant.GGSessionGroupEventConstant;
-import com.xzcode.ggcloud.session.group.common.message.req.DataTransferReq;
 
+import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
 import xzcode.ggserver.core.common.handler.serializer.ISerializer;
-import xzcode.ggserver.core.common.message.MessageData;
-import xzcode.ggserver.core.common.message.Pack;
 import xzcode.ggserver.core.common.message.response.support.IMakePackSupport;
 import xzcode.ggserver.core.common.session.GGSession;
+import xzcode.ggserver.core.common.session.manager.ISessionManager;
 import xzcode.ggserver.core.common.utils.GenericClassUtil;
+import xzcode.ggserver.core.common.utils.RandomIdUtil;
 import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 
-public class EventbusClient implements IMakePackSupport{
+public class EventbusClient{
 	
 	private EventbusClientConfig config;
 	
-	private ISerializer serializer;
-	
-	private Charset charset;
+	private GGClient serviceClient;
 	
 	
 	public EventbusClient(EventbusClientConfig config) {
@@ -56,28 +61,42 @@ public class EventbusClient implements IMakePackSupport{
 			SubscriberManager subscribeManager = this.config.getSubscribeManager();
 			//获取待注册的事件id集合
 			List<String> eventIds = subscribeManager.getEventIdList();
+			
 			//发送订阅请求
 			EventSubscribeReq req = new EventSubscribeReq(eventIds);
 			
-			GGSession session = e.getSession();
+			GGClientConfig serviceClientConfig = this.config.getSessionGroupClient().getConfig().getServiceClient().getConfig();
+			ISessionManager sessionManager = serviceClientConfig.getSessionManager();
 			
-			sessionGroupClient.transferData(session, req);
+			ServiceClientSession serviceClientSession = new ServiceClientSession(RandomIdUtil.newRandomStringId24(), sessionGroupClientConfig.getSessionGroupId(), sessionGroupClientConfig.getSessionGroupManager(), serviceClientConfig );
+			
+			GGSession addSessionIfAbsent = sessionManager.addSessionIfAbsent(serviceClientSession);
+			if (addSessionIfAbsent != null) {
+				serviceClientSession = (ServiceClientSession) addSessionIfAbsent;
+			}
+			
+			serviceClientSession.send(req);
 			
 		});
 		
+		this.serviceClient = sessionGroupClientConfig.getServiceClient();
 		
 		this.config.setSessionGroupClient(sessionGroupClient);
 		
+		
+		
+		this.serviceClient.onMessage(EventPublishResp.ACTION_ID, new EventPublishRespHandler(config));
+		this.serviceClient.onMessage(EventSubscribeResp.ACTION_ID, new EventSubscribeRespHandler(config));
+		this.serviceClient.onMessage(EventMessageResp.ACTION_ID, new EventMessageRespHandler(config));
+		
+		
 		//包日志输出控制
 		if (!this.config.isPrintEventbusPackLog()) {
-			sessionGroupClientConfig.getSessionClient().getConfig().getPackLogger().addPackLogFilter(pack -> {
+			this.serviceClient.getConfig().getPackLogger().addPackLogFilter(pack -> {
 				String actionString = pack.getActionString();
 				return !(actionString.startsWith(EventbusConstant.ACTION_ID_PREFIX));
 			});
 		}
-		
-		this.serializer = sessionGroupClient.getConfig().getSessionClient().getSerializer();
-		this.charset = sessionGroupClient.getConfig().getSessionClient().getCharset();
 		
 		
 		
@@ -97,24 +116,21 @@ public class EventbusClient implements IMakePackSupport{
 	public void publishEvent(String eventId, Object data) {
 		try {
 			
-			DataTransferReq transferReq = new DataTransferReq();
 			
 			EventPublishReq publishReq = new EventPublishReq();
-			publishReq.setEventData(getSerializer().serialize(data));
+			publishReq.setEventData(this.serviceClient.getConfig().getSerializer().serialize(data));
 			publishReq.setEventId(eventId);
+			publishReq.setSubscriberId(data.getClass().getName());
 			
-			Pack publishPack = makePack(new MessageData<>(EventPublishReq.ACTION_ID, publishReq));
-			
-			transferReq.setAction(publishPack.getAction());
-			transferReq.setMessage(publishPack.getMessage());
-			
-			this.config.getSessionGroupClient().transferData(transferReq);
+			ISessionManager sessionManager = this.serviceClient.getSessionManager();
+			GGSession session = sessionManager.randomGetSession();
+			session.send(publishReq);
 			
 		} catch (Exception e) {
 			GGLoggerUtil.getLogger(this).error("Eventbus publish event ERROR!", e);
 		}
 	}
-	
+
 	/**
 	 * 注册事件订阅
 	 *
@@ -133,16 +149,5 @@ public class EventbusClient implements IMakePackSupport{
 		
 		this.config.getSubscribeManager().subscribe(eventId, subscriberInfo);
 	}
-
-	@Override
-	public Charset getCharset() {
-		return this.charset;
-	}
-
-	@Override
-	public ISerializer getSerializer() {
-		return this.serializer;
-	}
-	
 
 }

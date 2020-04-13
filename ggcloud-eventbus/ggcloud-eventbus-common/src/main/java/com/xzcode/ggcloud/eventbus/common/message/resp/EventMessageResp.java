@@ -12,11 +12,11 @@ import xzcode.ggserver.core.common.message.model.IMessage;
  */
 public class EventMessageResp implements IMessage {
 
-	public static final String ACTION = EventbusConstant.ACTION_ID_PREFIX + "REC.MSG.RESP";
+	public static final String ACTION_ID = EventbusConstant.ACTION_ID_PREFIX + "EVENT.MESSAGE.RESP";
 
 	@Override
 	public String getActionId() {
-		return ACTION;
+		return ACTION_ID;
 	}
 
 	// 事件id

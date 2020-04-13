@@ -21,7 +21,7 @@ public class EventbusServerConfig {
 	protected SessionGroupServer sessionGroupServer;
 	
 	//订阅管理器
-	protected SubscriptionManager subscriptionManager = new SubscriptionManager();
+	protected SubscriptionManager subscriptionManager = new SubscriptionManager(this);
 	
 	//是否输出底层ping pong信息
 	protected boolean printPingPongInfo = false;

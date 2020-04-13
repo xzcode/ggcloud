@@ -10,7 +10,6 @@ import com.xzcode.ggcloud.session.group.client.handler.DataTransferRespHandler;
 import com.xzcode.ggcloud.session.group.client.handler.SessionGroupRegisterRespHandler;
 import com.xzcode.ggcloud.session.group.common.constant.GGSesssionGroupConstant;
 import com.xzcode.ggcloud.session.group.common.group.manager.GGSessionGroupManager;
-import com.xzcode.ggcloud.session.group.common.message.req.DataTransferReq;
 import com.xzcode.ggcloud.session.group.common.message.resp.AuthResp;
 import com.xzcode.ggcloud.session.group.common.message.resp.DataTransferResp;
 import com.xzcode.ggcloud.session.group.common.message.resp.SessionGroupRegisterResp;
@@ -24,11 +23,7 @@ import xzcode.ggserver.core.common.event.IEventManager;
 import xzcode.ggserver.core.common.event.IEventSupport;
 import xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
 import xzcode.ggserver.core.common.handler.serializer.ISerializer;
-import xzcode.ggserver.core.common.message.MessageData;
-import xzcode.ggserver.core.common.message.Pack;
-import xzcode.ggserver.core.common.message.model.IMessage;
 import xzcode.ggserver.core.common.message.response.support.IMakePackSupport;
-import xzcode.ggserver.core.common.session.GGSession;
 import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 
 /**
@@ -109,56 +104,7 @@ public class SessionGroupClient implements IEventSupport, IMakePackSupport{
 	public void start() {
 		this.connect();
 	}
-
-	/**
-	 * 消息传输
-	 *
-	 * @param message
-	 * @author zai
-	 * 2020-04-08 16:14:13
-	 */
-	public void transferData(DataTransferReq message) {
-		
-		GGSessionGroupManager sessionGroupManager = this.config.getSessionGroupManager();
-		sessionGroupManager.sendToRandomOne(this.config.getSessionGroupId(), message);
-	}
 	
-	/**
-	 * 消息传输
-	 *
-	 * @param message
-	 * @author zai
-	 * 2020-04-12 23:12:06
-	 */
-	public void transferData(IMessage message) {
-		this.transferData(null, message);
-	}
-	
-	
-	/**
-	 * 消息传输
-	 *
-	 * @param session
-	 * @param message
-	 * @author zai
-	 * 2020-04-12 23:12:21
-	 */
-	public void transferData(GGSession session, IMessage message) {
-		
-		DataTransferReq transferReq = new DataTransferReq();
-		
-		Pack publishPack = makePack(new MessageData<>(session, message.getActionId(), message));
-		
-		transferReq.setAction(publishPack.getAction());
-		transferReq.setMessage(publishPack.getMessage());
-		
-		GGSessionGroupManager sessionGroupManager = this.config.getSessionGroupManager();
-		if (session == null) {
-			sessionGroupManager.sendToRandomOne(this.config.getSessionGroupId(), message);
-		}else {
-			session.send(transferReq);
-		}
-	}
 
 	/**
 	 * 进行连接操作

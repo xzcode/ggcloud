@@ -8,4 +8,9 @@ package com.xzcode.ggcloud.session.group.server.constant;
  */
 public interface SessionGroupServerSessionKeys {
 	
+	/**
+	 * 组内会话的组id key
+	 */
+	String GROUP_SESSION_GROUP_ID = "GROUP_SESSION_GROUP_ID";
+	
 }
