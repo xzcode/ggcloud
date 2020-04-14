@@ -36,7 +36,7 @@ public class SessionGroupClientConfig {
 	//业务客户端
 	protected IGGServer serviceServer;
 	
-
+	//会话组管理器
 	protected GGSessionGroupManager sessionGroupManager;
 
 	// 服务器域名

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.slf4j.Logger;
@@ -12,18 +11,14 @@ import org.slf4j.LoggerFactory;
 
 import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
 import com.xzcode.ggcloud.router.client.event.RouterClientEvents;
-import com.xzcode.ggcloud.router.client.pool.RouterChannelPoolHandler;
 import com.xzcode.ggcloud.router.client.router.service.IRouterService;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceMatcher;
 import com.xzcode.ggcloud.router.client.router.service.listener.IRouterServiceActiveListener;
 import com.xzcode.ggcloud.router.client.router.service.listener.IRouterServiceInActiveListener;
 
-import io.netty.channel.Channel;
-import io.netty.channel.pool.ChannelPool;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.client.config.GGClientConfig;
-import xzcode.ggserver.core.common.event.GGEvents;
 import xzcode.ggserver.core.common.event.model.EventData;
 import xzcode.ggserver.core.common.executor.ITaskExecutor;
 import xzcode.ggserver.core.common.future.GGFailedFuture;
@@ -62,7 +57,7 @@ public class DefaultRouterService implements IRouterService{
 	/**
 	 * 绑定的连接客户端
 	 */
-	protected GGClient distClient;
+	protected SessionGroupClient distClient;
 	
 	
 	/**
@@ -106,103 +101,15 @@ public class DefaultRouterService implements IRouterService{
 		GGClientConfig clientConfig = new GGClientConfig();
 		clientConfig.setWorkerGroupThreadFactory(new DefaultThreadFactory("router-service-" + this.serviceId + "-", false));
 		clientConfig.setWorkerGroup(config.getRoutingServer().getConfig().getWorkerGroup());
-		clientConfig.setMetadataResolver(config.getMetadataResolver());
-		clientConfig.setMetadataProvider(config.getMetadataProvider());
-		clientConfig.setChannelPoolHandler(new RouterChannelPoolHandler(config, clientConfig));
-		clientConfig.setChannelPoolMaxSize(config.getRouterClientChannelPoolMaxSize());
 		clientConfig.setHost(host);
 		clientConfig.setPort(port);
-		clientConfig.setChannelPoolEnabled(true);
 		
 		this.executor = config.getRoutingServer().getTaskExecutor().nextEvecutor();
 		
 		distClient = new GGClient(clientConfig);
 		
-		//监听连接打开
-		distClient.addEventListener(GGEvents.Connection.OPENED, e -> {
-			LOGGER.warn("RouterService[{}] Channel Opened: {}", config.getRouterGroup() , e.getChannel());
-			avaliableConnections.incrementAndGet();
-		});
-		
-		//监听连接关闭
-		distClient.addEventListener(GGEvents.Connection.CLOSED, e -> {
-			LOGGER.warn("RouterService[{}] Channel Closed: {}", config.getRouterGroup(), e.getChannel());
-			int i = avaliableConnections.get();
-			if (i > 0) {
-				i = avaliableConnections.decrementAndGet();				
-				if (i <= 0) {
-					config.getRoutingServer().emitEvent(new EventData<IRouterService>(RouterClientEvents.RouterService.UNAVAILABLE, this));
-				}
-			}
-		});
-		
-		distClient.addAfterSerializeFilter((Pack pack) -> {
-			//对发送到远端的包进行处理
-			config.getPackHandler().handleSendPack(pack);
-			return true;
-		});
-		
-		distClient.addBeforeDeserializeFilter((Pack pack) -> {
-			//对远端返回的包进行处理
-			config.getPackHandler().handleReceivePack(pack);
-			return false;
-		});
-		
-		startCheckConnectionsTask();
-		
 	}
-	
-	/**
-	 * 初始化连接任务
-	 * 
-	 * @author zai
-	 * 2020-01-10 19:03:05
-	 */
-	public void startCheckConnectionsTask() {
-		
-		this.checkConnectionsFuture = this.executor.scheduleWithFixedDelay(1, 5, TimeUnit.SECONDS, () -> {
-			if (isShutdown()) {
-				getCheckConnectionsFuture().cancel();
-			}
-			int need = config.getRouterClientChannelPoolMaxSize() - this.avaliableConnections.get(); 
-			if (need > 0) {
-				for (int i = 0; i < need; i++) {
-					this.executor.submitTask(() -> {
-						ChannelPool channelPool = distClient.getConfig().getChannelPool();
-						channelPool.acquire()
-						.addListener(f -> {
-							Channel channel = (Channel) f.getNow();
-							if (LOGGER.isDebugEnabled()) {
-								LOGGER.info("Router Service Init Connections ----> [{}], channel: [{}]", getHost() + ":" + getPort(), channel);						
-							}
-							if (channel == null) {
-								if (LOGGER.isInfoEnabled()) {
-									LOGGER.info("Router Service Init Failed! ----> channel is null");						
-								}
-								return;
-							}
-							if (LOGGER.isInfoEnabled()) {
-								LOGGER.info("Router Service Init Success! ----> channel: [{}]", channel);						
-							}
-							channelPool.release(channel);					
-						});
-					});
-				}
-			}
-		});
-	}
-	
-	/**
-	 * 是否可用
-	 * 
-	 * @return
-	 * @author zai
-	 * 2020-02-07 11:08:07
-	 */
-	@Override
-	public boolean isAvailable() {
-		return this.avaliableConnections.get() >= config.getRouterClientChannelPoolMaxSize();
-	}
+
 	
 	/**
 	 * 转发消息
@@ -317,6 +224,11 @@ public class DefaultRouterService implements IRouterService{
 	
 	public void setServcieName(String servcieName) {
 		this.servcieName = servcieName;
+	}
+
+	@Override
+	public boolean isAvailable() {
+		return false;
 	}
 
 

@@ -101,12 +101,6 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
 			
 		});
 		
-		/*List<ServiceInfo> serviceList = this.serviceManager.getServiceList();
-		for (ServiceInfo serviceInfo : serviceList) {
-			//注册路由服务
-			registerRouterService(serviceInfo);
-		}*/
-		
 	}
 	
 	/**
@@ -119,7 +113,7 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
 	private void registerRouterService(ServiceInfo service) {
 		Map<String, String> customData = service.getCustomData();
 		String routerGroup = customData.get(RouterServiceCustomDataKeys.ROUTER_SERVICE_GROUP);
-		if (!config.getRouterGroup().equals(routerGroup)) {
+		if (!config.getRouterGroupId().equals(routerGroup)) {
 			return;
 		}
 		String actionIdPrefix = customData.get(RouterServiceCustomDataKeys.ROUTER_SERVICE_ACTION_ID_PREFIX);

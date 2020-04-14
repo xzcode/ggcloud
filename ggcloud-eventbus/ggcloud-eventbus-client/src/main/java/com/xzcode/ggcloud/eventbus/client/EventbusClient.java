@@ -124,7 +124,9 @@ public class EventbusClient{
 			
 			ISessionManager sessionManager = this.serviceClient.getSessionManager();
 			GGSession session = sessionManager.randomGetSession();
-			session.send(publishReq);
+			if (session != null) {
+				session.send(publishReq);
+			}
 			
 		} catch (Exception e) {
 			GGLoggerUtil.getLogger(this).error("Eventbus publish event ERROR!", e);

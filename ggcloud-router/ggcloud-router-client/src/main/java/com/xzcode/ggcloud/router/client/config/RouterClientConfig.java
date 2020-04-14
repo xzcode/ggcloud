@@ -10,15 +10,10 @@ import com.xzcode.ggcloud.router.client.router.service.IRouterPackHandler;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceProvider;
 import com.xzcode.ggcloud.router.client.router.service.impl.DefaultDiscoveryServicePorvider;
 import com.xzcode.ggcloud.router.client.router.service.impl.DefaultServicePorvider;
-import com.xzcode.ggcloud.router.client.router.service.impl.RouterUsereIdMetadataPackHandler;
 import com.xzcode.ggcloud.router.common.constant.RouterServiceCustomDataKeys;
-import com.xzcode.ggcloud.router.common.meta.impl.RouterSessionIdMetadataProvider;
-import com.xzcode.ggcloud.router.common.meta.impl.RouterSessionIdMetadataResolver;
 
 import io.netty.channel.nio.NioEventLoopGroup;
 import xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
-import xzcode.ggserver.core.common.message.meta.provider.IMetadataProvider;
-import xzcode.ggserver.core.common.message.meta.resolver.IMetadataResolver;
 import xzcode.ggserver.core.server.IGGServer;
 import xzcode.ggserver.core.server.impl.GGServer;
 
@@ -33,7 +28,7 @@ public class RouterClientConfig {
 	/**
 	 * 路由组id
 	 */
-	protected String routerGroup;
+	protected String routerGroupId;
 	
 	/**
 	 * 注册中心客户端
@@ -76,25 +71,12 @@ public class RouterClientConfig {
 	 */
 	private String[] excludedActionId;
 	
-	/**
-	 * 服务重连间隔毫秒数
-	 */
-	private int serviceReconnectDelayMs = 5000;
 
 	/**
 	 * 路由服务提供者
 	 */
 	private IRouterServiceProvider serviceProvider;
 
-	/**
-	 * 元数据解析器
-	 */
-	private IMetadataResolver<?> metadataResolver;
-	
-	/**
-	 * 元数据提供者
-	 */
-	private IMetadataProvider<?> metadataProvider;
 	
 	/**
 	 * 路由包处理器
@@ -122,25 +104,16 @@ public class RouterClientConfig {
 			executor = new NioEventLoopGroup(executorThreads, new GGThreadFactory("router-executor-", false));
 		}
 		
-		if (metadataResolver == null) {
-			metadataResolver = new RouterSessionIdMetadataResolver(routingServer.getSerializer());
-		}
-		if (metadataProvider == null) {
-			metadataProvider = new RouterSessionIdMetadataProvider();
-		}
 
-		if (packHandler == null) {
-			packHandler = new RouterUsereIdMetadataPackHandler(this);
-		}
 		
 		this.routingServer.addBeforeDeserializeFilter(new RouteReceiveMessageFilter(this));
 		
-		if (routerGroup == null) {
-			routerGroup = UUID.randomUUID().toString();
+		if (routerGroupId == null) {
+			routerGroupId = UUID.randomUUID().toString();
 		}
 
 		if (this.discoveryClient != null) {
-			this.discoveryClient.getConfig().addCustomData(RouterServiceCustomDataKeys.ROUTER_SERVICE_GROUP, getRouterGroup());
+			this.discoveryClient.getConfig().addCustomData(RouterServiceCustomDataKeys.ROUTER_SERVICE_GROUP, getRouterGroupId());
 			setServiceProvider(new DefaultDiscoveryServicePorvider(this));
 		}
 		
@@ -199,30 +172,6 @@ public class RouterClientConfig {
 		this.excludedActionId = excludedRoutingActionRegex;
 	}
 
-	public int getServiceReconnectDelayMs() {
-		return serviceReconnectDelayMs;
-	}
-
-	public void setServiceReconnectDelayMs(int serviceReconnectDelayMs) {
-		this.serviceReconnectDelayMs = serviceReconnectDelayMs;
-	}
-
-	public IMetadataResolver<?> getMetadataResolver() {
-		return metadataResolver;
-	}
-
-	public void setMetadataResolver(IMetadataResolver<?> metadataResolver) {
-		this.metadataResolver = metadataResolver;
-	}
-
-	public IMetadataProvider<?> getMetadataProvider() {
-		return metadataProvider;
-	}
-
-	public void setMetadataProvider(IMetadataProvider<?> metadataProvider) {
-		this.metadataProvider = metadataProvider;
-	}
-
 	public void setRoutingServer(IGGServer routingServer) {
 		this.routingServer = routingServer;
 	}
@@ -243,12 +192,12 @@ public class RouterClientConfig {
 		this.routerClient = routerClient;
 	}
 
-	public String getRouterGroup() {
-		return routerGroup;
+	public String getRouterGroupId() {
+		return routerGroupId;
 	}
 
-	public void setRouterGroup(String routerGroupId) {
-		this.routerGroup = routerGroupId;
+	public void setRouterGroupId(String routerGroupId) {
+		this.routerGroupId = routerGroupId;
 	}
 	
 	
