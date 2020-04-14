@@ -5,17 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.xzcode.ggcloud.discovery.client.DiscoveryClient;
-import com.xzcode.ggcloud.discovery.client.config.DiscoveryClientConfig;
-import com.xzcode.ggcloud.discovery.client.registry.RegistryInfo;
 import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
 import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
 import com.xzcode.ggcloud.router.client.router.service.IRouterService;
-import com.xzcode.ggcloud.router.client.router.service.IRouterServiceMatcher;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceProvider;
 import com.xzcode.ggcloud.router.client.router.service.listener.IAddRouterServiceListener;
 import com.xzcode.ggcloud.router.client.router.service.listener.IRemoveRouterServiceListener;
@@ -192,7 +188,7 @@ public class DefaultDiscoveryServicePorvider implements IRouterServiceProvider{
 
 	@Override
 	public IRouterService matchService(Pack pack) {
-		String actionId = pack.getActionString(config.getCharset());
+		String actionId = pack.getActionString();
 		//尝试从缓存中获取服务
 		IRouterService service = actionServiceCache.get(actionId);
 		if (service != null) {

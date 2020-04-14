@@ -31,7 +31,7 @@ public class RouteReceiveMessageFilter implements IBeforeDeserializeFilter{
 	@Override
 	public boolean doFilter(Pack pack) {
 
-		String actionId = pack.getActionString(config.getCharset());
+		String actionId = pack.getActionString(routingServer.getCharset());
 		//routingServer已定义的actionid,不参与路由
 		if (requestMessageManager.getMessageHandler(actionId) != null) {
 			return true;

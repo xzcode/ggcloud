@@ -16,6 +16,7 @@ import com.xzcode.ggcloud.session.group.server.handler.SessionGroupRegisterReqHa
 import xzcode.ggserver.core.common.constant.ProtocolTypeConstants;
 import xzcode.ggserver.core.common.event.GGEvents;
 import xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
+import xzcode.ggserver.core.common.future.IGGFuture;
 import xzcode.ggserver.core.server.IGGServer;
 import xzcode.ggserver.core.server.config.GGServerConfig;
 import xzcode.ggserver.core.server.impl.GGServer;
@@ -88,8 +89,8 @@ public class SessionGroupServer {
 		
 	}
 	
-	public void start() {
-		this.config.getSessionServer().start();
+	public IGGFuture start() {
+		return this.config.getSessionServer().start();
 	}
 	
 	public void setConfig(SessionGroupServerConfig config) {

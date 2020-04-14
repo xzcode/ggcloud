@@ -14,6 +14,10 @@ public interface GGRouterConstant {
 	String ACTION_ID_PREFIX = "GG.EVENTBUS.";
 	
 	/**
+	 * 默认服务地址
+	 */
+	String DEFAULT_SERVER_HOST = "localhost";
+	/**
 	 * 默认服务端口
 	 */
 	int DEFAULT_SERVER_PORT = 9999;

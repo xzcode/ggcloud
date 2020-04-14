@@ -15,12 +15,14 @@ import com.xzcode.ggcloud.router.client.router.service.IRouterService;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceMatcher;
 import com.xzcode.ggcloud.router.client.router.service.listener.IRouterServiceActiveListener;
 import com.xzcode.ggcloud.router.client.router.service.listener.IRouterServiceInActiveListener;
+import com.xzcode.ggcloud.session.group.client.SessionGroupClient;
+import com.xzcode.ggcloud.session.group.client.config.SessionGroupClientConfig;
+import com.xzcode.ggcloud.session.group.common.constant.GGSessionGroupEventConstant;
 
-import io.netty.util.concurrent.DefaultThreadFactory;
 import xzcode.ggserver.core.client.GGClient;
-import xzcode.ggserver.core.client.config.GGClientConfig;
 import xzcode.ggserver.core.common.event.model.EventData;
 import xzcode.ggserver.core.common.executor.ITaskExecutor;
+import xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
 import xzcode.ggserver.core.common.future.GGFailedFuture;
 import xzcode.ggserver.core.common.future.IGGFuture;
 import xzcode.ggserver.core.common.message.Pack;
@@ -57,7 +59,10 @@ public class DefaultRouterService implements IRouterService{
 	/**
 	 * 绑定的连接客户端
 	 */
-	protected SessionGroupClient distClient;
+	protected SessionGroupClient sessionGroupClient;
+	
+	
+	protected GGClient serviceClient;
 	
 	
 	/**
@@ -98,15 +103,33 @@ public class DefaultRouterService implements IRouterService{
 	 */
 	public void init() {
 		
-		GGClientConfig clientConfig = new GGClientConfig();
-		clientConfig.setWorkerGroupThreadFactory(new DefaultThreadFactory("router-service-" + this.serviceId + "-", false));
-		clientConfig.setWorkerGroup(config.getRoutingServer().getConfig().getWorkerGroup());
-		clientConfig.setHost(host);
-		clientConfig.setPort(port);
+		SessionGroupClientConfig sessionGroupClientConfig = new SessionGroupClientConfig();
+		sessionGroupClientConfig.setEnableServiceClient(true);
+		sessionGroupClientConfig.setAuthToken(this.config.getAuthToken());
+		sessionGroupClientConfig.setWorkThreadFactory(new GGThreadFactory("gg-evt-cli-", false));
+		sessionGroupClientConfig.setConnectionSize(this.config.getConnectionSize());
+		sessionGroupClientConfig.setPrintPingPongInfo(this.config.isPrintPingPongInfo());
 		
-		this.executor = config.getRoutingServer().getTaskExecutor().nextEvecutor();
+		SessionGroupClient sessionGroupClient = new SessionGroupClient(sessionGroupClientConfig);
 		
-		distClient = new GGClient(clientConfig);
+		//添加会话注册成功监听
+		sessionGroupClient.addEventListener(GGSessionGroupEventConstant.SESSION_REGISTER_SUCCESS, e -> {
+			
+			
+			
+		});
+		
+		this.serviceClient = sessionGroupClientConfig.getServiceClient();
+		
+		this.sessionGroupClient = sessionGroupClient;
+		
+		
+		//包日志输出控制
+		if (!this.config.isPrintRouterInfo()) {
+			this.serviceClient.getConfig().getPackLogger().addPackLogFilter(pack -> {
+				return false;
+			});
+		}
 		
 	}
 
@@ -125,7 +148,9 @@ public class DefaultRouterService implements IRouterService{
 		if (isShutdown()) {
 			return GGFailedFuture.DEFAULT_FAILED_FUTURE;
 		}
-		return distClient.send(pack);
+		GGClient serviceClient = this.sessionGroupClient.getConfig().getServiceClient();
+		
+		return serviceClient.send(pack);
 	}
 	
 	/**
@@ -137,7 +162,7 @@ public class DefaultRouterService implements IRouterService{
 	@Override
 	public void shutdown() {
 		this.shutdown = true;
-		ISessionManager sessionManager = this.distClient.getSessionManager();
+		ISessionManager sessionManager = this.serviceClient.getSessionManager();
 		sessionManager.disconnectAllSession();
 		config.getRoutingServer().emitEvent(new EventData<IRouterService>(RouterClientEvents.RouterService.SHUTDOWN, this));
 	}
@@ -228,7 +253,7 @@ public class DefaultRouterService implements IRouterService{
 
 	@Override
 	public boolean isAvailable() {
-		return false;
+		return true;
 	}
 
 

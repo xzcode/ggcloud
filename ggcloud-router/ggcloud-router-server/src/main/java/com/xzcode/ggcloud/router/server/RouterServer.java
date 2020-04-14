@@ -31,10 +31,8 @@ public class RouterServer {
 		return config;
 	}
 
-	@Override
 	public IGGFuture start() {
-		
-		return startFuture;
+		return this.config.getSessionGroupServer().start();
 	}
 	
 	
