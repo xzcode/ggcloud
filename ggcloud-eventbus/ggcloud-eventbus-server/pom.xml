@@ -17,8 +17,8 @@
 	</dependency>
 	<dependency>
 	    <groupId>xzcode</groupId>
-	    <artifactId>ggcloud-session-group-server</artifactId>
-	    <version>${project.version}</version>
+	    <artifactId>ggserver-session-group-server</artifactId>
+	    <version>${ggserver.version}</version>
 	</dependency>
 	<dependency>
 		<groupId>xzcode</groupId>
