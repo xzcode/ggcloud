@@ -1,6 +1,8 @@
 package com.xzcode.ggcloud.discovery.server.events;
 
-import com.xzcode.ggcloud.discovery.common.services.ServiceInfo;
+import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceUnregisterResp;
+import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
+import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
 import com.xzcode.ggcloud.discovery.server.constant.DiscoveryServerSessionKeys;
 
@@ -13,6 +15,10 @@ public class ConnCloseEventListener implements IEventListener<Void>{
 	
 	private DiscoveryServerConfig config;
 
+	public ConnCloseEventListener(DiscoveryServerConfig config) {
+		super();
+		this.config = config;
+	}
 
 	public void setConfig(DiscoveryServerConfig config) {
 		this.config = config;
@@ -26,9 +32,15 @@ public class ConnCloseEventListener implements IEventListener<Void>{
 		if (serviceInfo == null) {
 			return;
 		}
-		config.getServiceManager().removeServiceInfo(serviceInfo);			
+		config.getServiceManager().removeService(serviceInfo);
+		DiscoveryServiceUnregisterResp resp = new DiscoveryServiceUnregisterResp();
+		resp.setServiceName(serviceInfo.getServiceName());
+		resp.setServiceId(serviceInfo.getServiceId());
 		
-		GGLoggerUtil.getLogger(this).warn("Service ungristry!");
+		ServiceManager serviceManager = config.getServiceManager();
+		serviceManager.sendToAllServices(resp);
+		
+		GGLoggerUtil.getLogger(this).warn("Service unregristry! serviceName: {}, serviceId: {}", serviceInfo.getServiceName(), serviceInfo.getServiceId());
 		
 	}
 

@@ -1,14 +1,14 @@
 package com.xzcode.ggcloud.discovery.server.handler;
 
-import com.xzcode.ggcloud.discovery.common.message.req.RegisterReq;
-import com.xzcode.ggcloud.discovery.common.message.resp.RegisterResp;
-import com.xzcode.ggcloud.discovery.common.services.ServiceInfo;
-import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
-import com.xzcode.ggcloud.discovery.server.constant.DiscoveryServerSessionKeys;
-import com.xzcode.ggcloud.discovery.server.util.ServiceIdUtil;
+import java.util.List;
 
-import xzcode.ggserver.core.common.message.request.Request;
-import xzcode.ggserver.core.common.message.request.action.IRequestMessageHandler;
+import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryServiceListReq;
+import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceListResp;
+import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
+import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
+
+import xzcode.ggserver.core.common.message.MessageData;
+import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
 import xzcode.ggserver.core.common.session.GGSession;
 
 /**
@@ -18,32 +18,21 @@ import xzcode.ggserver.core.common.session.GGSession;
  * @author zai
  * 2019-10-04 14:29:53
  */
-public class ServiceListReqHandler implements IRequestMessageHandler<RegisterReq>{
+public class ServiceListReqHandler implements MessageDataHandler<DiscoveryServiceListReq>{
 	
 	private DiscoveryServerConfig config;
-	
 
 	public ServiceListReqHandler(DiscoveryServerConfig config) {
-		super();
 		this.config = config;
 	}
 
-
 	@Override
-	public void handle(Request<RegisterReq> request) {
+	public void handle(MessageData<DiscoveryServiceListReq> request) {
 		GGSession session = request.getSession();
-		RegisterReq req = request.getMessage();
-		ServiceInfo serviceInfo = session.getAttribute(DiscoveryServerSessionKeys.SERVICE_INFO, ServiceInfo.class);
-		if (serviceInfo == null) {
-			serviceInfo = new ServiceInfo();
-			serviceInfo.setServiceName(req.getServiceName());
-			serviceInfo.setServiceId(ServiceIdUtil.newServiceId());
-			serviceInfo.setIp(session.getHost());
-			serviceInfo.setPort(session.getPort());
-			config.getServiceManager().registerService(serviceInfo);
-		}
-		config.getServer().send(session, RegisterResp.ACTION, new RegisterResp(true));
-		
+		List<ServiceInfo> serviceList = config.getServiceManager().getServiceList();
+		DiscoveryServiceListResp resp = new DiscoveryServiceListResp(serviceList);
+		session.send(resp);
 	}
+
 
 }

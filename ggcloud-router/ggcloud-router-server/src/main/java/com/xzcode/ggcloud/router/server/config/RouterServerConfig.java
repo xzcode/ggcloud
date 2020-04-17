@@ -1,44 +1,123 @@
 package com.xzcode.ggcloud.router.server.config;
 
-import com.xzcode.ggcloud.router.common.meta.impl.RouterSessionIdMetadataProvider;
-import com.xzcode.ggcloud.router.common.meta.impl.RouterSessionIdMetadataResolver;
-import com.xzcode.ggcloud.router.server.session.RouterServerSessionFactory;
-
-import xzcode.ggserver.core.common.channel.group.IChannelGroupManager;
-import xzcode.ggserver.core.common.channel.group.impl.DefaultChannelGroupManager;
-import xzcode.ggserver.core.server.config.GGServerConfig;
+import com.xzcode.ggcloud.discovery.client.DiscoveryClient;
+import com.xzcode.ggcloud.router.common.constant.GGRouterConstant;
+import com.xzcode.ggcloud.router.server.RouterServer;
+import com.xzcode.ggcloud.session.group.server.SessionGroupServer;
 
 /**
- * 路由服务器配置 
+ * 路由服务器配置
  * 
- * @author zai
- * 2019-12-05 10:33:40
+ * @author zai 2019-12-05 10:33:40
  */
-public class RouterServerConfig extends GGServerConfig{
-	
-	protected IChannelGroupManager channelGroupManager;
+public class RouterServerConfig {
 
-	@Override
-	public void init() {
-		
-		this.sessionFactory = new RouterServerSessionFactory(this);
-		
-		if (channelGroupManager == null) {
-			channelGroupManager = new DefaultChannelGroupManager();
-		}
-		
-		this.metadataResolver = new RouterSessionIdMetadataResolver(serializer);
-		this.metadataProvider = new RouterSessionIdMetadataProvider();
-		
-		super.init();
+	// routerServer对象
+	protected RouterServer routerServer;
+
+	// sessionGroupServer对象
+	protected SessionGroupServer sessionGroupServer;
+
+	// 是否输出底层ping pong信息
+	protected boolean printPingPongInfo = false;
+
+	// 工作线程数
+	protected int workThreadSize = 8;
+
+	// 连接数
+	protected int connectionSize = 8;
+
+	// 服务端口
+	private int port = GGRouterConstant.DEFAULT_SERVER_PORT;
+
+	// 认证token
+	private String authToken = GGRouterConstant.DEFAULT_AUTH_TOKEN;
+
+	protected String routerGroupId;
+
+	protected String actionIdPrefix;
+
+	protected DiscoveryClient discoveryClient;
+
+	public void setDiscoveryClient(DiscoveryClient discoveryClient) {
+		this.discoveryClient = discoveryClient;
 	}
 
-	public IChannelGroupManager getChannelGroupManager() {
-		return channelGroupManager;
+	public DiscoveryClient getDiscoveryClient() {
+		return discoveryClient;
 	}
 
-	public void setChannelGroupManager(IChannelGroupManager channelGroupManager) {
-		this.channelGroupManager = channelGroupManager;
+	public String getRouterGroupId() {
+		return routerGroupId;
 	}
+
+	public void setRouterGroupId(String routerGroup) {
+		this.routerGroupId = routerGroup;
+	}
+
+	public void setActionIdPrefix(String actionIdPrefix) {
+		this.actionIdPrefix = actionIdPrefix;
+	}
+
+	public String getActionIdPrefix() {
+		return actionIdPrefix;
+	}
+
+	public RouterServer getRouterServer() {
+		return routerServer;
+	}
+
+	public void setRouterServer(RouterServer routerServer) {
+		this.routerServer = routerServer;
+	}
+
+	public SessionGroupServer getSessionGroupServer() {
+		return sessionGroupServer;
+	}
+
+	public void setSessionGroupServer(SessionGroupServer sessionGroupServer) {
+		this.sessionGroupServer = sessionGroupServer;
+	}
+
+	public boolean isPrintPingPongInfo() {
+		return printPingPongInfo;
+	}
+
+	public void setPrintPingPongInfo(boolean printPingPongInfo) {
+		this.printPingPongInfo = printPingPongInfo;
+	}
+
+	public int getWorkThreadSize() {
+		return workThreadSize;
+	}
+
+	public void setWorkThreadSize(int workThreadSize) {
+		this.workThreadSize = workThreadSize;
+	}
+
+	public int getConnectionSize() {
+		return connectionSize;
+	}
+
+	public void setConnectionSize(int connectionSize) {
+		this.connectionSize = connectionSize;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public String getAuthToken() {
+		return authToken;
+	}
+
+	public void setAuthToken(String authToken) {
+		this.authToken = authToken;
+	}
+
 	
 }

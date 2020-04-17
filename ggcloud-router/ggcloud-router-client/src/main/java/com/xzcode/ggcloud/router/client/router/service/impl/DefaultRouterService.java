@@ -1,20 +1,32 @@
 package com.xzcode.ggcloud.router.client.router.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
-import com.xzcode.ggcloud.router.client.pool.RouterChannelPoolHandler;
+import com.xzcode.ggcloud.router.client.event.RouterClientEvents;
 import com.xzcode.ggcloud.router.client.router.service.IRouterService;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceMatcher;
-import com.xzcode.ggcloud.router.common.ping.RouterPingPongInfo;
+import com.xzcode.ggcloud.router.client.router.service.listener.IRouterServiceActiveListener;
+import com.xzcode.ggcloud.router.client.router.service.listener.IRouterServiceInActiveListener;
+import com.xzcode.ggcloud.session.group.client.SessionGroupClient;
+import com.xzcode.ggcloud.session.group.client.config.SessionGroupClientConfig;
+import com.xzcode.ggcloud.session.group.common.constant.GGSessionGroupEventConstant;
 
-import io.netty.util.AttributeKey;
-import io.netty.util.concurrent.DefaultThreadFactory;
 import xzcode.ggserver.core.client.GGClient;
-import xzcode.ggserver.core.client.config.GGClientConfig;
-import xzcode.ggserver.core.common.event.GGEvents;
+import xzcode.ggserver.core.common.event.model.EventData;
+import xzcode.ggserver.core.common.executor.ITaskExecutor;
+import xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
+import xzcode.ggserver.core.common.future.GGFailedFuture;
+import xzcode.ggserver.core.common.future.IGGFuture;
 import xzcode.ggserver.core.common.message.Pack;
+import xzcode.ggserver.core.common.session.manager.ISessionManager;
 
 /**
  * 默认路由服务
@@ -25,12 +37,12 @@ import xzcode.ggserver.core.common.message.Pack;
 public class DefaultRouterService implements IRouterService{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultRouterService.class);
-	private static final String PING_PONG_INFO_KEY = "PING_PONG_INFO";
-	private static final AttributeKey<RouterPingPongInfo> PING_PONG_INFO_ATTR_KEY = AttributeKey.valueOf(PING_PONG_INFO_KEY);
 	
 	protected RouterClientConfig config;
 	
 	protected String serviceId;
+	
+	protected String servcieName;
 	
 	protected String host;
 	
@@ -38,15 +50,44 @@ public class DefaultRouterService implements IRouterService{
 	
 	protected IRouterServiceMatcher serviceMatcher;
 	
+	
+	protected ITaskExecutor executor;
+	
+	
+	protected IGGFuture checkConnectionsFuture;
+	
 	/**
 	 * 绑定的连接客户端
 	 */
-	protected GGClient distClient;
+	protected SessionGroupClient sessionGroupClient;
+	
+	
+	protected GGClient serviceClient;
+	
+	
+	/**
+	 * 是否已准备接收数据
+	 */
+	protected AtomicInteger avaliableConnections = new AtomicInteger(0);
+	/**
+	 * 额外数据
+	 */
+	protected Map<String, String> customData = new ConcurrentHashMap<>();
+	
+	/**
+	 * 服务生效监听
+	 */
+	protected List<IRouterServiceActiveListener> activeListeners = new ArrayList<>();
+	
+	/**
+	 * 服务失效监听器
+	 */
+	protected List<IRouterServiceInActiveListener> inActiveListeners = new ArrayList<>();
 	
 	/**
 	 * 是否已关闭
 	 */
-	protected boolean down;
+	protected boolean shutdown;
 	
 
 	public DefaultRouterService(RouterClientConfig config, String serviceId) {
@@ -62,75 +103,42 @@ public class DefaultRouterService implements IRouterService{
 	 */
 	public void init() {
 		
-		GGClientConfig clientConfig = new GGClientConfig();
-		clientConfig.setWorkerGroupThreadFactory(new DefaultThreadFactory("router-service-" + this.serviceId + "-", false));
-		clientConfig.setMetadataResolver(config.getMetadataResolver());
-		clientConfig.setMetadataProvider(config.getMetadataProvider());
-		clientConfig.setChannelPoolHandler(new RouterChannelPoolHandler(config, clientConfig));
-		clientConfig.setHost(host);
-		clientConfig.setPort(port);
-		clientConfig.setChannelPoolEnabled(true);
-		
-		distClient = new GGClient(clientConfig);
-		
-		//监听连接打开
-		distClient.addEventListener(GGEvents.Connection.OPENED, e -> {
-			LOGGER.warn("RouterService[{}] Channel Opened: {}", config.getRouterGroupId() , e.getChannel());
-		});
+		SessionGroupClientConfig sessionGroupClientConfig = new SessionGroupClientConfig();
+		sessionGroupClientConfig.setEnableServiceClient(true);
+		sessionGroupClientConfig.setAuthToken(this.config.getAuthToken());
+		sessionGroupClientConfig.setWorkThreadFactory(new GGThreadFactory("gg-router-cli-", false));
+		sessionGroupClientConfig.setConnectionSize(this.config.getConnectionSize());
+		sessionGroupClientConfig.setPrintPingPongInfo(this.config.isPrintPingPongInfo());
+		sessionGroupClientConfig.setServerHost(this.host);
+		sessionGroupClientConfig.setServerPort(this.port);
 		
 		
-		distClient.addEventListener(GGEvents.Connection.CLOSED, e -> {
-			LOGGER.warn("RouterService[{}] Channel Closed: {}", config.getRouterGroupId(), e.getChannel());
-		});
-		/*
-		distClient.addEventListener(GGEvents.Idle.ALL, eventData -> {
-			Channel channel = eventData.getChannel();
-			channel.writeAndFlush(distClient.makePack(new Response(RouterPingReq.ACTION_ID, null)));
-				
-			RouterPingPongInfo pingPongInfo = channel.attr(PING_PONG_INFO_ATTR_KEY).get();
+		SessionGroupClient sessionGroupClient = new SessionGroupClient(sessionGroupClientConfig);
+		
+		//添加会话注册成功监听
+		sessionGroupClient.addEventListener(GGSessionGroupEventConstant.SESSION_REGISTER_SUCCESS, e -> {
 			
-			if (pingPongInfo == null) {
-				pingPongInfo = new RouterPingPongInfo();
-				channel.attr(PING_PONG_INFO_ATTR_KEY).set(pingPongInfo);
-			}
 			
-			if (pingPongInfo.isHeartBeatLost()) {
-				channel.disconnect();
-			}
-			//增加心跳失败次数
-			pingPongInfo.heartBeatLostTimesIncrease();
-		});
-		
-		distClient.onMessage(RouterPingResp.ACTION_ID, (Request<RouterPingResp> request) -> {
-			Channel channel = request.getChannel();
-			RouterPingPongInfo pingPongInfo = channel.attr(PING_PONG_INFO_ATTR_KEY).get();
-			
-			if (pingPongInfo == null) {
-				pingPongInfo = new RouterPingPongInfo();
-				channel.attr(PING_PONG_INFO_ATTR_KEY).set(pingPongInfo);
-			}
-			
-			//重置心跳失败累计次数
-			pingPongInfo.heartBeatLostTimesReset();
 			
 		});
-		*/
+		
+		this.serviceClient = sessionGroupClientConfig.getServiceClient();
+		
+		this.sessionGroupClient = sessionGroupClient;
 		
 		
-		distClient.addAfterSerializeFilter((Pack pack) -> {
-			//对发送到远端的包进行处理
-			config.getPackHandler().handleSendPack(pack);
-			return true;
-		});
+		//包日志输出控制
+		if (!this.config.isPrintRouterInfo()) {
+			this.serviceClient.getConfig().getPackLogger().addPackLogFilter(pack -> {
+				return false;
+			});
+		}
 		
-		distClient.addBeforeDeserializeFilter((Pack pack) -> {
-			//对远端返回的包进行处理
-			config.getPackHandler().handleReceivePack(pack);
-			return false;
-		});
 		
+		sessionGroupClient.start();
 		
 	}
+
 	
 	/**
 	 * 转发消息
@@ -139,8 +147,16 @@ public class DefaultRouterService implements IRouterService{
 	 * @author zai
 	 * 2019-11-07 17:53:00
 	 */
-	public void dispatch(Pack pack) {
-		distClient.send(pack);
+	public IGGFuture dispatch(Pack pack) {
+		if (!isAvailable()) {
+			return GGFailedFuture.DEFAULT_FAILED_FUTURE;
+		}
+		if (isShutdown()) {
+			return GGFailedFuture.DEFAULT_FAILED_FUTURE;
+		}
+		GGClient serviceClient = this.sessionGroupClient.getConfig().getServiceClient();
+		
+		return serviceClient.send(pack);
 	}
 	
 	/**
@@ -149,12 +165,24 @@ public class DefaultRouterService implements IRouterService{
 	 * @author zai
 	 * 2019-11-07 15:51:04
 	 */
+	@Override
 	public void shutdown() {
-		this.down = true;
-		this.distClient.shutdown();
+		this.shutdown = true;
+		ISessionManager sessionManager = this.serviceClient.getSessionManager();
+		sessionManager.disconnectAllSession();
+		config.getRoutingServer().emitEvent(new EventData<IRouterService>(RouterClientEvents.RouterService.SHUTDOWN, this));
+	}
+	
+	
+	public void addActiveListener(IRouterServiceActiveListener listener) {
+		this.activeListeners.add(listener);
+	}
+	
+	public void addInActiveListener(IRouterServiceInActiveListener listener) {
+		this.inActiveListeners.add(listener);
 	}
 
-
+	
 	public void setServiceMatcher(IRouterServiceMatcher serviceMatcher) {
 		this.serviceMatcher = serviceMatcher;
 	}
@@ -179,7 +207,30 @@ public class DefaultRouterService implements IRouterService{
 	public int getPort() {
 		return port;
 	}
+	
 
+	@Override
+	public String getExtraData(String key) {
+		return this.customData.get(key);
+	}
+	
+	public void removeExtraData(String key) {
+		this.customData.remove(key);
+	}
+	public void addExtraData(String key, String data) {
+		this.customData.put(key, data);
+	}
+	public void addAllExtraData(Map<String, String> extraData) {
+		this.customData.putAll(extraData);
+	}
+	public void replaceExtraData(Map<String, String> extraData) {
+		this.customData.clear();
+		this.customData.putAll(extraData);
+	}
+	
+	public Map<String, String> getExtraDatas() {
+		return customData;
+	}
 
 	public void setServiceId(String serviceId) {
 		this.serviceId = serviceId;
@@ -191,6 +242,24 @@ public class DefaultRouterService implements IRouterService{
 
 	public void setPort(int port) {
 		this.port = port;
+	}
+	public boolean isShutdown() {
+		return shutdown;
+	}
+	public IGGFuture getCheckConnectionsFuture() {
+		return checkConnectionsFuture;
+	}
+	public String getServcieName() {
+		return servcieName;
+	}
+	
+	public void setServcieName(String servcieName) {
+		this.servcieName = servcieName;
+	}
+
+	@Override
+	public boolean isAvailable() {
+		return true;
 	}
 
 

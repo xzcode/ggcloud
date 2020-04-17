@@ -1,5 +1,8 @@
 package com.xzcode.ggcloud.discovery.common.message.req.model;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * 服务信息模型
  * 
@@ -27,12 +30,42 @@ public class ServiceInfoModel {
 	/**
 	 * 服务ip地址
 	 */
-	private int port;
+	private Integer port;
+	
+	/**
+	 * 所在地区
+	 */
+	protected String region;
+		
+	/**
+	 * 所在分区
+	 */
+	protected String zone;
 	
 	/**
 	 * 负载参考值
 	 */
-	private long loadingCapacity;
+	private Long loadingCapacity;
+	
+	/**
+	 * 额外数据
+	 */
+	private Map<String, String> extraData;
+	
+	/**
+	 * 添加额外参数
+	 * 
+	 * @param key
+	 * @param value
+	 * @author zai
+	 * 2020-02-04 11:19:05
+	 */
+	public void addExtraData(String key, String value) {
+		if (extraData == null) {
+			extraData = new LinkedHashMap<>();
+		}
+		extraData.put(key, value);
+	}
 	
 	public String getServiceName() {
 		return serviceName;
@@ -66,6 +99,34 @@ public class ServiceInfoModel {
 	public void setServiceId(String serviceId) {
 		this.serviceId = serviceId;
 	}
+	public Map<String, String> getExtraData() {
+		return extraData;
+	}
+	
+	public void setExtraData(Map<String, String> extraData) {
+		this.extraData = extraData;
+	}
+
+	public void setPort(Integer port) {
+		this.port = port;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public String getZone() {
+		return zone;
+	}
+
+	public void setZone(String zone) {
+		this.zone = zone;
+	}
+	
 	
 	
 }

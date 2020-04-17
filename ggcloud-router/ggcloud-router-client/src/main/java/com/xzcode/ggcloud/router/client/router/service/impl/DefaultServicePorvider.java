@@ -30,7 +30,7 @@ public class DefaultServicePorvider implements IRouterServiceProvider{
 	
 	protected List<IRemoveRouterServiceListener> removeRouterServiceListeners = new ArrayList<>();
 	
-	protected Map<String, IRouterService> services = new ConcurrentHashMap<>();
+	protected Map<String, IRouterService> services = new ConcurrentHashMap<>(100);
 	
 	public DefaultServicePorvider(RouterClientConfig config) {
 		this.config = config;

@@ -19,8 +19,8 @@ public class RegistryInfo {
 	private String zone;
 	//所在地区
 	private String region;
-	//状态
-	private int status;
+	//活动状态
+	private boolean active;
 	
 	public String getDomain() {
 		return domain;
@@ -58,11 +58,12 @@ public class RegistryInfo {
 	public void setAuthToken(String authToken) {
 		this.authToken = authToken;
 	}
-	public int getStatus() {
-		return status;
+	public boolean isActive() {
+		return active;
 	}
-	public void setStatus(int status) {
-		this.status = status;
+	
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	
 	

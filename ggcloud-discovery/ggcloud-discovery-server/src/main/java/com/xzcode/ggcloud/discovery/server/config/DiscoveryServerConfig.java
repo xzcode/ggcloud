@@ -1,6 +1,7 @@
 package com.xzcode.ggcloud.discovery.server.config;
 
-import com.xzcode.ggcloud.discovery.common.services.ServiceManager;
+import com.xzcode.ggcloud.discovery.common.constant.DiscoveryConstant;
+import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 
 import xzcode.ggserver.core.server.IGGServer;
 
@@ -16,6 +17,9 @@ public class DiscoveryServerConfig {
 	//ggserver对象
 	private IGGServer server;
 	
+	//是否打印pingpong包信息
+	protected boolean 	printPingPongInfo = false;
+	
 	//服务管理器
 	private ServiceManager serviceManager = new ServiceManager();
 	
@@ -23,16 +27,21 @@ public class DiscoveryServerConfig {
 	private int port = 19394;
 	
 	//认证token
-	private String authToken;
+	private String authToken = DiscoveryConstant.DEFAULT_AUTH_TOKEN;
 	
-	//客户端汇报超时时间(秒)
-	private long clientReportTimeout = 30L;
+	//客户端汇报周期(毫秒)
+	private long clientReportInterval = 30L * 1000L;
+	
+	//服务失效时间(毫秒)
+	private long serviceTimeoutDelay;
 	
 	//所在地区
 	private String region = "default";
 	
 	//所在分区
 	private String zone = "default";
+	
+	
 
 	public String getAuthToken() {
 		return authToken;
@@ -42,12 +51,12 @@ public class DiscoveryServerConfig {
 		this.authToken = authToken;
 	}
 
-	public long getClientReportTimeout() {
-		return clientReportTimeout;
+	public long getClientReportInterval() {
+		return clientReportInterval;
 	}
 
-	public void setClientReportTimeout(long clientReportTimeout) {
-		this.clientReportTimeout = clientReportTimeout;
+	public void setClientReportInterval(long clientReportTimeout) {
+		this.clientReportInterval = clientReportTimeout;
 	}
 
 	public int getPort() {
@@ -89,7 +98,21 @@ public class DiscoveryServerConfig {
 	public void setZone(String zone) {
 		this.zone = zone;
 	}
+	public long getServiceTimeoutDelay() {
+		return serviceTimeoutDelay;
+	}
 	
+	public void setServiceTimeoutDelay(long serviceTimeout) {
+		this.serviceTimeoutDelay = serviceTimeout;
+	}
+	
+	public boolean isPrintPingPongInfo() {
+		return printPingPongInfo;
+	}
+	
+	public void setPrintPingPongInfo(boolean printPingPongInfo) {
+		this.printPingPongInfo = printPingPongInfo;
+	}
 	
 
 }
