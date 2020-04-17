@@ -106,7 +106,7 @@ public class RouterClientConfig {
 		if (this.sharedEventLoopGroup == null) {
 			this.sharedEventLoopGroup = new NioEventLoopGroup(workThreadSize, new GGThreadFactory("gg-router-", false));
 		}
-
+		
 		this.routingServer.addBeforeDeserializeFilter(new RouteReceiveMessageFilter(this));
 
 		if (routerGroupId == null) {

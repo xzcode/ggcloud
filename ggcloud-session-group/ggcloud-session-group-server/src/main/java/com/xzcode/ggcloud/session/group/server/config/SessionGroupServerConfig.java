@@ -5,6 +5,7 @@ import java.util.concurrent.ThreadFactory;
 import com.xzcode.ggcloud.session.group.common.constant.GGSesssionGroupConstant;
 import com.xzcode.ggcloud.session.group.common.group.manager.GGSessionGroupManager;
 
+import io.netty.channel.EventLoopGroup;
 import xzcode.ggserver.core.server.IGGServer;
 
 /**
@@ -42,6 +43,9 @@ public class SessionGroupServerConfig {
 	
 	//工作线程工厂
 	protected ThreadFactory workThreadFactory;
+	
+	//工作线程组
+	protected EventLoopGroup workEventLoopGroup;
 	
 	
 	//是否输出会话组包信息
@@ -127,6 +131,14 @@ public class SessionGroupServerConfig {
 
 	public void setPrintSessionGroupPackLog(boolean printSessionGroupPackLog) {
 		this.printSessionGroupPackLog = printSessionGroupPackLog;
+	}
+
+	public EventLoopGroup getWorkEventLoopGroup() {
+		return workEventLoopGroup;
+	}
+
+	public void setWorkEventLoopGroup(EventLoopGroup workEventLoopGroup) {
+		this.workEventLoopGroup = workEventLoopGroup;
 	}
 	
 	

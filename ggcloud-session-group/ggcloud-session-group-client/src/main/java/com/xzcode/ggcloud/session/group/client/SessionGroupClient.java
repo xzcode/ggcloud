@@ -48,8 +48,6 @@ public class SessionGroupClient implements IEventSupport, IMakePackSupport{
 			this.config.setWorkThreadFactory(new GGThreadFactory("gg-group-cli-", false));
 		}
 		
-		
-		
 		GGClientConfig sessionClientConfig = new GGClientConfig();
 
 		sessionClientConfig.setPingPongEnabled(true);
@@ -58,6 +56,10 @@ public class SessionGroupClient implements IEventSupport, IMakePackSupport{
 		sessionClientConfig.setWorkerGroupThreadFactory(this.config.getWorkThreadFactory());
 		sessionClientConfig.setProtocolType(ProtocolTypeConstants.TCP);
 		sessionClientConfig.setSessionFactory(new SessionGroupSessionFactory(sessionClientConfig));
+		
+		if (this.config.getWorkEventLoopGroup() != null) {
+			sessionClientConfig.setWorkerGroup(this.config.getWorkEventLoopGroup());
+		}
 		
 		if (!this.config.isPrintSessionGroupPackLog()) {
 			sessionClientConfig.getPackLogger().addPackLogFilter(pack -> {

@@ -6,6 +6,7 @@ import com.xzcode.ggcloud.session.group.client.SessionGroupClient;
 import com.xzcode.ggcloud.session.group.common.constant.GGSesssionGroupConstant;
 import com.xzcode.ggcloud.session.group.common.group.manager.GGSessionGroupManager;
 
+import io.netty.channel.EventLoopGroup;
 import xzcode.ggserver.core.client.GGClient;
 import xzcode.ggserver.core.common.utils.RandomIdUtil;
 import xzcode.ggserver.core.server.IGGServer;
@@ -50,6 +51,11 @@ public class SessionGroupClientConfig {
 	
 	//工作线程工厂
 	protected ThreadFactory workThreadFactory;
+	
+	/**
+	 * 工作线程组
+	 */
+	protected EventLoopGroup workEventLoopGroup;
 	
 	
 	// 连接数
@@ -207,5 +213,15 @@ public class SessionGroupClientConfig {
 	public void setPrintSessionGroupPackLog(boolean printSessionGroupPackLog) {
 		this.printSessionGroupPackLog = printSessionGroupPackLog;
 	}
+
+	public EventLoopGroup getWorkEventLoopGroup() {
+		return workEventLoopGroup;
+	}
+
+	public void setWorkEventLoopGroup(EventLoopGroup workEventLoopGroup) {
+		this.workEventLoopGroup = workEventLoopGroup;
+	}
+	
+	
 
 }

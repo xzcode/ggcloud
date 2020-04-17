@@ -5,6 +5,8 @@ import com.xzcode.ggcloud.router.common.constant.GGRouterConstant;
 import com.xzcode.ggcloud.router.server.RouterServer;
 import com.xzcode.ggcloud.session.group.server.SessionGroupServer;
 
+import io.netty.channel.EventLoopGroup;
+
 /**
  * 路由服务器配置
  * 
@@ -26,6 +28,11 @@ public class RouterServerConfig {
 
 	// 连接数
 	protected int connectionSize = 8;
+	
+	/**
+	 * 共享的线程组
+	 */
+	private EventLoopGroup sharedEventLoopGroup;
 
 	// 服务端口
 	private int port = GGRouterConstant.DEFAULT_SERVER_PORT;
@@ -117,6 +124,14 @@ public class RouterServerConfig {
 
 	public void setAuthToken(String authToken) {
 		this.authToken = authToken;
+	}
+	
+	public EventLoopGroup getSharedEventLoopGroup() {
+		return sharedEventLoopGroup;
+	}
+	
+	public void setSharedEventLoopGroup(EventLoopGroup sharedEventLoopGroup) {
+		this.sharedEventLoopGroup = sharedEventLoopGroup;
 	}
 
 	

@@ -45,6 +45,11 @@ public class RouterServer {
 		sessionGroupServerConfig.setPrintPingPongInfo(this.config.isPrintPingPongInfo());
 		sessionGroupServerConfig.setWorkThreadFactory(new GGThreadFactory("gg-evt-serv-", false));
 		
+		if (this.config.getSharedEventLoopGroup() != null) {
+			sessionGroupServerConfig.setWorkEventLoopGroup(this.config.getSharedEventLoopGroup());
+			
+		}
+		
 		SessionGroupServer sessionGroupServer = new SessionGroupServer(sessionGroupServerConfig);
 		this.config.setSessionGroupServer(sessionGroupServer);
 		
