@@ -106,9 +106,12 @@ public class DefaultRouterService implements IRouterService{
 		SessionGroupClientConfig sessionGroupClientConfig = new SessionGroupClientConfig();
 		sessionGroupClientConfig.setEnableServiceClient(true);
 		sessionGroupClientConfig.setAuthToken(this.config.getAuthToken());
-		sessionGroupClientConfig.setWorkThreadFactory(new GGThreadFactory("gg-evt-cli-", false));
+		sessionGroupClientConfig.setWorkThreadFactory(new GGThreadFactory("gg-router-cli-", false));
 		sessionGroupClientConfig.setConnectionSize(this.config.getConnectionSize());
 		sessionGroupClientConfig.setPrintPingPongInfo(this.config.isPrintPingPongInfo());
+		sessionGroupClientConfig.setServerHost(this.host);
+		sessionGroupClientConfig.setServerPort(this.port);
+		
 		
 		SessionGroupClient sessionGroupClient = new SessionGroupClient(sessionGroupClientConfig);
 		
@@ -130,6 +133,9 @@ public class DefaultRouterService implements IRouterService{
 				return false;
 			});
 		}
+		
+		
+		sessionGroupClient.start();
 		
 	}
 

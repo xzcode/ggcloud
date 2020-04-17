@@ -33,9 +33,6 @@ public class RouterServerConfig {
 	// 认证token
 	private String authToken = GGRouterConstant.DEFAULT_AUTH_TOKEN;
 
-	// 是否输出包信息
-	protected boolean printEventbusPackLog = false;
-
 	protected String routerGroupId;
 
 	protected String actionIdPrefix;
@@ -122,14 +119,5 @@ public class RouterServerConfig {
 		this.authToken = authToken;
 	}
 
-	public boolean isPrintEventbusPackLog() {
-		return printEventbusPackLog;
-	}
-
-	public void setPrintEventbusPackLog(boolean printEventbusPackLog) {
-		this.printEventbusPackLog = printEventbusPackLog;
-	}
-	
-	
 	
 }
