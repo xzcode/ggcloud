@@ -7,7 +7,7 @@ import com.xzcode.ggcloud.session.group.server.SessionGroupServer;
 import com.xzcode.ggcloud.session.group.server.config.SessionGroupServerConfig;
 import com.xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
 import com.xzcode.ggserver.core.common.future.IGGFuture;
-import com.xzcode.ggserver.core.server.IGGServer;
+import com.xzcode.ggserver.core.server.GGServer;
 
 /**
  * 路由服务器对象
@@ -19,7 +19,7 @@ public class RouterServer {
 	
 	private RouterServerConfig config;
 	
-	private IGGServer serviceServer;
+	private GGServer serviceServer;
 	
 	public RouterServer(RouterServerConfig config) {
 		
@@ -58,7 +58,7 @@ public class RouterServer {
 		
 	}
 	
-	public IGGServer getServiceServer() {
+	public GGServer getServiceServer() {
 		return serviceServer;
 	}
 

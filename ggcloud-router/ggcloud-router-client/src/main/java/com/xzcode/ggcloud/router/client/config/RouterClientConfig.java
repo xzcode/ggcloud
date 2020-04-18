@@ -12,8 +12,8 @@ import com.xzcode.ggcloud.router.client.router.service.impl.DefaultServicePorvid
 import com.xzcode.ggcloud.router.common.constant.GGRouterConstant;
 import com.xzcode.ggcloud.router.common.constant.RouterServiceCustomDataKeys;
 import com.xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
-import com.xzcode.ggserver.core.server.IGGServer;
-import com.xzcode.ggserver.core.server.impl.GGServer;
+import com.xzcode.ggserver.core.server.GGServer;
+import com.xzcode.ggserver.core.server.impl.GGDefaultServer;
 
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -65,7 +65,7 @@ public class RouterClientConfig {
 	/**
 	 * 消息将被路由的服务器对象
 	 */
-	private IGGServer routingServer;
+	private GGServer routingServer;
 
 	/**
 	 * 不参与路由的actionid
@@ -88,7 +88,7 @@ public class RouterClientConfig {
 	 */
 	private EventLoopGroup sharedEventLoopGroup;
 
-	public RouterClientConfig(IGGServer routingServer) {
+	public RouterClientConfig(GGServer routingServer) {
 		if (routingServer == null) {
 			throw new NullPointerException("Parameter 'routingServer' cannot be null!!");
 		}
@@ -132,11 +132,11 @@ public class RouterClientConfig {
 		this.serviceProvider = serviceProvider;
 	}
 
-	public IGGServer getRoutingServer() {
+	public GGServer getRoutingServer() {
 		return routingServer;
 	}
 
-	public void setRoutingServer(GGServer routingServer) {
+	public void setRoutingServer(GGDefaultServer routingServer) {
 		this.routingServer = routingServer;
 	}
 
@@ -148,7 +148,7 @@ public class RouterClientConfig {
 		this.excludedActionId = excludedRoutingActionRegex;
 	}
 
-	public void setRoutingServer(IGGServer routingServer) {
+	public void setRoutingServer(GGServer routingServer) {
 		this.routingServer = routingServer;
 	}
 

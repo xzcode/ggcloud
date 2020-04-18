@@ -10,7 +10,7 @@ import com.xzcode.ggcloud.router.client.router.service.IRouterServiceProvider;
 import com.xzcode.ggserver.core.common.future.GGFailedFuture;
 import com.xzcode.ggserver.core.common.future.IGGFuture;
 import com.xzcode.ggserver.core.common.message.Pack;
-import com.xzcode.ggserver.core.server.IGGServer;
+import com.xzcode.ggserver.core.server.GGServer;
 
 /**
  * 默认网关路由器

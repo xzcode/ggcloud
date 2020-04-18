@@ -20,7 +20,7 @@ import com.xzcode.ggcloud.session.group.client.config.SessionGroupClientConfig;
 import com.xzcode.ggcloud.session.group.common.constant.GGSessionGroupEventConstant;
 import com.xzcode.ggserver.core.client.GGClient;
 import com.xzcode.ggserver.core.common.event.model.EventData;
-import com.xzcode.ggserver.core.common.executor.ITaskExecutor;
+import com.xzcode.ggserver.core.common.executor.TaskExecutor;
 import com.xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
 import com.xzcode.ggserver.core.common.future.GGFailedFuture;
 import com.xzcode.ggserver.core.common.future.IGGFuture;
@@ -50,7 +50,7 @@ public class DefaultRouterService implements IRouterService{
 	protected IRouterServiceMatcher serviceMatcher;
 	
 	
-	protected ITaskExecutor executor;
+	protected TaskExecutor executor;
 	
 	
 	protected IGGFuture checkConnectionsFuture;

@@ -14,7 +14,7 @@ import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 import com.xzcode.ggcloud.discovery.common.util.DiscoveryServiceIdUtil;
 import com.xzcode.ggserver.core.client.GGClient;
 import com.xzcode.ggserver.core.common.executor.DefaultTaskExecutor;
-import com.xzcode.ggserver.core.common.executor.ITaskExecutor;
+import com.xzcode.ggserver.core.common.executor.TaskExecutor;
 import com.xzcode.ggserver.core.common.session.GGSession;
 
 /**
@@ -34,7 +34,7 @@ public class DiscoveryClientConfig {
 	//GGClient对象
 	protected GGClient ggclient;
 	
-	protected ITaskExecutor taskExecutor = new DefaultTaskExecutor("discovery-client-", 1);
+	protected TaskExecutor taskExecutor = new DefaultTaskExecutor("discovery-client-", 1);
 	
 	//GGSession对象
 	protected GGSession session;
@@ -215,7 +215,7 @@ public class DiscoveryClientConfig {
 	public void setDiscoveryClient(DiscoveryClient discoveryClient) {
 		this.discoveryClient = discoveryClient;
 	}
-	public ITaskExecutor getTaskExecutor() {
+	public TaskExecutor getTaskExecutor() {
 		return taskExecutor;
 	}
 	

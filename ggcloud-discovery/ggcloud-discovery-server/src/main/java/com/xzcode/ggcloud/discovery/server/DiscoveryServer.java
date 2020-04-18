@@ -12,9 +12,9 @@ import com.xzcode.ggcloud.discovery.server.handler.ServiceUpdateReqHandler;
 import com.xzcode.ggserver.core.common.constant.ProtocolTypeConstants;
 import com.xzcode.ggserver.core.common.event.GGEvents;
 import com.xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
-import com.xzcode.ggserver.core.server.IGGServer;
+import com.xzcode.ggserver.core.server.GGServer;
 import com.xzcode.ggserver.core.server.config.GGServerConfig;
-import com.xzcode.ggserver.core.server.impl.GGServer;
+import com.xzcode.ggserver.core.server.impl.GGDefaultServer;
 
 public class DiscoveryServer {
 	
@@ -37,7 +37,7 @@ public class DiscoveryServer {
 		ggConfig.setBossGroupThreadFactory(new GGThreadFactory("discovery-boss-", false));
 		ggConfig.setWorkerGroupThreadFactory(new GGThreadFactory("discovery-worker-", false));
 		ggConfig.init();
-		IGGServer ggServer = new GGServer(ggConfig);
+		GGServer ggServer = new GGDefaultServer(ggConfig);
 		
 		ggServer.addEventListener(GGEvents.Connection.OPENED, new ConnActiveEventListener(config));
 		

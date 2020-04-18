@@ -3,10 +3,10 @@ package com.xzcode.ggcloud.router.client.filter;
 import com.xzcode.ggcloud.router.client.config.RouterClientConfig;
 import com.xzcode.ggcloud.router.client.event.RouterClientEvents;
 import com.xzcode.ggserver.core.common.event.model.EventData;
-import com.xzcode.ggserver.core.common.filter.IBeforeDeserializeFilter;
+import com.xzcode.ggserver.core.common.filter.BeforeDeserializeFilter;
 import com.xzcode.ggserver.core.common.message.Pack;
-import com.xzcode.ggserver.core.common.message.request.manager.IRequestMessageManager;
-import com.xzcode.ggserver.core.server.IGGServer;
+import com.xzcode.ggserver.core.common.message.request.manager.ReceiveMessageManager;
+import com.xzcode.ggserver.core.server.GGServer;
 
 /**
  * 路由消息过滤器
@@ -14,12 +14,12 @@ import com.xzcode.ggserver.core.server.IGGServer;
  * @author zai
  * 2019-12-18 18:59:37
  */
-public class RouteReceiveMessageFilter implements IBeforeDeserializeFilter{
+public class RouteReceiveMessageFilter implements BeforeDeserializeFilter{
 	
 	private RouterClientConfig config;
 	
-	private IGGServer routingServer;
-	private IRequestMessageManager requestMessageManager;
+	private GGServer routingServer;
+	private ReceiveMessageManager requestMessageManager;
 	
 	public RouteReceiveMessageFilter(RouterClientConfig config) {
 		this.config = config;

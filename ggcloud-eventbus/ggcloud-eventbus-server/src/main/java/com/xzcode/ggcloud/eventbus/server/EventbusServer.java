@@ -10,7 +10,7 @@ import com.xzcode.ggcloud.session.group.common.constant.GGSesssionGroupConstant;
 import com.xzcode.ggcloud.session.group.server.SessionGroupServer;
 import com.xzcode.ggcloud.session.group.server.config.SessionGroupServerConfig;
 import com.xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
-import com.xzcode.ggserver.core.server.IGGServer;
+import com.xzcode.ggserver.core.server.GGServer;
 
 public class EventbusServer {
 	
@@ -44,7 +44,7 @@ public class EventbusServer {
 			});
 		}
 		
-		IGGServer serviceServer = sessionGroupServerConfig.getServiceServer();
+		GGServer serviceServer = sessionGroupServerConfig.getServiceServer();
 		
 		serviceServer.onMessage(EventPublishReq.ACTION_ID, new EventPublishReqHandler(config));
 		serviceServer.onMessage(EventSubscribeReq.ACTION_ID, new EventSubscribeReqHandler(config));

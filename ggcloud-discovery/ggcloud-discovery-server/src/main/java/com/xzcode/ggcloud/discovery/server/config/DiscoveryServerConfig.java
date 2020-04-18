@@ -2,7 +2,7 @@ package com.xzcode.ggcloud.discovery.server.config;
 
 import com.xzcode.ggcloud.discovery.common.constant.DiscoveryConstant;
 import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
-import com.xzcode.ggserver.core.server.IGGServer;
+import com.xzcode.ggserver.core.server.GGServer;
 
 /**
  * 配置
@@ -14,7 +14,7 @@ import com.xzcode.ggserver.core.server.IGGServer;
 public class DiscoveryServerConfig {
 	
 	//ggserver对象
-	private IGGServer server;
+	private GGServer server;
 	
 	//是否打印pingpong包信息
 	protected boolean 	printPingPongInfo = false;
@@ -66,11 +66,11 @@ public class DiscoveryServerConfig {
 		this.port = port;
 	}
 	
-	public IGGServer getServer() {
+	public GGServer getServer() {
 		return server;
 	}
 	
-	public void setServer(IGGServer server) {
+	public void setServer(GGServer server) {
 		this.server = server;
 	}
 	

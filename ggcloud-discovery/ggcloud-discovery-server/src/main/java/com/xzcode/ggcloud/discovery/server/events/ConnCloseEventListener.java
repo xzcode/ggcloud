@@ -5,12 +5,12 @@ import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
 import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
 import com.xzcode.ggcloud.discovery.server.constant.DiscoveryServerSessionKeys;
-import com.xzcode.ggserver.core.common.event.IEventListener;
+import com.xzcode.ggserver.core.common.event.EventListener;
 import com.xzcode.ggserver.core.common.event.model.EventData;
 import com.xzcode.ggserver.core.common.session.GGSession;
 import com.xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 
-public class ConnCloseEventListener implements IEventListener<Void>{
+public class ConnCloseEventListener implements EventListener<Void>{
 	
 	private DiscoveryServerConfig config;
 
