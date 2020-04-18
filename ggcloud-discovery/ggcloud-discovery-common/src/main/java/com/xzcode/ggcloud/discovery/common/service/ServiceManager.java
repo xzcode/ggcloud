@@ -11,9 +11,8 @@ import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryAddServiceResp;
 import com.xzcode.ggcloud.discovery.common.service.listener.IRegisterServiceListener;
 import com.xzcode.ggcloud.discovery.common.service.listener.IUnregisterServiceListener;
 import com.xzcode.ggcloud.discovery.common.service.listener.IUpdateServiceListener;
-
-import xzcode.ggserver.core.common.message.model.IMessage;
-import xzcode.ggserver.core.common.session.GGSession;
+import com.xzcode.ggserver.core.common.message.model.IMessage;
+import com.xzcode.ggserver.core.common.session.GGSession;
 
 /**
  * 服务管理器

@@ -4,8 +4,7 @@ import com.xzcode.ggcloud.eventbus.client.EventbusClient;
 import com.xzcode.ggcloud.eventbus.client.subscriber.SubscriberManager;
 import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
 import com.xzcode.ggcloud.session.group.client.SessionGroupClient;
-
-import xzcode.ggserver.core.common.session.GGSession;
+import com.xzcode.ggserver.core.common.session.GGSession;
 
 /**
  * EventbusClient配置

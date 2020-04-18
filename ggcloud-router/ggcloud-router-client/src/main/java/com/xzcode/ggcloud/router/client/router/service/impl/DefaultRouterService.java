@@ -18,15 +18,14 @@ import com.xzcode.ggcloud.router.client.router.service.listener.IRouterServiceIn
 import com.xzcode.ggcloud.session.group.client.SessionGroupClient;
 import com.xzcode.ggcloud.session.group.client.config.SessionGroupClientConfig;
 import com.xzcode.ggcloud.session.group.common.constant.GGSessionGroupEventConstant;
-
-import xzcode.ggserver.core.client.GGClient;
-import xzcode.ggserver.core.common.event.model.EventData;
-import xzcode.ggserver.core.common.executor.ITaskExecutor;
-import xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
-import xzcode.ggserver.core.common.future.GGFailedFuture;
-import xzcode.ggserver.core.common.future.IGGFuture;
-import xzcode.ggserver.core.common.message.Pack;
-import xzcode.ggserver.core.common.session.manager.ISessionManager;
+import com.xzcode.ggserver.core.client.GGClient;
+import com.xzcode.ggserver.core.common.event.model.EventData;
+import com.xzcode.ggserver.core.common.executor.ITaskExecutor;
+import com.xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
+import com.xzcode.ggserver.core.common.future.GGFailedFuture;
+import com.xzcode.ggserver.core.common.future.IGGFuture;
+import com.xzcode.ggserver.core.common.message.Pack;
+import com.xzcode.ggserver.core.common.session.manager.ISessionManager;
 
 /**
  * 默认路由服务

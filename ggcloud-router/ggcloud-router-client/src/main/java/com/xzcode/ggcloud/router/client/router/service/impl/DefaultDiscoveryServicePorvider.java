@@ -17,8 +17,7 @@ import com.xzcode.ggcloud.router.client.router.service.listener.IAddRouterServic
 import com.xzcode.ggcloud.router.client.router.service.listener.IRemoveRouterServiceListener;
 import com.xzcode.ggcloud.router.client.router.service.listener.IRouterServiceListener;
 import com.xzcode.ggcloud.router.common.constant.RouterServiceCustomDataKeys;
-
-import xzcode.ggserver.core.common.message.Pack;
+import com.xzcode.ggserver.core.common.message.Pack;
 
 /**
  * 默认路由服务提供者

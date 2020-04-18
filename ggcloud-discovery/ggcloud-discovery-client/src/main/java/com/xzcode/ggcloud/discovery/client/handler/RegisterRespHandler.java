@@ -7,9 +7,8 @@ import com.xzcode.ggcloud.discovery.client.config.DiscoveryClientConfig;
 import com.xzcode.ggcloud.discovery.client.listener.IClientRegisterSuccessListener;
 import com.xzcode.ggcloud.discovery.common.message.req.DiscoveryServiceListReq;
 import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceRegisterResp;
-
-import xzcode.ggserver.core.common.message.MessageData;
-import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
+import com.xzcode.ggserver.core.common.message.MessageData;
+import com.xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
 
 /**
  * 客户端注册请求处理

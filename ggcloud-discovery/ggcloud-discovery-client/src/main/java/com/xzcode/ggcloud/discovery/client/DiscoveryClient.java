@@ -23,13 +23,12 @@ import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceRegister
 import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceUnregisterResp;
 import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceUpdateResp;
 import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
-
-import xzcode.ggserver.core.client.GGClient;
-import xzcode.ggserver.core.client.config.GGClientConfig;
-import xzcode.ggserver.core.common.constant.ProtocolTypeConstants;
-import xzcode.ggserver.core.common.event.GGEvents;
-import xzcode.ggserver.core.common.session.GGSession;
-import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
+import com.xzcode.ggserver.core.client.GGClient;
+import com.xzcode.ggserver.core.client.config.GGClientConfig;
+import com.xzcode.ggserver.core.common.constant.ProtocolTypeConstants;
+import com.xzcode.ggserver.core.common.event.GGEvents;
+import com.xzcode.ggserver.core.common.session.GGSession;
+import com.xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 
 public class DiscoveryClient {
 	

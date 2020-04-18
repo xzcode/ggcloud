@@ -8,8 +8,7 @@ import com.xzcode.ggcloud.eventbus.common.message.resp.EventMessageResp;
 import com.xzcode.ggcloud.eventbus.server.config.EventbusServerConfig;
 import com.xzcode.ggcloud.session.group.common.group.GGSessionGroup;
 import com.xzcode.ggcloud.session.group.common.group.impl.DefaultSessionGroup;
-
-import xzcode.ggserver.core.common.session.GGSession;
+import com.xzcode.ggserver.core.common.session.GGSession;
 
 /***
  * 订阅信息

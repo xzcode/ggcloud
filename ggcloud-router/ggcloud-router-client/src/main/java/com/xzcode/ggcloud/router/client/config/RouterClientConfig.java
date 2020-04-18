@@ -11,12 +11,12 @@ import com.xzcode.ggcloud.router.client.router.service.impl.DefaultDiscoveryServ
 import com.xzcode.ggcloud.router.client.router.service.impl.DefaultServicePorvider;
 import com.xzcode.ggcloud.router.common.constant.GGRouterConstant;
 import com.xzcode.ggcloud.router.common.constant.RouterServiceCustomDataKeys;
+import com.xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
+import com.xzcode.ggserver.core.server.IGGServer;
+import com.xzcode.ggserver.core.server.impl.GGServer;
 
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
-import xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
-import xzcode.ggserver.core.server.IGGServer;
-import xzcode.ggserver.core.server.impl.GGServer;
 
 /**
  * 路由客户端配置

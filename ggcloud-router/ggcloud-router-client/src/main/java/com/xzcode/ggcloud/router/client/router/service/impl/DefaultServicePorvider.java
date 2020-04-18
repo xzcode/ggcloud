@@ -12,8 +12,7 @@ import com.xzcode.ggcloud.router.client.router.service.IRouterServiceProvider;
 import com.xzcode.ggcloud.router.client.router.service.listener.IAddRouterServiceListener;
 import com.xzcode.ggcloud.router.client.router.service.listener.IRemoveRouterServiceListener;
 import com.xzcode.ggcloud.router.client.router.service.listener.IRouterServiceListener;
-
-import xzcode.ggserver.core.common.message.Pack;
+import com.xzcode.ggserver.core.common.message.Pack;
 
 /**
  * 默认路由服务提供者

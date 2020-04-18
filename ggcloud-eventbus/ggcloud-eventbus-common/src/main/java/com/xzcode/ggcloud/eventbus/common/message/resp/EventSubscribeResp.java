@@ -1,8 +1,7 @@
 package com.xzcode.ggcloud.eventbus.common.message.resp;
 
 import com.xzcode.ggcloud.eventbus.common.constant.EventbusConstant;
-
-import xzcode.ggserver.core.common.message.model.IMessage;
+import com.xzcode.ggserver.core.common.message.model.IMessage;
 
 /**
  * 事件订阅推送

@@ -2,9 +2,8 @@ package com.xzcode.ggcloud.discovery.client.handler;
 
 import com.xzcode.ggcloud.discovery.client.config.DiscoveryClientConfig;
 import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryAddServiceResp;
-
-import xzcode.ggserver.core.common.message.MessageData;
-import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
+import com.xzcode.ggserver.core.common.message.MessageData;
+import com.xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
 
 /**
  * 新增服务推送处理器

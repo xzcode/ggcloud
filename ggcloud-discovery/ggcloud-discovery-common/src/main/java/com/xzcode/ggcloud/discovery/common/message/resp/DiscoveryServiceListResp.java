@@ -3,8 +3,7 @@ package com.xzcode.ggcloud.discovery.common.message.resp;
 import java.util.List;
 
 import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
-
-import xzcode.ggserver.core.common.message.model.IMessage;
+import com.xzcode.ggserver.core.common.message.model.IMessage;
 
 /**
  * 服务列表推送

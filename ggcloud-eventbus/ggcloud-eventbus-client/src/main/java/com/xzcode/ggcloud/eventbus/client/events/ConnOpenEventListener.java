@@ -1,9 +1,8 @@
 package com.xzcode.ggcloud.eventbus.client.events;
 
 import com.xzcode.ggcloud.eventbus.client.config.EventbusClientConfig;
-
-import xzcode.ggserver.core.common.event.IEventListener;
-import xzcode.ggserver.core.common.event.model.EventData;
+import com.xzcode.ggserver.core.common.event.IEventListener;
+import com.xzcode.ggserver.core.common.event.model.EventData;
 
 public class ConnOpenEventListener implements IEventListener<Void>{
 

@@ -3,7 +3,7 @@ package com.xzcode.ggcloud.discovery.common.service;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import xzcode.ggserver.core.common.session.GGSession;
+import com.xzcode.ggserver.core.common.session.GGSession;
 
 /**
  * 服务信息

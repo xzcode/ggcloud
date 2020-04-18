@@ -6,10 +6,9 @@ import com.xzcode.ggcloud.discovery.common.message.resp.DiscoveryServiceUpdateRe
 import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
 import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
-
-import xzcode.ggserver.core.common.message.MessageData;
-import xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
-import xzcode.ggserver.core.common.session.GGSession;
+import com.xzcode.ggserver.core.common.message.MessageData;
+import com.xzcode.ggserver.core.common.message.request.action.MessageDataHandler;
+import com.xzcode.ggserver.core.common.session.GGSession;
 
 /**
  * 服务更新请求处理

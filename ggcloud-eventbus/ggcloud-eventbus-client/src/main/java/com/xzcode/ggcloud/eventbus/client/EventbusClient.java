@@ -20,17 +20,16 @@ import com.xzcode.ggcloud.session.group.client.SessionGroupClient;
 import com.xzcode.ggcloud.session.group.client.config.SessionGroupClientConfig;
 import com.xzcode.ggcloud.session.group.client.session.ServiceClientSession;
 import com.xzcode.ggcloud.session.group.common.constant.GGSessionGroupEventConstant;
-
-import xzcode.ggserver.core.client.GGClient;
-import xzcode.ggserver.core.client.config.GGClientConfig;
-import xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
-import xzcode.ggserver.core.common.handler.serializer.ISerializer;
-import xzcode.ggserver.core.common.message.response.support.IMakePackSupport;
-import xzcode.ggserver.core.common.session.GGSession;
-import xzcode.ggserver.core.common.session.manager.ISessionManager;
-import xzcode.ggserver.core.common.utils.GenericClassUtil;
-import xzcode.ggserver.core.common.utils.RandomIdUtil;
-import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
+import com.xzcode.ggserver.core.client.GGClient;
+import com.xzcode.ggserver.core.client.config.GGClientConfig;
+import com.xzcode.ggserver.core.common.executor.thread.GGThreadFactory;
+import com.xzcode.ggserver.core.common.handler.serializer.ISerializer;
+import com.xzcode.ggserver.core.common.message.response.support.IMakePackSupport;
+import com.xzcode.ggserver.core.common.session.GGSession;
+import com.xzcode.ggserver.core.common.session.manager.ISessionManager;
+import com.xzcode.ggserver.core.common.utils.GenericClassUtil;
+import com.xzcode.ggserver.core.common.utils.RandomIdUtil;
+import com.xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 
 public class EventbusClient{
 	

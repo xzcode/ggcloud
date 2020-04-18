@@ -12,11 +12,10 @@ import com.xzcode.ggcloud.discovery.client.registry.RegistryManager;
 import com.xzcode.ggcloud.discovery.common.constant.DiscoveryConstant;
 import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 import com.xzcode.ggcloud.discovery.common.util.DiscoveryServiceIdUtil;
-
-import xzcode.ggserver.core.client.GGClient;
-import xzcode.ggserver.core.common.executor.DefaultTaskExecutor;
-import xzcode.ggserver.core.common.executor.ITaskExecutor;
-import xzcode.ggserver.core.common.session.GGSession;
+import com.xzcode.ggserver.core.client.GGClient;
+import com.xzcode.ggserver.core.common.executor.DefaultTaskExecutor;
+import com.xzcode.ggserver.core.common.executor.ITaskExecutor;
+import com.xzcode.ggserver.core.common.session.GGSession;
 
 /**
  * 配置

@@ -2,8 +2,8 @@ package com.xzcode.ggcloud.router.client.router.service;
 
 import java.util.Map;
 
-import xzcode.ggserver.core.common.future.IGGFuture;
-import xzcode.ggserver.core.common.message.Pack;
+import com.xzcode.ggserver.core.common.future.IGGFuture;
+import com.xzcode.ggserver.core.common.message.Pack;
 
 /**
  * 路由服务统一接口

@@ -5,8 +5,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import com.xzcode.ggcloud.eventbus.common.message.resp.EventMessageResp;
 import com.xzcode.ggcloud.eventbus.server.config.EventbusServerConfig;
-
-import xzcode.ggserver.core.common.session.GGSession;
+import com.xzcode.ggserver.core.common.session.GGSession;
 
 /**
  * 事件订阅处理器

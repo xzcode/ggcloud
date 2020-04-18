@@ -3,8 +3,7 @@ package com.xzcode.ggcloud.router.client.router.service.impl;
 import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
 import com.xzcode.ggcloud.router.client.router.service.IRouterServiceMatcher;
 import com.xzcode.ggcloud.router.common.constant.RouterServiceCustomDataKeys;
-
-import xzcode.ggserver.core.common.message.Pack;
+import com.xzcode.ggserver.core.common.message.Pack;
 
 /**
  * 默认注册中心相关actionid前缀路由服务匹配器

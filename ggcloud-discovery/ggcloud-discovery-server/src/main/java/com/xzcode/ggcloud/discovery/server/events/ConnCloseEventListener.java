@@ -5,11 +5,10 @@ import com.xzcode.ggcloud.discovery.common.service.ServiceInfo;
 import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
 import com.xzcode.ggcloud.discovery.server.config.DiscoveryServerConfig;
 import com.xzcode.ggcloud.discovery.server.constant.DiscoveryServerSessionKeys;
-
-import xzcode.ggserver.core.common.event.IEventListener;
-import xzcode.ggserver.core.common.event.model.EventData;
-import xzcode.ggserver.core.common.session.GGSession;
-import xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
+import com.xzcode.ggserver.core.common.event.IEventListener;
+import com.xzcode.ggserver.core.common.event.model.EventData;
+import com.xzcode.ggserver.core.common.session.GGSession;
+import com.xzcode.ggserver.core.common.utils.logger.GGLoggerUtil;
 
 public class ConnCloseEventListener implements IEventListener<Void>{
 	

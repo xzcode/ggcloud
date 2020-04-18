@@ -2,8 +2,7 @@ package com.xzcode.ggcloud.discovery.server.config;
 
 import com.xzcode.ggcloud.discovery.common.constant.DiscoveryConstant;
 import com.xzcode.ggcloud.discovery.common.service.ServiceManager;
-
-import xzcode.ggserver.core.server.IGGServer;
+import com.xzcode.ggserver.core.server.IGGServer;
 
 /**
  * 配置
